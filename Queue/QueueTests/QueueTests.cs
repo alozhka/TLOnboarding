@@ -2,42 +2,38 @@ namespace QueueTests;
 
 using Queue;
 
+
+//TODO: добавить и удалять элементы до переполнения очереди (когда begin != 0)
+//TODO: тест на оборачивание кольца без переполнения (количество добавлений больше размеров, но без переполнения)
 public class QueueTests
 {
     [Fact]
-    public void HasEnqueueAsFIFO()
+    public void CanUseAsFIFO()
     {
         Queue<int> queue = new();
         queue.Enqueue(5);
         queue.Enqueue(10);
-
-        Assert.Equal(5, queue.Dequeue());
-    }
-
-    [Fact]
-    public void HasCheckingForEmptyness()
-    {
-        Queue<int> queue = new();
-
-        Assert.True(queue.IsEmpty());
-
-        queue.Enqueue(5);
+        queue.Enqueue(20);
+        queue.Enqueue(30);
 
         Assert.False(queue.IsEmpty());
-    }
+        Assert.Equal(4, queue.Count);
 
-    [Fact]
-    public void HasChangingElementsCounter()
-    {
-        Queue<int> queue = new();
-        queue.Enqueue(5);
-        queue.Enqueue(6);
+        Assert.Equal(5, queue.Dequeue());
+        Assert.False(queue.IsEmpty());
+        Assert.Equal(3, queue.Count);
 
+        Assert.Equal(10, queue.Dequeue());
+        Assert.False(queue.IsEmpty());
         Assert.Equal(2, queue.Count);
 
-        queue.Enqueue(7);
+        Assert.Equal(20, queue.Dequeue());
+        Assert.False(queue.IsEmpty());
+        Assert.Equal(1, queue.Count);
 
-        Assert.Equal(3, queue.Count);
+        Assert.Equal(30, queue.Dequeue());
+        Assert.True(queue.IsEmpty());
+        Assert.Equal(0, queue.Count);
     }
 
     [Fact]
@@ -49,10 +45,12 @@ public class QueueTests
         queue.Enqueue(5);
 
         Assert.Equal(3, queue.Count);
+        Assert.False(queue.IsEmpty());
 
         queue.Clear();
 
         Assert.Equal(0, queue.Count);
+        Assert.True(queue.IsEmpty());
     }
 
     [Fact]
@@ -62,17 +60,11 @@ public class QueueTests
         queue.Enqueue(3);
         queue.Enqueue(4);
 
-        bool caughtExpection = false;
-        try
-        {
-            queue.Enqueue(5);
-        }
-        catch (IndexOutOfRangeException)
-        {
-            caughtExpection = true;
-        }
+        queue.Enqueue(5);
 
-        Assert.False(caughtExpection);
+        Assert.Equal(3, queue.Dequeue());
+        Assert.Equal(4, queue.Dequeue());
+        Assert.Equal(5, queue.Dequeue());
     }
 
     [Fact]

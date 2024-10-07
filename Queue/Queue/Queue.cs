@@ -1,23 +1,15 @@
-using System.Drawing;
-
 namespace Queue;
 
-public class Queue<T>
+//TODO: убрать _defaultLength
+//TODO: добавить capacity
+public class Queue<T>(int initialSize = 20)
 {
-    private T[] Buffer { get; set; }
-    private int HeadIndex { get; set; }
-    private int TailIndex { get; set; }
-    public int Count;
+    private T[] Buffer = new T[initialSize];
+    private int HeadIndex = 0;
+    private int TailIndex = 0;
+    public int Count = 0;
 
     private const uint _defaultLength = 20;
-
-    public Queue(uint initialSize = _defaultLength)
-    {
-        Buffer = new T[initialSize];
-        HeadIndex = 0;
-        TailIndex = 0;
-        Count = 0;
-    }
 
     public void Enqueue(T element)
     {
@@ -43,7 +35,7 @@ public class Queue<T>
         }
 
         T element = Buffer[HeadIndex++];
-        Count++;
+        Count--;
         if (HeadIndex > _defaultLength)
         {
             HeadIndex = 0;
@@ -64,12 +56,13 @@ public class Queue<T>
 
     private void IncreaseBufferCapacity()
     {
-        T[] temp = new T[Buffer.Length];
-
-        Buffer.Select((el, index) => temp[index] = el);
-
-        Buffer = new T[temp.Length + _defaultLength];
+        T[] temp = new T[Buffer.Length + _defaultLength];
         
-        temp.Select((el, index) => Buffer[index] = el);
+        for (int i = 0; i < Buffer.Length; i++)
+        {
+            temp[i] = Buffer[i];
+        }
+
+        Buffer = temp;
    }
 }
