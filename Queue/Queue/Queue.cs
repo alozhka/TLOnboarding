@@ -2,6 +2,7 @@ using System.Drawing;
 
 namespace Queue;
 
+// TODO: добавить расширение по необходимости
 public class Queue<T>
 {
     private T[] Buffer { get; set; }
