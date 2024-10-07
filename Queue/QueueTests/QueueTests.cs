@@ -15,17 +15,12 @@ public class QueueTests
     }
 
     [Fact]
-    public void HasCheckingForEmptynessIfEmpty()
+    public void HasCheckingForEmptyness()
     {
         Queue<int> queue = new();
 
         Assert.True(queue.IsEmpty());
-    }
-    
-    [Fact]
-    public void HasCheckingForEmptynessIfNotEmpty()
-    {
-        Queue<int> queue = new();
+
         queue.Enqueue(5);
 
         Assert.False(queue.IsEmpty());
@@ -64,7 +59,7 @@ public class QueueTests
     public void ThrowsExceptionIfDequeueFromEmptyQueue()
     {
         Queue<int> queue = new();
-        
+
         bool caughtExpection = false;
         try
         {
