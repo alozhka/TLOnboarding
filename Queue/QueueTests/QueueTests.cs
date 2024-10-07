@@ -56,6 +56,26 @@ public class QueueTests
     }
 
     [Fact]
+    public void CanIncreaseCapacity()
+    {
+        Queue<int> queue = new(2);
+        queue.Enqueue(3);
+        queue.Enqueue(4);
+
+        bool caughtExpection = false;
+        try
+        {
+            queue.Enqueue(5);
+        }
+        catch (IndexOutOfRangeException)
+        {
+            caughtExpection = true;
+        }
+
+        Assert.False(caughtExpection);
+    }
+
+    [Fact]
     public void ThrowsExceptionIfDequeueFromEmptyQueue()
     {
         Queue<int> queue = new();

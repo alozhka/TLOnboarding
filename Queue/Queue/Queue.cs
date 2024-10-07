@@ -2,7 +2,6 @@ using System.Drawing;
 
 namespace Queue;
 
-// TODO: добавить тест на FIFO
 // TODO: добавить расширение по необходимости
 public class Queue<T>
 {
@@ -15,7 +14,7 @@ public class Queue<T>
 
     public Queue(uint initialSize = _defaultLength)
     {
-        Buffer = new T[_defaultLength];
+        Buffer = new T[initialSize];
         HeadIndex = 0;
         TailIndex = 0;
         Count = 0;
@@ -23,8 +22,14 @@ public class Queue<T>
 
     public void Enqueue(T element)
     {
-        Buffer[TailIndex++] = element;
         Count++;
+        if (Count > Buffer.Length)
+        {
+            IncreaseBufferCapacity();
+        }
+
+        Buffer[TailIndex++] = element;
+
         if (TailIndex > _defaultLength)
         {
             TailIndex = 0;
@@ -48,7 +53,7 @@ public class Queue<T>
         return element;
     }
 
-    public bool IsEmpty() => Count == 0; 
+    public bool IsEmpty() => Count == 0;
 
     public void Clear()
     {
@@ -57,4 +62,15 @@ public class Queue<T>
         TailIndex = 0;
         Count = 0;
     }
+
+    private void IncreaseBufferCapacity()
+    {
+        T[] temp = new T[Buffer.Length];
+
+        Buffer.Select((el, index) => temp[index] = el);
+
+        Buffer = new T[temp.Length + _defaultLength];
+        
+        temp.Select((el, index) => Buffer[index] = el);
+   }
 }
