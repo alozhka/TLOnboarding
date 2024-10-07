@@ -5,7 +5,7 @@ using Queue;
 public class QueueTests
 {
     [Fact]
-    public void Enqueue_As_FIFO()
+    public void HasEnqueueAsFIFO()
     {
         Queue<int> queue = new();
         queue.Enqueue(5);
@@ -15,7 +15,7 @@ public class QueueTests
     }
 
     [Fact]
-    public void Empty_ShouldBeEmpty()
+    public void HasCheckingForEmptynessIfEmpty()
     {
         Queue<int> queue = new();
 
@@ -23,7 +23,7 @@ public class QueueTests
     }
     
     [Fact]
-    public void NotEmpty_ShouldBeNotEmpty()
+    public void HasCheckingForEmptynessIfNotEmpty()
     {
         Queue<int> queue = new();
         queue.Enqueue(5);
@@ -32,7 +32,7 @@ public class QueueTests
     }
 
     [Fact]
-    public void HasChangedCount()
+    public void HasChangingElementsCounter()
     {
         Queue<int> queue = new();
         queue.Enqueue(5);
@@ -61,7 +61,7 @@ public class QueueTests
     }
 
     [Fact]
-    public void Empty_TryDequeue_ShouldThrowException()
+    public void ThrowsExceptionIfDequeueFromEmptyQueue()
     {
         Queue<int> queue = new();
         
