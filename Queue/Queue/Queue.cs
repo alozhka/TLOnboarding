@@ -35,8 +35,7 @@ public class Queue<T>
     {
         if (Count < 1)
         {
-            // TODO: Текст исключения на английском
-            throw new IndexOutOfRangeException("Очередь пустая");
+            throw new IndexOutOfRangeException("Queue is empty");
         }
 
         T element = Buffer[HeadIndex++];
