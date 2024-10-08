@@ -11,18 +11,8 @@ public class Queue<T>(int initialSize = 20)
 
     public void Enqueue(T element)
     {
-        /* Count++;
-        if (Count > Buffer.Length)
-        {
-            IncreaseBufferCapacity();
-        } */
-
-        Buffer[TailIndex++] = element;
-/* 
-        if (TailIndex > _defaultLength)
-        {
-            TailIndex = 0;
-        } */
+        Buffer[TailIndex] = element;
+        TailIndex = (TailIndex + 1) % Capacity;
     }
 
     public T Dequeue()
@@ -46,7 +36,7 @@ public class Queue<T>(int initialSize = 20)
 
     public void Clear()
     {
-        Buffer = [];
+        Buffer = new T[Capacity];
         HeadIndex = 0;
         TailIndex = 0;
     }
