@@ -22,12 +22,8 @@ public class Queue<T>(int initialSize = 20)
             throw new IndexOutOfRangeException("Queue is empty");
         }
 
-        T element = Buffer[HeadIndex++];
-        /* Count--;
-        if (HeadIndex > _defaultLength)
-        {
-            HeadIndex = 0;
-        } */
+        T element = Buffer[HeadIndex];
+        HeadIndex = (HeadIndex + 1) % Capacity;
 
         return element;
     }

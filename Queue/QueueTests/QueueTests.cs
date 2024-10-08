@@ -73,6 +73,20 @@ public class QueueTests
         Queue<int> queue = new();
 
         bool caughtExpection = false;
+        queue.Enqueue(2);
+
+        try
+        {
+            queue.Dequeue();
+        }
+        catch (IndexOutOfRangeException)
+        {
+            caughtExpection = true;
+        }
+        
+        Assert.False(caughtExpection);
+
+        caughtExpection = false;
         try
         {
             queue.Dequeue();
