@@ -13,6 +13,11 @@ public class Queue<T>(int initialSize = 20)
     {
         Buffer[TailIndex] = element;
         TailIndex = (TailIndex + 1) % Capacity;
+
+        if (TailIndex == HeadIndex)
+        {
+            IncreaseBufferCapacity();
+        }
     }
 
     public T Dequeue()
@@ -41,11 +46,13 @@ public class Queue<T>(int initialSize = 20)
     {
         T[] temp = new T[Buffer.Length + initialSize];
 
-        for (int i = 0; i < Buffer.Length; i++)
+        for (int i = HeadIndex; i != TailIndex; i = (HeadIndex + 1 + Capacity) % Capacity)
         {
             temp[i] = Buffer[i];
         }
-
+        
+        HeadIndex = 0;
+        TailIndex = Capacity;
         Buffer = temp;
     }
 }
