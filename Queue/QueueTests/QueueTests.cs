@@ -54,6 +54,12 @@ public class QueueTests
     }
 
     [Fact]
+    public void WorksAsRingBufferWithoutOverflow()
+    {
+
+    }
+
+    [Fact]
     public void CanIncreaseCapacity()
     {
         Queue<int> queue = new(2);
@@ -72,21 +78,11 @@ public class QueueTests
     {
         Queue<int> queue = new();
 
-        bool caughtExpection = false;
         queue.Enqueue(2);
-
-        try
-        {
-            queue.Dequeue();
-        }
-        catch (IndexOutOfRangeException)
-        {
-            caughtExpection = true;
-        }
+        queue.Dequeue();
         
-        Assert.False(caughtExpection);
 
-        caughtExpection = false;
+        bool caughtExpection = false;
         try
         {
             queue.Dequeue();
