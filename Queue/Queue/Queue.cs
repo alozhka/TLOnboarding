@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace Queue;
 
 public class Queue<T>(int initialSize = 20)
@@ -44,13 +46,18 @@ public class Queue<T>(int initialSize = 20)
 
     private void IncreaseBufferCapacity()
     {
+        TailIndex = (TailIndex - 1 + Capacity) % Capacity;
         T[] temp = new T[Buffer.Length + initialSize];
 
-        for (int i = HeadIndex; i != TailIndex; i = (HeadIndex + 1 + Capacity) % Capacity)
-        {
-            temp[i] = Buffer[i];
-        }
+        int bufferIndex = HeadIndex, tempIndex = 0;
         
+        for (; bufferIndex != TailIndex;
+        bufferIndex = (bufferIndex + 1) % Capacity, tempIndex++)
+        {
+            temp[tempIndex] = Buffer[bufferIndex];
+        }
+        temp[tempIndex] = Buffer[bufferIndex];
+
         HeadIndex = 0;
         TailIndex = Capacity;
         Buffer = temp;
