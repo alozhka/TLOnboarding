@@ -7,9 +7,8 @@ public class Queue<T>(int initialSize = 20)
     private T[] Buffer = new T[initialSize];
     private int HeadIndex = 0;
     private int TailIndex = 0;
-    public int Count = 0;
+    public int Capacity => Buffer.Length;
 
-    private const uint _defaultLength = 20;
 
     public void Enqueue(T element)
     {
