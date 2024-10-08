@@ -17,23 +17,23 @@ public class QueueTests
         queue.Enqueue(30);
 
         Assert.False(queue.IsEmpty());
-        Assert.Equal(4, queue.Count);
+        Assert.Equal(4, queue.Count());
 
         Assert.Equal(5, queue.Dequeue());
         Assert.False(queue.IsEmpty());
-        Assert.Equal(3, queue.Count);
+        Assert.Equal(3, queue.Count());
 
         Assert.Equal(10, queue.Dequeue());
         Assert.False(queue.IsEmpty());
-        Assert.Equal(2, queue.Count);
+        Assert.Equal(2, queue.Count());
 
         Assert.Equal(20, queue.Dequeue());
         Assert.False(queue.IsEmpty());
-        Assert.Equal(1, queue.Count);
+        Assert.Equal(1, queue.Count());
 
         Assert.Equal(30, queue.Dequeue());
         Assert.True(queue.IsEmpty());
-        Assert.Equal(0, queue.Count);
+        Assert.Equal(0, queue.Count());
     }
 
     [Fact]
@@ -44,12 +44,12 @@ public class QueueTests
         queue.Enqueue(4);
         queue.Enqueue(5);
 
-        Assert.Equal(3, queue.Count);
+        Assert.Equal(3, queue.Count());
         Assert.False(queue.IsEmpty());
 
         queue.Clear();
 
-        Assert.Equal(0, queue.Count);
+        Assert.Equal(0, queue.Count());
         Assert.True(queue.IsEmpty());
     }
 
