@@ -51,9 +51,37 @@ public class XmlParser
     {
         _currentIndex = _rawXml.IndexOf('>') + 1;
 
-        XmlElement el = ParseElement();
-        // дальше логика последовательной обработки
-        return el;
+        XmlElement first = ParseElement();
+
+        Stack<XmlElement> elements = new();
+
+        elements.Push(first);
+        while (elements.Count > 0)
+        {
+            if (TryGetPlainValue(out string plainValue))
+            {
+                elements.Peek().Value = plainValue;
+                continue;
+            }
+
+            XmlElement el = ParseElement();
+            if (IsClosedElement(el))
+            {
+                if (elements.Peek().Name != el.Name[1..])
+                {
+                    throw new FormatException("Invalid XML nesting");
+                }
+
+                elements.Pop();
+            }
+            else
+            {
+                elements.Peek().Children.Add(el);
+                elements.Push(el);
+            }
+        }
+
+        return first;
     }
 
 
@@ -67,8 +95,8 @@ public class XmlParser
         int end = _rawXml.IndexOf('>', start);
         string element = _rawXml.Substring(start + 1, end - start - 1);
         string[] entries = element.Split(' ', StringSplitOptions.TrimEntries);
+        _currentIndex = end + 1;
 
-        _currentIndex = end;
         List<XmlAttribute> attributes = entries[1..].Select(str =>
             {
                 string[] keyValue = str.Split('=', StringSplitOptions.TrimEntries);
@@ -77,5 +105,24 @@ public class XmlParser
             .ToList();
 
         return new XmlElement(entries[0], attributes);
+    }
+
+    /// <summary>
+    /// Пытается взять простое значение. Состояние полей не изменяет.
+    /// Если следубщий идёт тэг, то возвращается false.
+    /// </summary>
+    /// <param name="plainValue"></param>
+    /// <returns></returns>
+    private bool TryGetPlainValue(out string plainValue)
+    {
+        int startIndex = _rawXml.IndexOf('<', _currentIndex);
+        plainValue = _rawXml.Substring(_currentIndex, startIndex - _currentIndex).Trim();
+        _currentIndex = startIndex;
+        return !string.IsNullOrEmpty(plainValue);
+    }
+
+    private static bool IsClosedElement(XmlElement el)
+    {
+        return el.Name[0] == '/';
     }
 }

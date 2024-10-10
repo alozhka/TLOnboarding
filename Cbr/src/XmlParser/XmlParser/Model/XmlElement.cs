@@ -24,7 +24,7 @@ public class XmlElement(string name, List<XmlAttribute> attributes, string value
     /// Если тип простой, то он будет в поле <see cref="Value"/>
     /// Если тип сложный, то см. поле <see cref="Children"/>
     /// </summary>
-    public string Value { get; } = value;
+    public string Value { get; set; } = value;
 
     /// <summary>
     /// Дети сложного XML-элемента.

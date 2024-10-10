@@ -9,7 +9,12 @@ public class XmlParserTests
     {
         Service.XmlParser parser = new();
         parser.FromRawString(
-            """<?xml version="1.0" encoding="utf-8"?><Element attr1="123" attr2="456"></Element>""");
+            """
+            <?xml version="1.0" encoding="utf-8"?>
+            <Element attr1="123" attr2="456">
+                <name>Alex</name>
+            </Element>
+            """);
     }
 
     [Fact]
