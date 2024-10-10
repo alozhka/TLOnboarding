@@ -26,7 +26,7 @@ public class XmlParser
             throw new FileNotFoundException("File not found", filepath);
         }
 
-        _rawXml = string.Join("", File.ReadAllLines(filepath));
+        _rawXml = File.ReadAllText(filepath);
         return Parse();
     }
 
