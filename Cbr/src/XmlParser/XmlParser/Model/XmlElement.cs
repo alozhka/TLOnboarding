@@ -1,8 +1,6 @@
 namespace XmlParser.Model;
 
 
-using XmlAttributes = KeyValuePair<string, string>;
-
 public class XmlElement(string name, List<XmlAttribute> attributes, string value = "")
 {
     /// <summary>
