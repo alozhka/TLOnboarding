@@ -1,6 +1,9 @@
 namespace XmlParser.Model;
 
-public class XmlElement(string name, List<string> attributes, string value = "")
+
+using XmlAttributes = KeyValuePair<string, string>;
+
+public class XmlElement(string name, List<XmlAttribute> attributes, string value = "")
 {
     /// <summary>
     /// Название XML-элемента. Берётся из угловых скобок
@@ -16,7 +19,7 @@ public class XmlElement(string name, List<string> attributes, string value = "")
     /// <example>
     /// <Element attr1="123" attr2="456"></Element> <br/> attr1 и attr2 - аттрибуты
     /// </example>
-    public List<string> Attributes { get; } = attributes;
+    public List<XmlAttribute> Attributes { get; } = attributes;
 
     /// <summary>
     /// Значение внутри XML-элемента, между открывающимся и закрывающимся тегом.
