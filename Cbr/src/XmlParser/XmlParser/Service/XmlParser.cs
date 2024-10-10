@@ -3,38 +3,60 @@ using XmlParser.Model;
 
 namespace XmlParser.Service;
 
-public static class XmlParser
+public class XmlParser
 {
+    /// <summary>
+    /// Регулярное выражение для извлечения названия и аттрибутов у xml-элемента
+    /// </summary>
     private const string RegexElement = @"<(\\w+)([^>]*)>";
+    
+    /// <summary>
+    /// Xml в виде строки
+    /// </summary>
+    private string _rawXml = "";
+    /// <summary>
+    /// Текущий индекс во время обработки <see cref="_rawXml"/>
+    /// </summary>
+    private int _currentIndex = 0;
     
     /// <summary>
     /// Считывает xml в виде строки из файла и парсит приватным методом
     /// </summary>
     /// <param name="filepath">путь до xml файла</param>
-    /// <returns></returns>
     /// <exception cref="FileNotFoundException">если файл не найден</exception>
-    public static XmlElement FromFile(string filepath)
+    public XmlElement FromFile(string filepath)
     {
         if (!File.Exists(filepath))
         {
             throw new FileNotFoundException("File not found", filepath);
         }
 
-        string rawXml = string.Join("", File.ReadAllLines(filepath));
-        return Parse(ref rawXml);
+        _rawXml = string.Join("", File.ReadAllLines(filepath));
+        return Parse();
     }
+    
 
+    /// <summary>
+    /// Задаёт значение для полей класса и парсит xml
+    /// </summary>
+    /// <returns><see cref="XmlElement"/> Главный элемент с детьми</returns>
+    /// <param name="rawXml">xml в виде строки</param>
+    public XmlElement FromRawString(string rawXml)
+    {
+        _rawXml = rawXml;
+        return Parse();
+    }
+    
     /// <summary>
     /// Парсит xml в виде строки
     /// </summary>
-    /// <returns><see cref="XmlElement"/></returns>
+    /// <returns><see cref="XmlElement"/> Главный элемент с детьми</returns>
     /// <param name="rawXml">xml в виде строки</param>
-    /// <returns></returns>
-    private static XmlElement Parse(ref string rawXml)
+    private XmlElement Parse()
     {
-        int currentIndex = rawXml.IndexOf('>') + 1;
+        _currentIndex = _rawXml.IndexOf('>') + 1;
 
-        ParseElement(ref rawXml, ref currentIndex);
+        XmlElement el = ParseElement();
         // дальше логика последовательной обработки
     }
 
@@ -42,15 +64,13 @@ public static class XmlParser
     /// <summary>
     /// Парсит значение элемента внутри угловых скобок
     /// </summary>
-    /// <param name="str">строка для парсинга</param>
-    /// <param name="currentIndex">текуший индекс</param>
-    /// <returns></returns>
-    private static XmlElement ParseElement(ref string str, ref int currentIndex)
+    /// <returns>Элемент без детей</returns>
+    private XmlElement ParseElement()
     {
-        int start = str.IndexOf('<', currentIndex);
-        int end = str.IndexOf('>', start);
+        int start = _rawXml.IndexOf('<', _currentIndex);
+        int end = _rawXml.IndexOf('>', start);
 
-        string element = str.Substring(start, end - start + 1);
+        string element = _rawXml.Substring(start, end - start + 1);
 
         Match match = Regex.Match(element, RegexElement);
         
