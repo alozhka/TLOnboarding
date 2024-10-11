@@ -106,7 +106,7 @@ public static class XmlParser
         List<XmlAttribute> attributes = entries[1..].Select(str =>
             {
                 string[] keyValue = str.Split('=', StringSplitOptions.TrimEntries);
-                return new XmlAttribute(keyValue[0], string.Join("", keyValue[1..])[1..^1]);
+                return new XmlAttribute(keyValue[0], string.Join("=", keyValue[1..])[1..^1]);
             })
             .ToList();
 

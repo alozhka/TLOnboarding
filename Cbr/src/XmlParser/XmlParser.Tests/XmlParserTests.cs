@@ -11,7 +11,7 @@ public class XmlParserTests
         XmlElement el = Service.XmlParser.FromRawString(
             """
             <?xml version="1.0" encoding="utf-8"?>
-            <Element attr1="123" attr2="456">
+            <Element attr1="12=3" attr2="456">
                 <name>Alex</name>
             </Element>
             """);
