@@ -2,24 +2,24 @@ using XmlParser.Model;
 
 namespace XmlParser.Service;
 
-public class XmlParser
+public static class XmlParser
 {
     /// <summary>
     /// Xml в виде строки
     /// </summary>
-    private string _rawXml = "";
+    private static string _rawXml = "";
 
     /// <summary>
     /// Текущий индекс во время обработки <see cref="_rawXml"/>
     /// </summary>
-    private int _currentIndex = 0;
+    private static int _currentIndex = 0;
 
     /// <summary>
-    /// Считывает xml в виде строки из файла и парсит приватным методом
+    /// Инициализирует значения из файла и парсит xml
     /// </summary>
     /// <param name="filepath">путь до xml файла</param>
     /// <exception cref="FileNotFoundException">если файл не найден</exception>
-    public XmlElement FromFile(string filepath)
+    public static XmlElement FromFile(string filepath)
     {
         if (!File.Exists(filepath))
         {
@@ -27,18 +27,22 @@ public class XmlParser
         }
 
         _rawXml = File.ReadAllText(filepath);
+        _currentIndex = 0;
+
         return Parse();
     }
 
 
     /// <summary>
-    /// Задаёт значение для полей класса и парсит xml
+    /// Инициализирует значения и парсит xml
     /// </summary>
-    /// <returns><see cref="XmlElement"/> Главный элемент с детьми</returns>
+    /// <returns><see cref="XmlElement"/>Главный элемент с детьми</returns>
     /// <param name="rawXml">xml в виде строки</param>
-    public XmlElement FromRawString(string rawXml)
+    public static XmlElement FromRawString(string rawXml)
     {
         _rawXml = rawXml;
+        _currentIndex = 0;
+
         return Parse();
     }
 
@@ -47,7 +51,7 @@ public class XmlParser
     /// </summary>
     /// <returns><see cref="XmlElement"/> Главный элемент с детьми</returns>
     /// <param name="rawXml">xml в виде строки</param>
-    private XmlElement Parse()
+    private static XmlElement Parse()
     {
         _currentIndex = _rawXml.IndexOf('>') + 1;
 
@@ -89,18 +93,20 @@ public class XmlParser
     /// Парсит значение элемента внутри угловых скобок
     /// </summary>
     /// <returns>Элемент без детей</returns>
-    private XmlElement ParseElement()
+    private static XmlElement ParseElement()
     {
         int start = _rawXml.IndexOf('<', _currentIndex);
         int end = _rawXml.IndexOf('>', start);
+        // Значение внутри угловых скобок <>
         string element = _rawXml.Substring(start + 1, end - start - 1);
-        string[] entries = element.Split(' ', StringSplitOptions.TrimEntries);
+
+        List<string> entries = SplitWithNoAdditionalSpaces(element);
         _currentIndex = end + 1;
 
         List<XmlAttribute> attributes = entries[1..].Select(str =>
             {
                 string[] keyValue = str.Split('=', StringSplitOptions.TrimEntries);
-                return new XmlAttribute(keyValue[0], keyValue[1][1..^1]);
+                return new XmlAttribute(keyValue[0], string.Join("", keyValue[1..])[1..^1]);
             })
             .ToList();
 
@@ -109,11 +115,11 @@ public class XmlParser
 
     /// <summary>
     /// Пытается взять простое значение. Состояние полей не изменяет.
-    /// Если следубщий идёт тэг, то возвращается false.
+    /// Если следующий идёт тэг, то возвращается false.
     /// </summary>
     /// <param name="plainValue"></param>
     /// <returns></returns>
-    private bool TryGetPlainValue(out string plainValue)
+    private static bool TryGetPlainValue(out string plainValue)
     {
         int startIndex = _rawXml.IndexOf('<', _currentIndex);
         plainValue = _rawXml.Substring(_currentIndex, startIndex - _currentIndex).Trim();
@@ -121,6 +127,52 @@ public class XmlParser
         return !string.IsNullOrEmpty(plainValue);
     }
 
+    /// <summary>
+    /// Разделяет строку по пробелам.
+    /// Игнорирует множество пробелов, идущих подряд, оставляя только один.
+    /// Игнорирует пробелы внутри кавычек. 
+    /// </summary>
+    /// <returns></returns>
+    private static List<string> SplitWithNoAdditionalSpaces(string str)
+    {
+        List<string> words = [];
+        string word = "";
+        bool insideQuotes = false;
+
+        foreach (var ch in str)
+        {
+            if (ch == '"')
+            {
+                insideQuotes = !insideQuotes;
+            }
+
+            if (!insideQuotes && char.IsWhiteSpace(ch))
+            {
+                if (word.Length > 0)
+                {
+                    words.Add(word);
+                    word = "";
+                }
+            }
+            else
+            {
+                word += ch;
+            }
+        }
+
+        if (word.Length > 0)
+        {
+            words.Add(word);
+        }
+
+        return words;
+    }
+
+    /// <summary>
+    /// Проверяет, закрытый ли тэг у считавшегося элемента
+    /// </summary>
+    /// <param name="el">Проверяемый xml-элемент</param>
+    /// <returns></returns>
     private static bool IsClosedElement(XmlElement el)
     {
         return el.Name[0] == '/';
