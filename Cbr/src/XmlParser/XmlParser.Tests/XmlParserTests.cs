@@ -1,3 +1,4 @@
+using XmlParser.Model;
 using Xunit;
 
 namespace XmlParser.Tests;
@@ -7,8 +8,7 @@ public class XmlParserTests
     [Fact]
     public void Can_use_complex_types()
     {
-        Service.XmlParser parser = new();
-        parser.FromRawString(
+        XmlElement el = Service.XmlParser.FromRawString(
             """
             <?xml version="1.0" encoding="utf-8"?>
             <Element attr1="123" attr2="456">
@@ -18,8 +18,10 @@ public class XmlParserTests
     }
 
     [Fact]
-    public void Supports_parsing_from_raw_data_and_from_xml_file()
+    public void Supports_parsing_from_xml_file()
     {
+        XmlElement el = Service.XmlParser.FromFile("../../../data/XML_daily.asp");
+        
     }
 
     [Fact]

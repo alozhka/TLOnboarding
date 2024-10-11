@@ -26,4 +26,8 @@
       <ProjectReference Include="..\XmlParser\XmlParser.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="data\" />
+    </ItemGroup>
+
 </Project>
