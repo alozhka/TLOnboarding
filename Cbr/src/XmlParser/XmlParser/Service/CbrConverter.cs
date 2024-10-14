@@ -3,7 +3,7 @@ using XmlParser.Model;
 
 namespace XmlParser.Service;
 
-public static class CbrConverter
+internal static class CbrConverter
 {
     public static CurrencyRates ToCurrencyRate(this XmlElement el)
     {
@@ -13,7 +13,7 @@ public static class CbrConverter
             List<string> data = [];
             foreach (XmlElement value in currency)
             {
-                data.Add(value.ChildNodes.Item(0).Value);
+                data.Add(value.ChildNodes.Item(0)!.Value!);
             }
 
             currencies.Add(new CurrencyRate(
@@ -22,6 +22,6 @@ public static class CbrConverter
                 decimal.Parse(data[5])));
         }
 
-        return new CurrencyRates(DateOnly.ParseExact(el.Attributes["Date"].Value, "dd.MM.yyyy"), currencies);
+        return new CurrencyRates(DateOnly.ParseExact(el.Attributes["Date"]!.Value, "dd.MM.yyyy"), currencies);
     }
 }

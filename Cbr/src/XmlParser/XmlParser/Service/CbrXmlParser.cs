@@ -25,7 +25,7 @@ public class CbrXmlParser
         return ConvertToRate(doc.DocumentElement);
     }
 
-    public static CurrencyRates ConvertToRate(XmlElement? rootElement)
+    private static CurrencyRates ConvertToRate(XmlElement? rootElement)
     {
         if (rootElement is null)
         {
