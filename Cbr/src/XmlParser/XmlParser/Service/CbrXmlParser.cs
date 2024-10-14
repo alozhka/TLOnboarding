@@ -9,34 +9,41 @@ public class CbrXmlParser
     {
         SetupEncoding();
 
-        XmlDocument doc = new();
-        doc.Load(filepath);
-
-        return ConvertToRate(doc.DocumentElement);
+        return LoadAndParse(filepath);
     }
 
     public static CurrencyRates FromRawString(string rawXml)
     {
         SetupEncoding();
 
-        XmlDocument doc = new();
-        doc.LoadXml(rawXml);
 
-        return ConvertToRate(doc.DocumentElement);
+        return LoadAndParse(rawXml);
     }
 
-    private static CurrencyRates ConvertToRate(XmlElement? rootElement)
+    private static CurrencyRates LoadAndParse(string loadArg)
     {
-        if (rootElement is null)
-        {
-            throw new InvalidDataException("No data inside xml-document");
-        }
+        XmlDocument doc = new();
 
         try
         {
+            doc.LoadXml(loadArg);
+            XmlElement? rootElement = doc.DocumentElement;
+            if (rootElement is null)
+            {
+                throw new InvalidDataException("No data inside xml-document");
+            }
+
             return rootElement.ToCurrencyRate();
         }
-        catch (Exception)
+        catch (IndexOutOfRangeException)
+        {
+            throw new FormatException("Invalid document format");
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            throw new FormatException("Invalid document format");
+        }
+        catch (XmlException)
         {
             throw new FormatException("Invalid document format");
         }
