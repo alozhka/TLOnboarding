@@ -16,15 +16,12 @@ public static class CbrConverter
                 data.Add(value.ChildNodes.Item(0).Value);
             }
 
-            currencies.Add(new CurrencyRate(currency.Attributes.Item(0).Value, 
-                ushort.Parse(data[0]), 
+            currencies.Add(new CurrencyRate(
                 data[1], 
-                uint.Parse(data[2]), 
                 data[3],
-                decimal.Parse(data[4]), 
                 decimal.Parse(data[5])));
         }
 
-        return new CurrencyRates(el.Attributes["name"].Value, DateOnly.ParseExact(el.Attributes["Date"].Value, "dd.MM.yyyy"), currencies);
+        return new CurrencyRates(DateOnly.ParseExact(el.Attributes["Date"].Value, "dd.MM.yyyy"), currencies);
     }
 }

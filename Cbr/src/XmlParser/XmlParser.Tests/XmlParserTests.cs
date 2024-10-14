@@ -24,24 +24,15 @@ public class XmlParserTests
             """);
 
         CurrencyRates expected = new CurrencyRates(
-            "Foreign Currency Market",
             new DateOnly(2024, 10, 8),
             new List<CurrencyRate>([
                 new CurrencyRate(
-                    "R01010",
-                    036,
                     "AUD",
-                    1,
                     "Австралийский доллар",
-                    65.7852m,
                     65.7852m),
                 new CurrencyRate(
-                    "R01020A",
-                    944,
                     "AZN",
-                    1,
                     "Азербайджанский манат",
-                    56.5088m,
                     56.5088m)
             ]));
 
