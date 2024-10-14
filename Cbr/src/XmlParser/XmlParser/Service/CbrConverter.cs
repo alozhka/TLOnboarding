@@ -10,16 +10,16 @@ internal static class CbrConverter
         List<CurrencyRate> currencies = [];
         foreach (XmlElement currency in el)
         {
-            List<string> data = [];
-            foreach (XmlElement value in currency)
+            List<KeyValuePair<string,string>> data = [];
+            foreach (XmlNode node in currency)
             {
-                data.Add(value.ChildNodes.Item(0)!.Value!);
+                data.Add(new(node.Name, node.ChildNodes.Item(0)!.Value!));
             }
 
             currencies.Add(new CurrencyRate(
-                data[1], 
-                data[3],
-                decimal.Parse(data[5])));
+                data.Find(pair => pair.Key == "CharCode").Value, 
+                data.Find(pair => pair.Key == "Name").Value,
+                decimal.Parse(data.Find(pair => pair.Key == "VunitRate").Value)));
         }
 
         return new CurrencyRates(DateOnly.ParseExact(el.Attributes["Date"]!.Value, "dd.MM.yyyy"), currencies);
