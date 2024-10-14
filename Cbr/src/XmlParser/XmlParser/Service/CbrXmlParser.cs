@@ -41,25 +41,24 @@ public class CbrXmlParser
         try
         {
             doc.LoadXml(loadArg);
-            XmlElement? rootElement = doc.DocumentElement
-                ?? throw new FormatException("No data inside xml-document");
+            XmlElement? rootElement = doc.DocumentElement;
+
+            if (rootElement is null || rootElement.Name is not "ValCurs")
+            {
+                throw new FormatException("No data inside xml-document");
+            }
+
             return rootElement.ToCurrencyRate();
         }
-        catch (FormatException)
+        catch (Exception e)
         {
+            if (e is InvalidOperationException // not found in Single LINQ method
+            || e is XmlException) // wrong xml markdown
+            {
+                throw new FormatException("Invalid document format");
+            }
+
             throw;
-        }
-        catch (IndexOutOfRangeException)
-        {
-            throw new FormatException("Invalid document format");
-        }
-        catch (ArgumentOutOfRangeException)
-        {
-            throw new FormatException("Invalid document format");
-        }
-        catch (XmlException)
-        {
-            throw new FormatException("Invalid document format");
         }
     }
 
