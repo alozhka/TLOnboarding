@@ -1,15 +1,19 @@
 namespace XmlParser.Model;
 
-public class CurrencyRates
+/// <summary>
+/// Показывает стоимость валют к российскому рублю за определённую дату
+/// </summary>
+public class CurrencyRates(DateOnly date, List<CurrencyRate> currencies)
 {
-    public CurrencyRates(DateOnly date, List<CurrencyRate> currencies)
-    {
-        Date = date;
-        Currencies = currencies;
-    }
+    /// <summary>
+    /// Дата, для которой действителен курс валют
+    /// </summary>
+    public DateOnly Date { get; } = date;
 
-    public DateOnly Date { get; }
-    public List<CurrencyRate> Currencies { get; }
+    /// <summary>
+    /// Список валют для конкретной даты
+    /// </summary>
+    public List<CurrencyRate> Currencies { get; } = currencies;
 
     public void AppendCurrency(CurrencyRate currency)
     {

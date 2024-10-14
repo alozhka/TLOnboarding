@@ -82,6 +82,8 @@ public class XmlParserTests
             </ValCurs> 
             """));
 
-        Assert.Throws<FormatException>(() => CbrXmlParser.FromFile("../../../XML_empty.asp"));
+        Assert.Throws<FormatException>(() => CbrXmlParser.FromFile("../../../data/XML_empty.asp"));
+        
+        Assert.Throws<FileNotFoundException>(() => CbrXmlParser.FromFile("does not exist"));
     }
 }
