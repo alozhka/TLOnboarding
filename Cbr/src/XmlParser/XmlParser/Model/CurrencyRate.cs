@@ -2,19 +2,28 @@ namespace XmlParser.Model;
 
 public class CurrencyRate
 {
-    public CurrencyRate(string name, DateOnly date, List<CurrencyData> currencies)
+    public string Id { get; }
+    public ushort NumCode { get; }
+    public string CharCode { get; }
+    public uint Nominal { get; }
+    public string Name { get; }
+    public decimal Value { get; }
+    public decimal VUnitRate { get; }
+
+    public CurrencyRate(string id, 
+        ushort numCode, 
+        string charCode, 
+        uint nominal, 
+        string name, 
+        decimal value,
+        decimal vUnitRate)
     {
+        Id = id;
+        NumCode = numCode;
+        CharCode = charCode;
+        Nominal = nominal;
         Name = name;
-        Date = date;
-        Currencies = currencies;
-    }
-
-    public string Name { get; private set; }
-    public DateOnly Date { get; private set; }
-    public List<CurrencyData> Currencies { get; private set; }
-
-    public void AppendCurrency(CurrencyData currency)
-    {
-        Currencies.Add(currency);
+        Value = value;
+        VUnitRate = vUnitRate;
     }
 }

@@ -1,3 +1,4 @@
+using System.Text.Json;
 using XmlParser.Model;
 using XmlParser.Service;
 using Xunit;
@@ -9,7 +10,7 @@ public class XmlParserTests
     [Fact]
     public void Can_use_complex_types()
     {
-        CurrencyRate el = CbrXmlParser.FromRawString(
+        CurrencyRates el = CbrXmlParser.FromRawString(
             """
             <?xml version="1.0" encoding="windows-1251"?>
             <ValCurs Date="08.10.2024" name="Foreign Currency Market">
@@ -22,11 +23,11 @@ public class XmlParserTests
             </ValCurs>            
             """);
 
-        CurrencyRate expected = new CurrencyRate(
+        CurrencyRates expected = new CurrencyRates(
             "Foreign Currency Market",
             new DateOnly(2024, 10, 8),
-            new List<CurrencyData>([
-                new CurrencyData(
+            new List<CurrencyRate>([
+                new CurrencyRate(
                     "R01010",
                     036,
                     "AUD",
@@ -34,7 +35,7 @@ public class XmlParserTests
                     "Австралийский доллар",
                     65.7852m,
                     65.7852m),
-                new CurrencyData(
+                new CurrencyRate(
                     "R01020A",
                     944,
                     "AZN",
@@ -44,13 +45,13 @@ public class XmlParserTests
                     56.5088m)
             ]));
 
-        Assert.Equal(expected, el);
+        Assert.Equivalent(expected, el);
     }
 
     [Fact]
     public void Supports_parsing_from_xml_file()
     {
-        CurrencyRate rate = CbrXmlParser.FromFile("../../../data/XML_daily.asp");
+        CurrencyRates rate = CbrXmlParser.FromFile("../../../data/XML_daily.asp");
     }
 
     [Fact]
