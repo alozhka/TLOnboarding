@@ -42,9 +42,9 @@ public class XmlParserTests
     [Fact]
     public void Supports_parsing_from_xml_file()
     {
-        CurrencyRates rate = CbrXmlParser.FromFile("../../../data/XML_daily.asp");
+        CurrencyRates rate = CbrXmlParser.FromFile("../../../data/XML_daily.xml");
 
-        CurrencyRates expected = new CurrencyRates(
+        CurrencyRates expected = new(
             new DateOnly(2024, 10, 8),
             new List<CurrencyRate>([
                 new CurrencyRate(

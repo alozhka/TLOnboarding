@@ -9,7 +9,8 @@ public class CbrXmlParser
     {
         SetupEncoding();
 
-        return LoadAndParse(filepath);
+        string rawXml = File.ReadAllText(filepath, Encoding.GetEncoding("windows-1251"));
+        return LoadAndParse(rawXml);
     }
 
     public static CurrencyRates FromRawString(string rawXml)
