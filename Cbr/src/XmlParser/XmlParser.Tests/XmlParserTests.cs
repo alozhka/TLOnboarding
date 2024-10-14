@@ -69,7 +69,6 @@ public class XmlParserTests
     {
         Assert.Throws<FormatException>(() => CbrXmlParser.FromFile("../../../data/XML_wrong.asp"));
 
-
         Assert.Throws<FormatException>(() => CbrXmlParser.FromRawString(
             """
             <?xml version="1.0" encoding="windows-1251"?>
@@ -82,5 +81,7 @@ public class XmlParserTests
                 </Valute>
             </ValCurs> 
             """));
+
+        Assert.Throws<FormatException>(() => CbrXmlParser.FromFile("../../../XML_empty.asp"));
     }
 }

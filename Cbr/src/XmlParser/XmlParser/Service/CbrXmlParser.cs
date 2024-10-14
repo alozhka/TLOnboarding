@@ -16,7 +16,6 @@ public class CbrXmlParser
     {
         SetupEncoding();
 
-
         return LoadAndParse(rawXml);
     }
 
@@ -27,13 +26,13 @@ public class CbrXmlParser
         try
         {
             doc.LoadXml(loadArg);
-            XmlElement? rootElement = doc.DocumentElement;
-            if (rootElement is null)
-            {
-                throw new InvalidDataException("No data inside xml-document");
-            }
-
+            XmlElement? rootElement = doc.DocumentElement 
+                ?? throw new FormatException("No data inside xml-document");
             return rootElement.ToCurrencyRate();
+        }
+        catch (FormatException)
+        {
+            throw;
         }
         catch (IndexOutOfRangeException)
         {
