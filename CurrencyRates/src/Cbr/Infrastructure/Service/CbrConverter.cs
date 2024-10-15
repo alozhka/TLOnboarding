@@ -5,7 +5,7 @@ namespace Cbr.Infrastructure.Service;
 
 internal static class CbrConverter
 {
-    public static CurrencyRates ToCurrencyRate(this XmlElement el)
+    public static CurrencyRates ToCurrencyRate(XmlElement el)
     {
         List<CurrencyRate> currencies = [];
 

@@ -49,7 +49,7 @@ public class CbrXmlParser
                 throw new FormatException("No data inside xml-document");
             }
 
-            return rootElement.ToCurrencyRate();
+            return CbrConverter.ToCurrencyRate(rootElement);
         }
         catch (Exception e)
         {
