@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{08360472
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cbr.UnitTests", "tests\Cbr.UnitTests\Cbr.UnitTests.csproj", "{F17DB34C-D182-4CCA-B818-AC7ED6911B32}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CbrCurrencyRatesSaver", "src\CbrCurrencyRatesSaver\CbrCurrencyRatesSaver.csproj", "{B4283534-E5CE-4D9C-80FF-4B2247FFF7D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +30,14 @@ Global
 		{F17DB34C-D182-4CCA-B818-AC7ED6911B32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F17DB34C-D182-4CCA-B818-AC7ED6911B32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F17DB34C-D182-4CCA-B818-AC7ED6911B32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4283534-E5CE-4D9C-80FF-4B2247FFF7D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4283534-E5CE-4D9C-80FF-4B2247FFF7D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4283534-E5CE-4D9C-80FF-4B2247FFF7D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4283534-E5CE-4D9C-80FF-4B2247FFF7D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4599ACF1-756F-433C-B44D-401F93D42AF3} = {ED9F0C90-F918-4F82-9994-0A03D8183987}
 		{F17DB34C-D182-4CCA-B818-AC7ED6911B32} = {08360472-C1B1-4D4E-AF62-A37DEC105F28}
+		{B4283534-E5CE-4D9C-80FF-4B2247FFF7D9} = {ED9F0C90-F918-4F82-9994-0A03D8183987}
 	EndGlobalSection
 EndGlobal
