@@ -1,4 +1,4 @@
-namespace Cbr.Model;
+namespace Cbr.Domain.Entity;
 
 /// <summary>
 /// Показывает стоимость валюты к российскому рублю

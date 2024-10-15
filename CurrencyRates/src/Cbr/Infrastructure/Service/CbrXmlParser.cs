@@ -1,8 +1,8 @@
 using System.Text;
 using System.Xml;
-using Cbr.Model;
+using Cbr.Domain.Entity;
 
-namespace Cbr.Service;
+namespace Cbr.Infrastructure.Service;
 
 public class CbrXmlParser
 {

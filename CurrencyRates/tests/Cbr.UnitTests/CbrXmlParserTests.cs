@@ -1,5 +1,5 @@
-using Cbr.Model;
-using Cbr.Service;
+using Cbr.Domain.Entity;
+using Cbr.Infrastructure.Service;
 
 namespace Cbr.UnitTests;
 
