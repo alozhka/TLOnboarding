@@ -1,7 +1,8 @@
 using System.Text;
 using System.Xml;
-using XmlParser.Model;
-namespace XmlParser.Service;
+using Cbr.Model;
+
+namespace Cbr.Service;
 
 public class CbrXmlParser
 {

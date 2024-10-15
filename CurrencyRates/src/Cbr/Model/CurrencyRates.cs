@@ -1,4 +1,4 @@
-namespace XmlParser.Model;
+namespace Cbr.Model;
 
 /// <summary>
 /// Показывает стоимость валют к российскому рублю за определённую дату

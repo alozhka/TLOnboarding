@@ -1,10 +1,7 @@
-using System.Security.Cryptography;
-using System.Text.Json;
-using XmlParser.Model;
-using XmlParser.Service;
-using Xunit;
+using Cbr.Model;
+using Cbr.Service;
 
-namespace XmlParser.Tests;
+namespace Cbr.UnitTests;
 
 public class XmlParserTests
 {
@@ -91,9 +88,9 @@ public class XmlParserTests
                 </Valute>
             </UnexpectedTag>
             """));
-            
-            Assert.Throws<FormatException>(() => CbrXmlParser.FromRawString(
-            """
+
+        Assert.Throws<FormatException>(() => CbrXmlParser.FromRawString(
+        """
             <?xml version="1.0" encoding="windows-1251"?>
             <ValCurs Date="08.10.2024" name="Foreign Currency Market">
                 <UnexpectedTag ID="R01010">

@@ -1,7 +1,7 @@
 using System.Xml;
-using XmlParser.Model;
+using Cbr.Model;
 
-namespace XmlParser.Service;
+namespace Cbr.Service;
 
 internal static class CbrConverter
 {
