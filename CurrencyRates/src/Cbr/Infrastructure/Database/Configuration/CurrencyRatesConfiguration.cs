@@ -9,13 +9,13 @@ public class CurrencyRatesConfiguration : IEntityTypeConfiguration<CurrencyRates
 {
     public void Configure(EntityTypeBuilder<CurrencyRates> builder)
     {
-        builder.HasKey(cr => cr.Date);
+        builder.HasKey(cr => cr.Date)
+            .HasName("data");
 
         builder.HasMany(cr => cr.Currencies)
-        .WithMany()
-        .UsingEntity<CurrencyRateDate>("CurrencyRate_Date", j =>
-            {
-                j.Property(crd => crd.VunitRate).IsRequired();
-            });
+            .WithMany()
+            .UsingEntity("currency_rate_currency_rates");
+
+        builder.ToTable("currency_rates");
     }
 }
