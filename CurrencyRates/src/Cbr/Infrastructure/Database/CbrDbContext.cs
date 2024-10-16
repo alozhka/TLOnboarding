@@ -1,11 +1,10 @@
-using Cbr.Application.Abstractions.Database;
 using Cbr.Domain.Entity;
 using Cbr.Infrastructure.Database.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cbr.Infrastructure.Database;
 
-public class CbrDbContext(DbContextOptions<CbrDbContext> options) : DbContext(options), ICbrDbContext
+public class CbrDbContext(DbContextOptions<CbrDbContext> options) : DbContext(options)
 {
     public DbSet<CurrencyRate> CurrencyRate { get; set; }
     public DbSet<CurrencyRates> CurrencyRates { get; set; }

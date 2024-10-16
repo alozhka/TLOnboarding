@@ -1,4 +1,4 @@
-using Cbr.Application.Abstractions.Database;
+using Cbr.Application;
 using Cbr.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +10,9 @@ public static class CbrModuleSetup
 {
     public static void AddCbr(this IServiceCollection services, IConfiguration cfg)
     {
-        services.AddDbContext<ICbrDbContext, CbrDbContext>(o =>
+        services.AddCbrApplication();
+        
+        services.AddDbContext<CbrDbContext>(o =>
         {
             o.UseNpgsql(cfg.GetConnectionString("Postgres"));
         });
