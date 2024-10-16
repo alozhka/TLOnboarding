@@ -10,6 +10,12 @@ public class CbrDbContext(DbContextOptions<CbrDbContext> options) : DbContext(op
     public DbSet<CurrencyRate> CurrencyRate { get; set; }
     public DbSet<CurrencyRates> CurrencyRates { get; set; }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+        optionsBuilder.LogTo(Console.WriteLine);
+        Database.EnsureCreated();
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
