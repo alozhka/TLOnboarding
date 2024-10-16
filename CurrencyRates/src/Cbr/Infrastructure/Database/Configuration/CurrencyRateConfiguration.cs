@@ -11,7 +11,7 @@ public class CurrencyRateConfiguration : IEntityTypeConfiguration<CurrencyRate>
         builder.HasKey(r => r.CharCode);
 
         builder.Property(r => r.Name)
-            .HasMaxLength(32)
+            .HasMaxLength(64)
             .IsRequired();
     }
 }

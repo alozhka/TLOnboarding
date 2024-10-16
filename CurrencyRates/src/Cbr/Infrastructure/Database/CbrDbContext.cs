@@ -17,7 +17,6 @@ public class CbrDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
-        optionsBuilder.EnableDetailedErrors();
         //optionsBuilder.LogTo(Console.WriteLine);
     }
 
