@@ -12,7 +12,8 @@ public class CurrencyRatesRepository
     }
 
     public void Add(CurrencyRates currencyRates)
-    {
-        _dbContext.CurrencyRates.Add(currencyRates);
-    }
+        => _dbContext.CurrencyRates.Add(currencyRates);
+
+    public void SaveChanges()
+        => _dbContext.SaveChanges();
 }

@@ -17,6 +17,7 @@ public class SaveCurrencyRatesFromFileHandler
         Domain.Entity.CurrencyRates rates = CbrXmlParser.FromFile(command.Filepath);
 
         _currencyRatesRepository.Add(rates);
-    }
 
+        _currencyRatesRepository.SaveChanges();
+    }
 }
