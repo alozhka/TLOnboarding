@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import MainPage from '~/pages/Main/Main'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import NotFoundPage from './pages/NotFound/NotFOund'
 
 const router = createBrowserRouter([
   {
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <>Страница не найдена</>
+    element: <NotFoundPage />
   }
 ])
 
