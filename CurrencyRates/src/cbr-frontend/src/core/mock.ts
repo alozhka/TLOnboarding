@@ -1,4 +1,6 @@
-const CurrencyRatesMock = {
+import { CurrencyRates } from "./types"
+
+const CurrencyRatesMock: CurrencyRates = {
     date: '2024-10-08',
     currencies: [
         {
@@ -45,4 +47,4 @@ const CurrencyRatesMock = {
 }
 
 
-export { CurrencyRatesMock as DataMock }
+export { CurrencyRatesMock }

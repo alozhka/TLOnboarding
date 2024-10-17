@@ -1,4 +1,4 @@
-import { Box, Container, TextField, Typography } from "@mui/material"
+import { Container, Stack, TextField, Typography } from "@mui/material"
 import { DatePicker } from "@mui/x-date-pickers"
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -23,9 +23,7 @@ const MainPage: React.FC = () => {
       <Typography align="center" variant="h1">
         Курс валют
         </Typography>
-      <Box 
-        gap={7}
-        sx={{ display: "flex", flexDirection: 'row' }}>
+      <Stack direction="row" spacing={2}>
         <p>Найдите нужный курс по дате:</p>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker 
@@ -39,7 +37,7 @@ const MainPage: React.FC = () => {
           onChange={handleCurrencyChange}
           onKeyDown={(e) => (e.key == 'Enter' && !currencyError) && navigate(PagesUrls.Search(`currency=${currency}`))}
           helperText="Код валюты должен быть из 3 символов"/>
-      </Box>
+      </Stack>
     </Container>
   )
 }

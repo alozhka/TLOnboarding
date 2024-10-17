@@ -3,7 +3,8 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import MainPage from '~/pages/Main/Main'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import NotFoundPage from './pages/NotFound/NotFOund'
+import NotFoundPage from '~/pages/NotFound/NotFound'
+import ShowCurrencyPage from '~/pages/ShowCurrency/ShowCurrencyPage'
 
 const router = createBrowserRouter([
   {
@@ -12,7 +13,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/search",
-    element: <>Заглушка{location.search}</>
+    element: <ShowCurrencyPage />
   },
   {
     path: "*",
