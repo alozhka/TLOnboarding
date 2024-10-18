@@ -1,13 +1,10 @@
-type Currency = {
-    name: string,
-    charCode: string,
-    vUnitRate: number
+export type CurrencyRate = {
+    currencyName: string,
+    currencyCode: string,
+    exchangeRate: number
 }
 
-type CurrencyRates = {
+export type DayCurrencyRates = {
     date: string,
-    currencies: Currency[]
+    rates: CurrencyRate[]
 }
-
-
-export type { Currency, CurrencyRates }

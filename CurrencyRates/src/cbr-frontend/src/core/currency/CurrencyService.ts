@@ -1,8 +1,8 @@
-import { Currency, CurrencyRates } from "~/core/types";
+import { CurrencyRate, DayCurrencyRates } from "~/core/types";
 import { CurrencyRatesMock } from "../mock";
 
 class CurrencyService {
-  public static async GetCurrencies(date: string | null): Promise<CurrencyRates> {
+  public static async getCurrencyRatesByDate(date: string | null): Promise<DayCurrencyRates> {
     let currentRate = CurrencyRatesMock.find(r => r.date === date) ?? null
 
     if (currentRate) {
@@ -17,8 +17,8 @@ class CurrencyService {
 
   }
 
-  public static async GetCurrencyChart(currencyCode: string): Promise<Currency> {
-    let currency: Currency | null = CurrencyRatesMock.at(-1)?.currencies.find(c => c.charCode == currencyCode.toUpperCase()) ?? null
+  public static async getCurrencyRate(currencyCode: string): Promise<CurrencyRate> {
+    let currency: CurrencyRate | null = CurrencyRatesMock.at(-1)?.rates.find(c => c.currencyCode == currencyCode.toUpperCase()) ?? null
 
     if (currency === null)
       return Promise.reject('Валюта не найдена')

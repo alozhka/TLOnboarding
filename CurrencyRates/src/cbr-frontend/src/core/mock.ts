@@ -1,93 +1,93 @@
-import { CurrencyRates } from "./types"
+import { DayCurrencyRates } from "./types"
 
-const CurrencyRatesMock: CurrencyRates[] = [
+const CurrencyRatesMock: DayCurrencyRates[] = [
     {
         date: '2024-10-08',
-        currencies: [
+        rates: [
             {
-                charCode: 'EUR',
-                name: 'Евро',
-                vUnitRate: 105.3069
+                currencyCode: 'EUR',
+                currencyName: 'Евро',
+                exchangeRate: 105.3069
             },
             {
-                charCode: 'USD',
-                name: 'Доллар США',
-                vUnitRate: 96.0649
+                currencyCode: 'USD',
+                currencyName: 'Доллар США',
+                exchangeRate: 96.0649
             },
             {
-                charCode: 'GPB',
-                name: 'Фунт стерлингов Соединенного королевства',
-                vUnitRate: 125.9699
+                currencyCode: 'GPB',
+                currencyName: 'Фунт стерлингов Соединенного королевства',
+                exchangeRate: 125.9699
             },
             {
-                charCode: 'BGN',
-                name: 'Болгарский лев',
-                vUnitRate: 54.1714
+                currencyCode: 'BGN',
+                currencyName: 'Болгарский лев',
+                exchangeRate: 54.1714
             },
             {
-                charCode: 'AED',
-                name: 'Дирхам ОАЭ',
-                vUnitRate: 26.1579
+                currencyCode: 'AED',
+                currencyName: 'Дирхам ОАЭ',
+                exchangeRate: 26.1579
             },
             {
-                charCode: 'INR',
-                name: 'Индийских рупий',
-                vUnitRate: 1.1440
+                currencyCode: 'INR',
+                currencyName: 'Индийских рупий',
+                exchangeRate: 1.1440
             },
             {
-                charCode: 'CNY',
-                name: 'Китайский юань',
-                vUnitRate: 13.5537
+                currencyCode: 'CNY',
+                currencyName: 'Китайский юань',
+                exchangeRate: 13.5537
             },
             {
-                charCode: 'HKD',
-                name: 'Гонконгский доллар',
-                vUnitRate: 12.3907
+                currencyCode: 'HKD',
+                currencyName: 'Гонконгский доллар',
+                exchangeRate: 12.3907
             },
         ]
     },
     {
         date: '2024-10-09',
-        currencies: [
+        rates: [
             {
-                charCode: 'EUR',
-                name: 'Евро',
-                vUnitRate: 104.3069
+                currencyCode: 'EUR',
+                currencyName: 'Евро',
+                exchangeRate: 104.3069
             },
             {
-                charCode: 'USD',
-                name: 'Доллар США',
-                vUnitRate: 95.0649
+                currencyCode: 'USD',
+                currencyName: 'Доллар США',
+                exchangeRate: 95.0649
             },
             {
-                charCode: 'GPB',
-                name: 'Фунт стерлингов Соединенного королевства',
-                vUnitRate: 124.9699
+                currencyCode: 'GPB',
+                currencyName: 'Фунт стерлингов Соединенного королевства',
+                exchangeRate: 124.9699
             },
             {
-                charCode: 'BGN',
-                name: 'Болгарский лев',
-                vUnitRate: 53.1714
+                currencyCode: 'BGN',
+                currencyName: 'Болгарский лев',
+                exchangeRate: 53.1714
             },
             {
-                charCode: 'AED',
-                name: 'Дирхам ОАЭ',
-                vUnitRate: 25.1579
+                currencyCode: 'AED',
+                currencyName: 'Дирхам ОАЭ',
+                exchangeRate: 25.1579
             },
             {
-                charCode: 'INR',
-                name: 'Индийских рупий',
-                vUnitRate: 0.1440
+                currencyCode: 'INR',
+                currencyName: 'Индийских рупий',
+                exchangeRate: 0.1440
             },
             {
-                charCode: 'CNY',
-                name: 'Китайский юань',
-                vUnitRate: 12.5537
+                currencyCode: 'CNY',
+                currencyName: 'Китайский юань',
+                exchangeRate: 12.5537
             },
             {
-                charCode: 'HKD',
-                name: 'Гонконгский доллар',
-                vUnitRate: 11.3907
+                currencyCode: 'HKD',
+                currencyName: 'Гонконгский доллар',
+                exchangeRate: 11.3907
             },
         ]
     }

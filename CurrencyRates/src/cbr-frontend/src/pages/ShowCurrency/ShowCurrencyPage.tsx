@@ -4,29 +4,30 @@ import { Link, useSearchParams } from "react-router-dom"
 import CurrenciesSider from "~/components/CurrenciesSider/CurrenciesSider"
 import ExchangeData from "~/components/ExchangeData/ExchangeData"
 import { CurrencyService } from "~/core/currency/CurrencyService"
-import { Currency, CurrencyRates } from "~/core/types"
+import { CurrencyRate, DayCurrencyRates } from "~/core/types"
 import PagesUrls from "~/pages"
 
 const ShowCurrencyPage: React.FC = () => {
   const [params, setParams] = useSearchParams()
   const date = params.get('date')
-  const [rates, setRates] = useState<CurrencyRates | null>(null)
-  const [currency, setCurrency] = useState<Currency | null>(null)
+  const [rates, setRates] = useState<DayCurrencyRates | null>(null)
+  const [currency, setCurrency] = useState<CurrencyRate | null>(null)
 
   useEffect(() => {
-    CurrencyService.GetCurrencies(date)
+    CurrencyService.getCurrencyRatesByDate(date)
       .then(r => {
         setRates(r)
-        const curr = r.currencies.find(c => c.charCode === params.get('currency'))
-        if (curr)
+        const curr = r.rates.find(c => c.currencyCode === params.get('currency'))
+        if (curr) {
           setCurrency(curr)
+        }
       })
   }, [])
 
   const onCurrencySelect = (charCode: string): void => {
     params.set('currency', charCode)
     setParams(params)
-    setCurrency(rates?.currencies.find(c => c.charCode == charCode)!)
+    setCurrency(rates?.rates.find(c => c.currencyCode == charCode)!)
   }
 
   return (

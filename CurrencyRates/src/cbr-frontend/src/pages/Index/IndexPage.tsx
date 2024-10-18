@@ -8,12 +8,12 @@ import { isCurrencyCode } from "~/helpers/stringHelpers";
 import PagesUrls from "~/pages";
 
 
-const MainPage: React.FC = () => {
+const IndexPage: React.FC = () => {
   const navigate = useNavigate()
   const [currency, setCurrency] = useState<string>("")
   const [currencyError, setCurrencyError] = useState<boolean>(false)
   
-  function handleCurrencyChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void {
+  const handleCurrencyChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     setCurrency(e.target.value)
     setCurrencyError(!isCurrencyCode(e.target.value))
   }
@@ -43,4 +43,4 @@ const MainPage: React.FC = () => {
 }
 
 
-export default MainPage
+export default IndexPage

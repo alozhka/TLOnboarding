@@ -1,7 +1,7 @@
 import { Box, Stack } from "@mui/material"
 import { useEffect, useState } from "react"
 import { CurrencyService } from "~/core/currency/CurrencyService"
-import { CurrencyRates } from "~/core/types"
+import { DayCurrencyRates } from "~/core/types"
 import CurrencyCard from "../CurrencyCard/CurrencyCard"
 
 
@@ -11,10 +11,10 @@ interface CurrenciesSiderProps {
 }
 
 const CurrenciesSider: React.FC<CurrenciesSiderProps> = (props) => {
-  const [currencies, setCurrencies] = useState<CurrencyRates | null>(null)
+  const [currencies, setCurrencies] = useState<DayCurrencyRates | null>(null)
 
   useEffect(() => {
-      CurrencyService.GetCurrencies(props.date)
+      CurrencyService.getCurrencyRatesByDate(props.date)
         .then(r => setCurrencies(r))
   })
 
@@ -23,7 +23,7 @@ const CurrenciesSider: React.FC<CurrenciesSiderProps> = (props) => {
     <Box sx={{ border: '2px black solid', width: '15dvw', height: '60dvh', overflow: 'scroll', p: 2 }}>
       <Stack spacing={2}>
         {currencies !== null &&
-          currencies.currencies.map(c => <CurrencyCard key={c.charCode} onCLick={props.onSelect} currency={c} />)
+          currencies.rates.map(c => <CurrencyCard key={c.currencyCode} onCLick={props.onSelect} currency={c} />)
         }
       </Stack>
     </Box>
