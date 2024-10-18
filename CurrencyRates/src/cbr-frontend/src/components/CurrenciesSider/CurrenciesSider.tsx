@@ -21,7 +21,7 @@ const CurrenciesSider: React.FC<CurrenciesSiderProps> = (props) => {
 
   return (
     <Box sx={{ border: '2px black solid', width: '15dvw', height: '60dvh', overflow: 'scroll', p: 2 }}>
-      <Stack spacing={10}>
+      <Stack spacing={2}>
         {currencies !== null &&
           currencies.currencies.map(c => <CurrencyCard key={c.charCode} onCLick={props.onSelect} currency={c} />)
         }

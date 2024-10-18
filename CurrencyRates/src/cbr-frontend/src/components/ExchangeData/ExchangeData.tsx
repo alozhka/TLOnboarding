@@ -1,22 +1,11 @@
 import { Card, Stack, Typography } from "@mui/material"
-import { useEffect, useState } from "react"
-import { CurrencyService } from "~/core/currency/CurrencyService"
 import { Currency } from "~/core/types"
 
 interface ExchangeDataProps {
-  selectedCurrencyCode: string | null
+  currency: Currency
 }
 
-const ExchangeData: React.FC<ExchangeDataProps> = (props) => {
-  const [currency, setCurrency] = useState<Currency | null>(null)
-
-  useEffect(() => {
-    if (props.selectedCurrencyCode) {
-      CurrencyService.GetCurrencyChart(props.selectedCurrencyCode)
-        .then(r => setCurrency(r))
-    }
-  }, [])
-
+const ExchangeData: React.FC<ExchangeDataProps> = ({ currency }) => {
   return (
     <>
       {currency &&

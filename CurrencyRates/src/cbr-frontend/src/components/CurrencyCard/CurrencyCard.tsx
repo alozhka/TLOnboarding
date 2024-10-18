@@ -14,7 +14,7 @@ const CurrencyCard: React.FC<CurrencyCardProps> = (props) => {
   }
 
   return (
-    <Button onClick={onClick} sx={{ border: '1px black solid' }}>
+    <Button onClick={onClick} sx={{ border: '1px black solid', p: '1px' }}>
       <h5>{props.currency.charCode}/RUB</h5>
       <strong>{props.currency.vUnitRate}</strong>
     </Button>
