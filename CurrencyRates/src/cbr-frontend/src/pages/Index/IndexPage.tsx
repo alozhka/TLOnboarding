@@ -5,7 +5,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isValidCurrencyCode } from "~/helpers/stringHelpers";
-import PagesUrls from "~/pages";
+import PagesUrls from "~/pages/consts";
 
 
 const IndexPage: React.FC = () => {

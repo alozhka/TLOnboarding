@@ -5,7 +5,7 @@ import CurrenciesSider from "~/components/CurrenciesSider/CurrenciesSider"
 import ExchangeData from "~/components/ExchangeData/ExchangeData"
 import { CurrencyService } from "~/core/currency/CurrencyService"
 import { CurrencyRate, DayCurrencyRates } from "~/core/types"
-import PagesUrls from "~/pages"
+import PagesUrls from "~/pages/consts"
 
 const ShowCurrencyPage: React.FC = () => {
   const [params, setParams] = useSearchParams()
@@ -17,10 +17,8 @@ const ShowCurrencyPage: React.FC = () => {
     CurrencyService.getCurrencyRatesByDate(date)
       .then(r => {
         setRates(r)
-        const curr = r.rates.find(c => c.currencyCode === params.get('currency'))
-        if (curr) {
-          setCurrency(curr)
-        }
+        const curr = r.rates.find(c => c.currencyCode === params.get('currency')?.toUpperCase())
+        setCurrency(curr ?? r.rates[0])
       })
   }, [])
 
@@ -32,7 +30,7 @@ const ShowCurrencyPage: React.FC = () => {
 
   return (
     <Container>
-      <Link to={PagesUrls.Main}><Typography variant="h1">Курс валют</Typography></Link>
+      <Link to={PagesUrls.Index()}><Typography variant="h1">Курс валют</Typography></Link>
       <Stack direction='row'>
         <CurrenciesSider date={date} onSelect={onCurrencySelect} />
         {currency && <ExchangeData currency={currency} />}
