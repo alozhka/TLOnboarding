@@ -30,9 +30,9 @@ const ShowCurrencyPage: React.FC = () => {
 
   return (
     <Container>
-      <Link to={PagesUrls.Index()}><Typography variant="h1">Курс валют</Typography></Link>
+      <Link to={PagesUrls.Index()}><Typography variant="h2">Курс валют</Typography></Link>
       <Stack direction='row'>
-        <CurrenciesSider date={date} onSelect={onCurrencySelect} />
+        <CurrenciesSider dayRates={rates} onSelect={onCurrencySelect} />
         {currency && <ExchangeData currency={currency} />}
       </Stack>
     </Container>
