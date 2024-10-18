@@ -1,16 +1,23 @@
-import { Card } from "@mui/material"
+import { Button } from "@mui/material"
 import { Currency } from "~/core/types"
 
 interface CurrencyCardProps {
-  currency: Currency
+  currency: Currency,
+  onCLick?: (charCode: string) => void
 }
 
 const CurrencyCard: React.FC<CurrencyCardProps> = (props) => {
+  const onClick = () => {
+    if (props.onCLick) {
+      props.onCLick(props.currency.charCode)
+    }
+  }
+
   return (
-    <Card sx={{ cursor: 'pointer', ":hover": { background: 'lightgray' }, ":active": {background: 'grey'} }}>
+    <Button onClick={onClick} sx={{ border: '1px black solid' }}>
       <h5>{props.currency.charCode}/RUB</h5>
       <strong>{props.currency.vUnitRate}</strong>
-    </Card>
+    </Button>
   )
 }
 
