@@ -3,13 +3,13 @@ import { CurrencyRatesMock } from "../mock";
 
 class CurrencyService {
   public static async getCurrencyRatesByDate(date: string | null): Promise<DayCurrencyRates> {
-    let currentRate = CurrencyRatesMock.find(r => r.date === date) ?? null
+    const currentRate = CurrencyRatesMock.find(r => r.date === date) ?? null
 
     if (currentRate) {
       return await Promise.resolve(currentRate)
     }
 
-    let lastRate = CurrencyRatesMock.at(-1)
+    const lastRate = CurrencyRatesMock.at(-1)
     if (lastRate)
       return await Promise.resolve(lastRate)
 
@@ -18,7 +18,7 @@ class CurrencyService {
   }
 
   public static async getCurrencyRate(currencyCode: string): Promise<CurrencyRate> {
-    let currency: CurrencyRate | null = CurrencyRatesMock.at(-1)?.rates.find(c => c.currencyCode == currencyCode.toUpperCase()) ?? null
+    const currency: CurrencyRate | null = CurrencyRatesMock.at(-1)?.rates.find(c => c.currencyCode == currencyCode.toUpperCase()) ?? null
 
     if (currency === null)
       return Promise.reject('Валюта не найдена')

@@ -1,4 +1,4 @@
-import { Card, Stack, Typography } from "@mui/material"
+import { Card, Paper, Typography } from "@mui/material"
 import { CurrencyRate } from "~/core/types"
 
 interface ExchangeDataProps {
@@ -7,15 +7,12 @@ interface ExchangeDataProps {
 
 const ExchangeData: React.FC<ExchangeDataProps> = ({ currency }) => {
   return (
-    <Card>
-      <Stack direction='row' spacing={2}>
-        <Typography variant="h2">{currency.currencyCode}/RUB</Typography>
-        <div>
-          <Typography variant="h6">{currency.currencyName}</Typography>
-          <Typography variant="h6">Российский рубль</Typography>
-        </div>
-      </Stack>
-      <Typography variant="h3">{currency.exchangeRate}</Typography>
+    <Card sx={{ p: '20px' }}>
+      <Typography variant="h3">1 {currency.currencyCode} = {currency.exchangeRate} RUB</Typography>
+      <Paper sx={{p: '10px'}}>
+        <p>Источник: ЦБ РФ</p>
+        <p>1 {currency.currencyName} = {currency.exchangeRate} Российского рубля</p>
+      </Paper>
     </Card>
   )
 }

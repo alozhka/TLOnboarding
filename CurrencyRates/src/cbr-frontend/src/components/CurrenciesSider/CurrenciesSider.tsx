@@ -1,4 +1,4 @@
-import { Box, Card, List, ListItem, Stack } from "@mui/material"
+import { Card, List, ListItemButton } from "@mui/material"
 import { DayCurrencyRates } from "~/core/types"
 import CurrencyCard from "../CurrencyCard/CurrencyCard"
 
@@ -13,9 +13,9 @@ const CurrenciesSider: React.FC<CurrenciesSiderProps> = (props) => {
     <Card>
       <List>
         {props.dayRates !== null && props.dayRates.rates.map(c =>
-          <ListItem onClick={() => { props.onSelect && props.onSelect(c.currencyCode) }}>
+          <ListItemButton onClick={() => { props.onSelect && props.onSelect(c.currencyCode) }}>
             <CurrencyCard key={c.currencyCode} currency={c} />
-          </ListItem>)
+          </ListItemButton>)
         }
       </List>
     </Card>
