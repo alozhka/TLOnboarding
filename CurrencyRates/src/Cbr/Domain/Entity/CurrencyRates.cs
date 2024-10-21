@@ -13,12 +13,12 @@ public class CurrencyRates
     /// <summary>
     /// Список валют для конкретной даты
     /// </summary>
-    public List<CurrencyRate> Currencies { get; }
+    public List<CurrencyRate> Rates { get; }
 
-    public CurrencyRates(DateOnly date, List<CurrencyRate> currencies)
+    public CurrencyRates(DateOnly date, List<CurrencyRate> rates)
     {
         Date = date;
-        Currencies = currencies;
+        Rates = rates;
     }
     
     /// <summary>
@@ -28,8 +28,8 @@ public class CurrencyRates
     {
     }
 
-    public void AppendCurrency(CurrencyRate currency)
+    public void AppendRate(CurrencyRate rate)
     {
-        Currencies.Add(currency);
+        Rates.Add(rate);
     }
 }

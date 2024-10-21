@@ -18,7 +18,7 @@ public class CurrencyRatesRepository
     public Task<CurrencyRates?> GetByDate(DateOnly date, CancellationToken ct)
         => _dbContext.CurrencyRates
             .Where(cr => cr.Date == date)
-            .Include(cr => cr.Currencies.OrderByDescending(c => c.CharCode))
+            .Include(cr => cr.Rates.OrderByDescending(c => c.CurrencyCode))
             .FirstOrDefaultAsync(ct);
 
     public Task<int> SaveChangesAsync(CancellationToken ct)

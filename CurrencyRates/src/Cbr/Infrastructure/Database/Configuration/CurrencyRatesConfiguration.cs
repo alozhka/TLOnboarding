@@ -12,7 +12,7 @@ public class CurrencyRatesConfiguration : IEntityTypeConfiguration<CurrencyRates
         builder.HasKey(cr => cr.Date)
             .HasName("data");
 
-        builder.HasMany(cr => cr.Currencies)
+        builder.HasMany(cr => cr.Rates)
             .WithMany()
             .UsingEntity("currency_rate_currency_rates");
 

@@ -8,26 +8,26 @@ public class CurrencyRate
     /// <summary>
     /// Код валюты (пр. RUB, USD и тд)
     /// </summary>
-    public string CharCode { get; }
+    public string CurrencyCode { get; }
 
     /// <summary>
     /// Полное название (пр. Доллар США)
     /// </summary>
-    public string Name { get; }
+    public string CurrencyName { get; }
 
     /// <summary>
     /// Стоимость 1 единицы валюты в рублёвом эквиваленте (пр. USD/RUB = 96.89)
     /// </summary>
-    public decimal VUnitRate { get; }
+    public decimal ExchangeRate { get; }
 
     public CurrencyRate(
-        string charCode,
-        string name,
-        decimal vUnitRate)
+        string currencyCode,
+        string currencyName,
+        decimal exchangeRate)
     {
-        CharCode = charCode;
-        Name = name;
-        VUnitRate = vUnitRate;
+        CurrencyCode = currencyCode;
+        CurrencyName = currencyName;
+        ExchangeRate = exchangeRate;
     }
 
     /// <summary>

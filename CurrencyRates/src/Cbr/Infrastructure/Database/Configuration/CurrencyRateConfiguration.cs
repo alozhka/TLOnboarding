@@ -8,22 +8,22 @@ public class CurrencyRateConfiguration : IEntityTypeConfiguration<CurrencyRate>
 {
     public void Configure(EntityTypeBuilder<CurrencyRate> builder)
     {
-        builder.HasKey(r => r.CharCode);
+        builder.HasKey(r => r.CurrencyCode);
 
-        builder.Property(r => r.CharCode)
+        builder.Property(r => r.CurrencyCode)
         .HasMaxLength(3)
-        .HasColumnName("char_code")
+        .HasColumnName("currency_code")
         .IsFixedLength()
         .IsRequired();
 
-        builder.Property(r => r.Name)
+        builder.Property(r => r.CurrencyName)
             .HasMaxLength(64)
-            .HasColumnName("name")
+            .HasColumnName("currency_name")
             .IsRequired();
 
-        builder.Property(r => r.VUnitRate)
+        builder.Property(r => r.ExchangeRate)
             .HasPrecision(20, 4)
-            .HasColumnName("v_unit_rate")
+            .HasColumnName("exchange_rate")
             .IsRequired();
 
         builder.ToTable("currency_rate");
