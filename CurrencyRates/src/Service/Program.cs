@@ -4,6 +4,8 @@ var builder = WebApplication.CreateSlimBuilder(args);
 
 
 builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 builder.Services.AddSpaStaticFiles(cfg => 
 {
     cfg.RootPath = "cbr-frontend/build";
@@ -12,8 +14,15 @@ builder.Services.AddSpaStaticFiles(cfg =>
 
 var app = builder.Build();
 
-app.UseRouting();
-app.UseStaticFiles();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
+}
+
+app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseWhen(
     cxt => !cxt.Request.Path.StartsWithSegments("/api"),
@@ -29,7 +38,8 @@ app.UseWhen(
             if (app.Environment.IsDevelopment())
             {
                 spa.Options.SourcePath = "cbr-frontend";
-                spa.UseReactDevelopmentServer(npmScript: "dev");
+                spa.Options.DevServerPort = 5173;
+                spa.UseReactDevelopmentServer(npmScript: "start");
             }
         });
     }
