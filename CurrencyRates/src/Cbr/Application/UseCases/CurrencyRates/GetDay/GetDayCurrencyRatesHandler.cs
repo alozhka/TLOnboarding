@@ -4,7 +4,7 @@ using Cbr.Infrastructure.Database.Repository;
 
 namespace Cbr.Application.UseCases.CurrencyRates.GetDay;
 
-public class GetDayCurrencyRatesHandler(CurrencyRatesRepository currencyRatesRepository)
+public class GetDayCurrencyRatesCommandHandler(CurrencyRatesRepository currencyRatesRepository)
 {
     private readonly CurrencyRatesRepository _currencyRatesRepository = currencyRatesRepository;
 

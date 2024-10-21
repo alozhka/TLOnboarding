@@ -12,7 +12,7 @@ public class CbrController : ControllerBase
     [HttpGet("daily-rates")]
     public async Task<IResult> GetDayRates(
         [FromQuery] DateOnly? requestDate,
-        [FromServices] GetDayCurrencyRatesHandler handler,
+        [FromServices] GetDayCurrencyRatesCommandHandler handler,
         CancellationToken ct)
     {
         DateOnly date;
@@ -26,7 +26,7 @@ public class CbrController : ControllerBase
         }
         Result<CurrencyRates> result = await handler.Handle(new GetDayCurrencyRatesCommand(date), ct);
 
-        if (result.IsFailure)
+        if (!result.HasValue)
         {
             return Results.NotFound();
         }

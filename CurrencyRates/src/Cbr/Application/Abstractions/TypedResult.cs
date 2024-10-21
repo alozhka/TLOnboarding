@@ -11,14 +11,13 @@ public record Result<T>
             throw new ArgumentException( "Invalid error", nameof(error) );
         }
 
-        IsSuccess = isSuccess;
+        HasValue = isSuccess;
         Value = value;
         Error = error;
     }
 
     public T Value { get; }
-    public bool IsSuccess { get; }
-    public bool IsFailure => !IsSuccess;
+    public bool HasValue { get; }
     public Error Error { get; }
 
     public static Result<T> Failure( Error error ) => new(false, default!, error);
