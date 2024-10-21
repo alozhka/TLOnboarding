@@ -1,20 +1,28 @@
 import { CurrencyRate, DayCurrencyRates } from "~/core/types";
 import { CurrencyRatesMock } from "../mock";
+import { axiosClassic } from "../requests/axios";
+import dayjs from "dayjs";
 
 class CurrencyService {
   public static async getCurrencyRatesByDate(date: string | null): Promise<DayCurrencyRates> {
-    const currentRate = CurrencyRatesMock.find(r => r.date === date) ?? null
+    let requestDate: string;
 
-    if (currentRate) {
-      return await Promise.resolve(currentRate)
+    if (date !== null) {
+      requestDate = dayjs(date).format("YYYY/MM/DD")
+    }
+    else {
+      requestDate = dayjs(Date.now()).format("YYYY/MM/DD")
     }
 
-    const lastRate = CurrencyRatesMock.at(-1)
-    if (lastRate)
-      return await Promise.resolve(lastRate)
+    return axiosClassic.get<DayCurrencyRates>('cbr/daily-rates?requestDate=' + requestDate)
+      .then(r => r.data)
+      .catch(e => {
+        if (e.status === 404) {
+          return Promise.reject(`Курс валют за дату ${requestDate} не найден`)
+        }
 
-    return await Promise.reject('Отсутствуют данные')
-
+        return Promise.reject(e.message)
+      })
   }
 
   public static async getCurrencyRate(currencyCode: string): Promise<CurrencyRate> {
@@ -29,3 +37,12 @@ class CurrencyService {
 
 
 export { CurrencyService }
+
+/*
+let response = await axiosClassic.get<DayCurrencyRates>('currency-rates?date=' + date)
+
+if(response.status === 404) {
+  return await Promise.reject('Отсутствуют данные')
+}
+return Promise.resolve(response.data)
+*/
