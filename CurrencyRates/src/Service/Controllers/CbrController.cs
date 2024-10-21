@@ -12,7 +12,7 @@ public class CbrController : ControllerBase
     [HttpGet("daily-rates")]
     public async Task<IResult> GetDayRates(
         [FromQuery] DateOnly? requestDate,
-        [FromServices] GetDaycurrencyRatesHandler handler,
+        [FromServices] GetDayСurrencyRatesHandler handler,
         CancellationToken ct)
     {
         DateOnly date;
