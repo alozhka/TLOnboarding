@@ -10,7 +10,7 @@ public class CurrencyRatesConfiguration : IEntityTypeConfiguration<CurrencyRates
     public void Configure(EntityTypeBuilder<CurrencyRates> builder)
     {
         builder.HasKey(cr => cr.Date)
-            .HasName("data");
+            .HasName("date");
 
         builder.HasMany(cr => cr.Rates)
             .WithMany()

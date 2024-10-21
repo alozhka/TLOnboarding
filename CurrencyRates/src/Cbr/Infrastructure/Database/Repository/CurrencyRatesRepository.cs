@@ -21,6 +21,8 @@ public class CurrencyRatesRepository
             .Include(cr => cr.Rates.OrderByDescending(c => c.CurrencyCode))
             .FirstOrDefaultAsync(ct);
 
+    public void SaveChanges()
+        => _dbContext.SaveChanges();
     public Task<int> SaveChangesAsync(CancellationToken ct)
         => _dbContext.SaveChangesAsync(ct);
 }
