@@ -24,6 +24,6 @@ public class SaveCurrencyRatesFromFileHandler
         _logger.LogInformation("Распарсили данные: {0}", JsonSerializer.Serialize(rates));
         _currencyRatesRepository.Add(rates);
 
-        _currencyRatesRepository.SaveChanges();
+        _currencyRatesRepository.SaveChangesAsync(default);
     }
 }

@@ -1,4 +1,5 @@
 using Cbr.Domain.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cbr.Infrastructure.Database.Repository;
 
@@ -14,6 +15,12 @@ public class CurrencyRatesRepository
     public void Add(CurrencyRates currencyRates)
         => _dbContext.CurrencyRates.Add(currencyRates);
 
-    public void SaveChanges()
-        => _dbContext.SaveChanges();
+    public Task<CurrencyRates?> GetByDate(DateOnly date, CancellationToken ct)
+        => _dbContext.CurrencyRates
+            .Where(cr => cr.Date == date)
+            .Include(cr => cr.Currencies.OrderByDescending(c => c.CharCode))
+            .FirstOrDefaultAsync(ct);
+
+    public Task<int> SaveChangesAsync(CancellationToken ct)
+        => _dbContext.SaveChangesAsync(ct);
 }

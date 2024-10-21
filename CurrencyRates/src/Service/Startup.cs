@@ -1,11 +1,14 @@
+using Cbr.Infrastructure;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 
 namespace Service;
 
 public static class Startup
 {
-    public static void AddDependencies(this IServiceCollection services)
+    public static void AddDependencies(this IServiceCollection services, IConfiguration cfg)
     {
+        services.AddCbr(cfg);
+        
         services.AddControllers();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
