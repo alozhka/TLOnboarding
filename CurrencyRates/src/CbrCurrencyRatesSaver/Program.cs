@@ -1,4 +1,4 @@
-﻿using Cbr.Application.UseCases.CurrencyRates.Save;
+﻿using Cbr.Application.Service;
 using CbrCurrencyRatesSaver;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,6 +9,6 @@ builder.Services.AddDependencies(builder.Configuration);
 
 using IHost host = builder.Build();
 
-SaveCurrencyRatesFromFileHandler saveCurrencyRates = host.Services.GetRequiredService<SaveCurrencyRatesFromFileHandler>();
+CurrencyRatesService currencyRatesService = host.Services.GetRequiredService<CurrencyRatesService>();
 
-saveCurrencyRates.Handle(new SaveCurrencyRatesFromFileCommand(args[0]));
+currencyRatesService.SaveDayRatesFromFile(args[0]);
