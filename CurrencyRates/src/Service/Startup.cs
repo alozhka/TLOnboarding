@@ -27,7 +27,6 @@ public static class Startup
             app.UseDeveloperExceptionPage();
         }
 
-        app.UseHttpsRedirection();
         app.UseAuthorization();
         app.UseWhen(
             cxt => !cxt.Request.Path.StartsWithSegments("/api"),

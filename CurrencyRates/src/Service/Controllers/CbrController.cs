@@ -1,6 +1,5 @@
-using Cbr.Application.Abstractions;
-using Cbr.Application.UseCases.CurrencyRates.GetDay;
 using Cbr.Domain.Entity;
+using Cbr.Infrastructure.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Service.Controllers;
@@ -12,7 +11,7 @@ public class CbrController : ControllerBase
     [HttpGet("daily-rates")]
     public async Task<IResult> GetDayRates(
         [FromQuery] DateOnly? requestDate,
-        [FromServices] GetDayCurrencyRatesCommandHandler handler,
+        [FromServices] CurrencyRatesService ratesService,
         CancellationToken ct)
     {
         DateOnly date;
@@ -24,13 +23,13 @@ public class CbrController : ControllerBase
         {
             date = (DateOnly) requestDate;
         }
-        Result<CurrencyRates> result = await handler.Handle(new GetDayCurrencyRatesCommand(date), ct);
+        CurrencyRates? rates = await ratesService.GetDayRatesByDate(date, ct);
 
-        if (!result.HasValue)
+        if (rates is null)
         {
             return Results.NotFound();
         }
         
-        return Results.Ok(result.Value);
+        return Results.Ok(rates);
     }
 }
