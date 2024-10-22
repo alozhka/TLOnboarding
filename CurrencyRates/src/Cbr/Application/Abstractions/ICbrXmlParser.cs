@@ -4,5 +4,5 @@ namespace Cbr.Application.Abstractions;
 
 public interface ICbrXmlParser
 {
-    CurrencyRates FromFile(string filepath);
+    List<CurrencyRate> FromFile(string filepath);
 }

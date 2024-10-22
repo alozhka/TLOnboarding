@@ -20,5 +20,7 @@ public class CurrencyConfiguration : IEntityTypeConfiguration<Currency>
             .HasMaxLength(64)
             .HasColumnName("name")
             .IsRequired();
+
+        builder.ToTable("currency");
     }
 }

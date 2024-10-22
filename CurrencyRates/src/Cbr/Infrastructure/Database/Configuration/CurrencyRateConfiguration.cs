@@ -8,15 +8,7 @@ public class CurrencyRateConfiguration : IEntityTypeConfiguration<CurrencyRate>
 {
     public void Configure(EntityTypeBuilder<CurrencyRate> builder)
     {
-        builder.HasKey(r => new {r.SourceCurrency, r.TargetCurrency, r.Date });
-
-        builder.Property(r => r.SourceCurrency)
-            .HasColumnName("source_currency")
-            .IsRequired();
-
-        builder.Property(r => r.TargetCurrency)
-            .HasColumnName("target_currency")
-            .IsRequired();
+        builder.HasKey(r => new {r.SourceCurrencyCode, r.TargetCurrencyCode, r.Date });
             
             builder.Property(r => r.Date)
             .HasColumnName("date")
@@ -26,6 +18,14 @@ public class CurrencyRateConfiguration : IEntityTypeConfiguration<CurrencyRate>
             .HasPrecision(20, 4)
             .HasColumnName("exchange_rate")
             .IsRequired();
+
+        builder.HasOne(r => r.SourceCurrency)
+            .WithMany()
+            .HasForeignKey(cr => cr.SourceCurrencyCode);
+
+        builder.HasOne(r => r.TargetCurrency)
+            .WithMany()
+            .HasForeignKey(cr => cr.TargetCurrencyCode);
 
         builder.ToTable("currency_rate");
     }
