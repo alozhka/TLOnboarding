@@ -1,3 +1,5 @@
+using Cbr.Application;
+using Cbr.Application.Abstractions;
 using Cbr.Infrastructure.Database;
 using Cbr.Infrastructure.Database.Repository;
 using Cbr.Infrastructure.Service;
@@ -11,6 +13,8 @@ public static class CbrModuleSetup
 {
     public static void AddCbr(this IServiceCollection services, IConfiguration cfg)
     {
+        services.AddCbrApplication();
+        
         /*
         Repository
         */
@@ -19,7 +23,7 @@ public static class CbrModuleSetup
         /*
         Service
         */
-        services.AddScoped<CurrencyRatesService>();
+        services.AddTransient<ICbrXmlParser, CbrXmlParser>();
 
         services.AddDbContext<CbrDbContext>(o =>
         {

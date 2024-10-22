@@ -1,16 +1,17 @@
 using System.Text;
 using System.Xml;
+using Cbr.Application.Abstractions;
 using Cbr.Domain.Entity;
 
 namespace Cbr.Infrastructure.Service;
 
-public class CbrXmlParser
+public class CbrXmlParser : ICbrXmlParser
 {
     /// <summary>
     /// Парсит xml-файл в сущность <see cref="CurrencyRates"/>
     /// </summary>
     /// <param name="filepath">Путь до xml-файла</param>
-    public static CurrencyRates FromFile(string filepath)
+    public CurrencyRates FromFile(string filepath)
     {
         SetupEncoding();
 
@@ -22,7 +23,7 @@ public class CbrXmlParser
     /// Парсит строку в сущность <see cref="CurrencyRates"/>
     /// </summary>
     /// <param name="rawXml">Xml-cтрока</param>
-    public static CurrencyRates FromRawString(string rawXml)
+    public CurrencyRates FromRawString(string rawXml)
     {
         SetupEncoding();
 

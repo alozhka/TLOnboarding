@@ -1,3 +1,4 @@
+using Cbr.Application.Service;
 using Cbr.Domain.Entity;
 using Cbr.Infrastructure.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ namespace Service.Controllers;
 public class CbrController : ControllerBase
 {
     [HttpGet("daily-rates")]
-    public async Task<IResult> GetDayRates(
+    public async Task<ActionResult<CurrencyRates>> GetDayRates(
         [FromQuery] DateOnly? requestDate,
         [FromServices] CurrencyRatesService ratesService,
         CancellationToken ct)
@@ -27,9 +28,9 @@ public class CbrController : ControllerBase
 
         if (rates is null)
         {
-            return Results.NotFound();
+            return NotFound();
         }
         
-        return Results.Ok(rates);
+        return rates;
     }
 }
