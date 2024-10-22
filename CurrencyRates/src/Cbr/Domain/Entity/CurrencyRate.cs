@@ -35,9 +35,9 @@ public class CurrencyRate
         decimal exchangeRate)
     {
         SourceCurrency = sourceCurrency;
-        TargetCurrencyCode = targetCurrency.CharCode;
+        TargetCurrencyCode = targetCurrency.Code;
         TargetCurrency = targetCurrency;
-        TargetCurrencyCode = targetCurrency.CharCode;
+        TargetCurrencyCode = targetCurrency.Code;
         Date = date;
         ExchangeRate = exchangeRate;
     }

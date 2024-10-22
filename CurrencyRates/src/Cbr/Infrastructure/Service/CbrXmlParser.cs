@@ -50,7 +50,7 @@ public class CbrXmlParser : ICbrXmlParser
                 throw new FormatException("No data inside xml-document");
             }
 
-            return CbrConverter.ToCurrencyRates(rootElement);
+            return CbrConverter.ToCbrCurrencyRates(rootElement);
         }
         catch (Exception e)
         {

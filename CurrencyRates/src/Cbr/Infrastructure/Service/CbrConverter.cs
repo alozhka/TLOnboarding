@@ -5,10 +5,10 @@ namespace Cbr.Infrastructure.Service;
 
 internal static class CbrConverter
 {
-    public static List<CurrencyRate> ToCurrencyRates(XmlElement el)
+    public static List<CurrencyRate> ToCbrCurrencyRates(XmlElement el)
     {
         List<CurrencyRate> currencies = [];
-        Currency rub = new("RUB", "Российский рубль");
+        Currency rub = new("RUB", "Российских рублей");
         DateOnly date = DateOnly.ParseExact(el.Attributes["Date"]!.Value, "dd.MM.yyyy");
 
         foreach (XmlElement currencyXml in el)

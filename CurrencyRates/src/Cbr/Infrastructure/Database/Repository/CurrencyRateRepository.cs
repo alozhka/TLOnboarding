@@ -20,8 +20,8 @@ public class CurrencyRateRepository
             .Where(cr => cr.Date == date)
             .Include(cr => cr.SourceCurrency)
             .Include(cr => cr.TargetCurrency)
-            .OrderBy(cr => cr.SourceCurrency.CharCode)
-            .ThenBy(cr => cr.TargetCurrency.CharCode)
+            .OrderBy(cr => cr.SourceCurrency.Code)
+            .ThenBy(cr => cr.TargetCurrency.Code)
             .ToListAsync(ct);
 
     public void SaveChanges()

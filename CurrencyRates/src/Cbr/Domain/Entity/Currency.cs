@@ -6,16 +6,16 @@ public class Currency
     /// <summary>
     /// Код валюты (пр. RUB, USD и тд)
     /// </summary>
-    public string CharCode { get; }
+    public string Code { get; }
 
     /// <summary>
     /// Полное название (пр. Доллар США)
     /// </summary>
     public string Name { get; }
 
-    public Currency(string charCode, string name)
+    public Currency(string code, string name)
     {
-        CharCode = charCode;
+        Code = code;
         Name = name;
     }
 

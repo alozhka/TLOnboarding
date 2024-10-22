@@ -8,12 +8,12 @@ public class CurrencyConfiguration : IEntityTypeConfiguration<Currency>
 {
     public void Configure(EntityTypeBuilder<Currency> builder)
     {
-        builder.HasKey(c => c.CharCode);
+        builder.HasKey(c => c.Code);
 
-        builder.Property(c => c.CharCode)
+        builder.Property(c => c.Code)
             .HasMaxLength(3)
             .IsFixedLength()
-            .HasColumnName("char_code")
+            .HasColumnName("code")
             .IsRequired();
 
         builder.Property(c => c.Name)
