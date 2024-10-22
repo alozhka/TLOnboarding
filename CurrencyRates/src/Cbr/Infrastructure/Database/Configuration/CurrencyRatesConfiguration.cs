@@ -14,7 +14,14 @@ public class CurrencyRatesConfiguration : IEntityTypeConfiguration<CurrencyRates
 
         builder.HasMany(cr => cr.Rates)
             .WithMany()
-            .UsingEntity("currency_rate_currency_rates");
+            .UsingEntity<CurrencyRate>(j =>
+            {
+                j.ToTable("currency_rate");
+                j.Property(r => r.ExchangeRate)
+                    .HasPrecision(20, 4)
+                    .HasColumnName("exchange_rate")
+                    .IsRequired();
+            });
 
         builder.ToTable("currency_rates");
     }

@@ -5,15 +5,7 @@ namespace Cbr.Domain.Entity;
 /// </summary>
 public class CurrencyRate
 {
-    /// <summary>
-    /// Код валюты (пр. RUB, USD и тд)
-    /// </summary>
-    public string CurrencyCode { get; }
-
-    /// <summary>
-    /// Полное название (пр. Доллар США)
-    /// </summary>
-    public string CurrencyName { get; }
+    public Currency Currency { get; }
 
     /// <summary>
     /// Стоимость 1 единицы валюты в рублёвом эквиваленте (пр. USD/RUB = 96.89)
@@ -21,12 +13,10 @@ public class CurrencyRate
     public decimal ExchangeRate { get; }
 
     public CurrencyRate(
-        string currencyCode,
-        string currencyName,
+        Currency currency,
         decimal exchangeRate)
     {
-        CurrencyCode = currencyCode;
-        CurrencyName = currencyName;
+        Currency = currency;
         ExchangeRate = exchangeRate;
     }
 

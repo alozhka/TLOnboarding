@@ -9,22 +9,23 @@ internal static class CbrConverter
     {
         List<CurrencyRate> currencies = [];
 
-        foreach (XmlElement currency in el)
+        foreach (XmlElement currencyXml in el)
         {
-            if (currency.Name is not "Valute")
+            if (currencyXml.Name is not "Valute")
             {
                 throw new FormatException("Unexpected tag identifier");
             }
             List<KeyValuePair<string, string>> data = [];
-            foreach (XmlNode node in currency)
+            foreach (XmlNode node in currencyXml)
             {
                 data.Add(new(node.Name, node.ChildNodes.Item(0)!.Value!));
             }
 
-            currencies.Add(new CurrencyRate(
-                data.Single(pair => pair.Key == "CharCode").Value,
-                data.Single(pair => pair.Key == "Name").Value,
-                decimal.Parse(data.Single(pair => pair.Key == "VunitRate").Value)));
+            Currency currency = new(
+                currencyCode: data.Single(pair => pair.Key == "CharCode").Value, 
+                currencyName: data.Single(pair => pair.Key == "Name").Value);
+
+            currencies.Add(new CurrencyRate(currency, exchangeRate: decimal.Parse(data.Single(pair => pair.Key == "VunitRate").Value)));
         }
 
         return new CurrencyRates(DateOnly.ParseExact(el.Attributes["Date"]!.Value, "dd.MM.yyyy"), currencies);
