@@ -47,7 +47,7 @@ public class CbrXmlParser : ICbrXmlParser
 
             if (rootElement is null || rootElement.Name is not "ValCurs")
             {
-                throw new FormatException("No data inside xml-document");
+                throw new FormatException("No data inside currency rates document");
             }
 
             return CbrConverter.ToCbrCurrencyRates(rootElement);
