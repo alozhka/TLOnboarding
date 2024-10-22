@@ -18,7 +18,7 @@ public static class CbrModuleSetup
         /*
         Repository
         */
-        services.AddScoped<CurrencyRatesRepository>();
+        services.AddScoped<CurrencyRateRepository>();
 
         /*
         Service

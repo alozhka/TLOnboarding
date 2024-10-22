@@ -9,7 +9,7 @@ namespace Service.Controllers;
 public class CbrController : ControllerBase
 {
     [HttpGet("daily-rates")]
-    public async Task<ActionResult<CurrencyRates>> GetDayRates(
+    public async Task<ActionResult<List<CurrencyRate>>> GetDayRates(
         [FromQuery] DateOnly? requestDate,
         [FromServices] CurrencyRatesService ratesService,
         CancellationToken ct)
@@ -23,9 +23,9 @@ public class CbrController : ControllerBase
         {
             date = (DateOnly) requestDate;
         }
-        CurrencyRates? rates = await ratesService.ListDayRatesByDate(date, ct);
+        List<CurrencyRate> rates = await ratesService.ListDayRatesByDate(date, ct);
 
-        if (rates is null)
+        if (rates.Count == 0)
         {
             return NotFound();
         }

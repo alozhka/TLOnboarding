@@ -8,17 +8,18 @@ public class CurrencyRateConfiguration : IEntityTypeConfiguration<CurrencyRate>
 {
     public void Configure(EntityTypeBuilder<CurrencyRate> builder)
     {
-        builder.HasKey(r => r.CurrencyCode);
+        builder.HasKey(r => new {r.SourceCurrency, r.TargetCurrency, r.Date });
 
-        builder.Property(r => r.CurrencyCode)
-        .HasMaxLength(3)
-        .HasColumnName("currency_code")
-        .IsFixedLength()
-        .IsRequired();
+        builder.Property(r => r.SourceCurrency)
+            .HasColumnName("source_currency")
+            .IsRequired();
 
-        builder.Property(r => r.CurrencyName)
-            .HasMaxLength(64)
-            .HasColumnName("currency_name")
+        builder.Property(r => r.TargetCurrency)
+            .HasColumnName("target_currency")
+            .IsRequired();
+            
+            builder.Property(r => r.Date)
+            .HasColumnName("date")
             .IsRequired();
 
         builder.Property(r => r.ExchangeRate)

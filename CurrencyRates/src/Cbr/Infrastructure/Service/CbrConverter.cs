@@ -5,28 +5,31 @@ namespace Cbr.Infrastructure.Service;
 
 internal static class CbrConverter
 {
-    public static CurrencyRates ToCurrencyRates(XmlElement el)
+    public static List<CurrencyRate> ToCurrencyRates(XmlElement el)
     {
         List<CurrencyRate> currencies = [];
+        Currency rub = new("RUB", "Российский рубль");
+        DateOnly date = DateOnly.ParseExact(el.Attributes["Date"]!.Value, "dd.MM.yyyy");
 
-        foreach (XmlElement currency in el)
+        foreach (XmlElement currencyXml in el)
         {
-            if (currency.Name is not "Valute")
+            if (currencyXml.Name is not "Valute")
             {
                 throw new FormatException("Unexpected tag identifier");
             }
             List<KeyValuePair<string, string>> data = [];
-            foreach (XmlNode node in currency)
+            foreach (XmlNode node in currencyXml)
             {
                 data.Add(new(node.Name, node.ChildNodes.Item(0)!.Value!));
             }
 
-            currencies.Add(new CurrencyRate(
+            var parsedCurrency = new Currency(
                 data.Single(pair => pair.Key == "CharCode").Value,
-                data.Single(pair => pair.Key == "Name").Value,
-                decimal.Parse(data.Single(pair => pair.Key == "VunitRate").Value)));
+                data.Single(pair => pair.Key == "Name").Value);
+
+            currencies.Add(new CurrencyRate(parsedCurrency, rub, date, decimal.Parse(data.Single(pair => pair.Key == "VunitRate").Value)));
         }
 
-        return new CurrencyRates(DateOnly.ParseExact(el.Attributes["Date"]!.Value, "dd.MM.yyyy"), currencies);
+        return currencies;
     }
 }

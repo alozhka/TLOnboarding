@@ -7,7 +7,7 @@ namespace Cbr.Infrastructure.Database;
 public class CbrDbContext : DbContext
 {
     public DbSet<CurrencyRate> CurrencyRate { get; set; }
-    public DbSet<CurrencyRates> CurrencyRates { get; set; }
+    public DbSet<Currency> Currency { get; set; }
 
     public CbrDbContext(DbContextOptions<CbrDbContext> options) : base(options)
     {
@@ -26,6 +26,6 @@ public class CbrDbContext : DbContext
         modelBuilder.HasDefaultSchema("Cbr");
 
         modelBuilder.ApplyConfiguration(new CurrencyRateConfiguration());
-        modelBuilder.ApplyConfiguration(new CurrencyRatesConfiguration());
+        modelBuilder.ApplyConfiguration(new CurrencyConfiguration());
     }
 }
