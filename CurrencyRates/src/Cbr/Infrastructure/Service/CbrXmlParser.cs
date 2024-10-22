@@ -50,14 +50,14 @@ public class CbrXmlParser : ICbrXmlParser
                 throw new FormatException("No data inside xml-document");
             }
 
-            return CbrConverter.ToCurrencyRate(rootElement);
+            return CbrConverter.ToCurrencyRates(rootElement);
         }
         catch (Exception e)
         {
             if (e is InvalidOperationException // not found in Single LINQ method
             || e is XmlException) // wrong xml markdown
             {
-                throw new FormatException("Invalid document format");
+                throw new FormatException("Invalid currency rates document format: " + e.Message, e);
             }
 
             throw;

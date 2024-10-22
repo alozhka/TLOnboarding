@@ -11,4 +11,4 @@ using IHost host = builder.Build();
 
 CurrencyRatesService currencyRatesService = host.Services.GetRequiredService<CurrencyRatesService>();
 
-currencyRatesService.SaveDayRatesFromFile(args[0]);
+currencyRatesService.ImportCbrCurrencyRates(args[0]);

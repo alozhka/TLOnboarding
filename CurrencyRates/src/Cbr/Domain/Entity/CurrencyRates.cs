@@ -28,7 +28,7 @@ public class CurrencyRates
     {
     }
 
-    public void AppendRate(CurrencyRate rate)
+    public void AddRate(CurrencyRate rate)
     {
         Rates.Add(rate);
     }

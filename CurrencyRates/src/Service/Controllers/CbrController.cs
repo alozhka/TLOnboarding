@@ -1,6 +1,5 @@
 using Cbr.Application.Service;
 using Cbr.Domain.Entity;
-using Cbr.Infrastructure.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Service.Controllers;
@@ -24,7 +23,7 @@ public class CbrController : ControllerBase
         {
             date = (DateOnly) requestDate;
         }
-        CurrencyRates? rates = await ratesService.GetDayRatesByDate(date, ct);
+        CurrencyRates? rates = await ratesService.ListDayRatesByDate(date, ct);
 
         if (rates is null)
         {

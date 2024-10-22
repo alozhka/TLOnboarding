@@ -10,18 +10,9 @@ public class CurrencyRatesService(CurrencyRatesRepository currencyRatesRepositor
     private readonly ICbrXmlParser _cbrXmlParser = cbrXmlParser;
 
 
-    public async Task<CurrencyRates?> GetDayRatesByDate(DateOnly date, CancellationToken ct) => await _currencyRatesRepository.GetByDate(date, ct);
-    
-    public void SaveDayRatesFromRaw(string rawXml)
-    {
-        CurrencyRates rates = _cbrXmlParser.FromRawString(rawXml);
+    public async Task<CurrencyRates?> ListDayRatesByDate(DateOnly date, CancellationToken ct) => await _currencyRatesRepository.GetByDate(date, ct);
 
-        _currencyRatesRepository.Add(rates);
-
-        _currencyRatesRepository.SaveChanges();
-    }
-
-    public void SaveDayRatesFromFile(string filepath)
+    public void ImportCbrCurrencyRates(string filepath)
     {
         CurrencyRates rates = _cbrXmlParser.FromFile(filepath);
 
