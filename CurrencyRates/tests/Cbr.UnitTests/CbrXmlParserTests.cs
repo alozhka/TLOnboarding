@@ -5,10 +5,22 @@ namespace Cbr.UnitTests;
 
 public class XmlParserTests
 {
+    private readonly CbrXmlParser _parser = new();
+    private readonly Currency _rub = new("RUB", "Российских рублей");
+
+
     [Fact]
     public void Can_use_complex_types()
     {
-        CurrencyRates rate = CbrXmlParser.FromRawString(
+        DateOnly date = new(2024, 10, 8);
+
+        List<CurrencyRate> expected =
+        [
+            new CurrencyRate(new Currency("AUD", "Австралийский доллар"), _rub, date, 65.7852m),
+            new CurrencyRate(new Currency("AZN", "Азербайджанский манат"), _rub, date, 56.5088m)
+        ];
+
+        List<CurrencyRate> rate = _parser.FromRawString(
             """
             <?xml version="1.0" encoding="windows-1251"?>
             <ValCurs Date="08.10.2024" name="Foreign Currency Market">
@@ -21,43 +33,21 @@ public class XmlParserTests
             </ValCurs>            
             """);
 
-        CurrencyRates expected = new CurrencyRates(
-            new DateOnly(2024, 10, 8),
-            new List<CurrencyRate>([
-                new CurrencyRate(
-                    "AUD",
-                    "Австралийский доллар",
-                    65.7852m),
-                new CurrencyRate(
-                    "AZN",
-                    "Азербайджанский манат",
-                    56.5088m)
-            ]));
-
         Assert.Equivalent(expected, rate);
     }
 
     [Fact]
     public void Supports_parsing_from_xml_file()
     {
-        CurrencyRates rate = CbrXmlParser.FromFile("../../../data/XML_daily.xml");
+        DateOnly date = new(2024, 10, 8);
+        List<CurrencyRate> expected =
+        [
+            new (new Currency("AUD", "Австралийский доллар"), _rub, date, 65.7852m),
+            new (new Currency("AZN", "Азербайджанский манат"), _rub, date, 65.7852m),
+            new (new Currency("JPY", "Японских иен"), _rub, date, 0.647076m),
+        ];
 
-        CurrencyRates expected = new(
-            new DateOnly(2024, 10, 8),
-            new List<CurrencyRate>([
-                new CurrencyRate(
-                    "AUD",
-                    "Австралийский доллар",
-                    65.7852m),
-                new CurrencyRate(
-                    "AZN",
-                    "Азербайджанский манат",
-                    56.5088m),
-                new CurrencyRate(
-                    "JPY",
-                    "Японских иен",
-                    0.647076m)
-            ]));
+        List<CurrencyRate> rate = _parser.FromFile("../../../data/XML_daily.xml");
 
         Assert.Equivalent(expected, rate);
     }
@@ -65,7 +55,7 @@ public class XmlParserTests
     [Fact]
     public void Parse_only_cbr_daily_response_type()
     {
-        Assert.Throws<FormatException>(() => CbrXmlParser.FromRawString(
+        Assert.Throws<FormatException>(() => _parser.FromRawString(
             """
             <?xml version="1.0" encoding="windows-1251"?>
             <ValCurs Date="08.10.2024" name="Foreign Currency Market">
@@ -77,7 +67,7 @@ public class XmlParserTests
             </ValCurs> 
             """));
 
-        Assert.Throws<FormatException>(() => CbrXmlParser.FromRawString(
+        Assert.Throws<FormatException>(() => _parser.FromRawString(
             """
             <?xml version="1.0" encoding="windows-1251"?>
             <UnexpectedTag Date="08.10.2024" name="Foreign Currency Market">
@@ -89,7 +79,7 @@ public class XmlParserTests
             </UnexpectedTag>
             """));
 
-        Assert.Throws<FormatException>(() => CbrXmlParser.FromRawString(
+        Assert.Throws<FormatException>(() => _parser.FromRawString(
         """
             <?xml version="1.0" encoding="windows-1251"?>
             <ValCurs Date="08.10.2024" name="Foreign Currency Market">
@@ -105,9 +95,9 @@ public class XmlParserTests
     [Fact]
     public void Cannot_parse_incorrect_xml()
     {
-        Assert.Throws<FormatException>(() => CbrXmlParser.FromFile("../../../data/failure/XML_wrong.asp"));
+        Assert.Throws<FormatException>(() => _parser.FromFile("../../../data/failure/XML_wrong.asp"));
 
-        Assert.Throws<FormatException>(() => CbrXmlParser.FromRawString(
+        Assert.Throws<FormatException>(() => _parser.FromRawString(
             """
             <?xml version="1.0" encoding="windows-1251"?>
             <ValCurs Date="08.10.2024" name="Foreign Currency Market">
@@ -119,8 +109,8 @@ public class XmlParserTests
             </ValCurs> 
             """));
 
-        Assert.Throws<FormatException>(() => CbrXmlParser.FromFile("../../../data/failure/XML_empty.asp"));
+        Assert.Throws<FormatException>(() => _parser.FromFile("../../../data/failure/XML_empty.asp"));
 
-        Assert.Throws<FileNotFoundException>(() => CbrXmlParser.FromFile("does not exist"));
+        Assert.Throws<FileNotFoundException>(() => _parser.FromFile("does not exist"));
     }
 }
