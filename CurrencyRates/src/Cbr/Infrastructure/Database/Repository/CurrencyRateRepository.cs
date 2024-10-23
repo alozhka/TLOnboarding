@@ -20,7 +20,7 @@ public class CurrencyRateRepository : ICurrencyRateRepository
 
     public async Task<CbrDayRatesDto?> ListCbrDayRatesToRub(DateOnly date, CancellationToken ct)
     {
-        var rates = await _dbContext.CurrencyRate
+        List<CbrRateDto> rates = await _dbContext.CurrencyRate
                 .Where(cr => cr.Date == date && cr.TargetCurrencyCode == "RUB")
                 .Include(cr => cr.SourceCurrency)
                 .OrderBy(cr => cr.SourceCurrency.Code)
