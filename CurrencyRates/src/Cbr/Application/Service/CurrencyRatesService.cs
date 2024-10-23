@@ -21,4 +21,12 @@ public class CurrencyRatesService(ICurrencyRateRepository currencyRatesRepositor
 
         _currencyRatesRepository.SaveChanges();
     }
+    public void ImportCbrCurrencyRatesFromRaw(string rawXml)
+    {
+        List<CurrencyRate> rates = _cbrXmlParser.FromFile(rawXml);
+
+        _currencyRatesRepository.AddRange(rates);
+
+        _currencyRatesRepository.SaveChanges();
+    }
 }

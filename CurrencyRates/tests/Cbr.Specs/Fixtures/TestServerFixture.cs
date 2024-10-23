@@ -1,3 +1,4 @@
+using Cbr.Application.Service;
 using Cbr.Infrastructure.Database;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -14,6 +15,7 @@ public class TestServerFixture : IDisposable
 {
     private IDbContextTransaction? _dbTransaction;
     public HttpClient HttpClient { get; }
+    public CurrencyRatesService CurrencyRatesService { get; }
 
     public TestServerFixture()
     {
@@ -35,6 +37,7 @@ public class TestServerFixture : IDisposable
         CbrDbContext dbContext = factory.Services.GetRequiredService<CbrDbContext>();
         _dbTransaction = dbContext.Database.BeginTransaction();
 
+        CurrencyRatesService = factory.Services.GetRequiredService<CurrencyRatesService>();
         HttpClient = factory.CreateClient();
     }
     public void Dispose()
