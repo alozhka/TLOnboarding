@@ -41,7 +41,7 @@ public sealed class CbrSteps(TestServerFixture fixture)
     public async Task КогдаЯЗапрашиваюДанныеЗаДату(string date)
     {
         DateOnly? dateOnly = null;
-        if (string.IsNullOrEmpty(date))
+        if (!string.IsNullOrEmpty(date))
         {
             dateOnly = DateOnly.Parse(date);
         }

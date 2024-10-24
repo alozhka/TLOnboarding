@@ -107,13 +107,13 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 9
- await testRunner.GivenAsync("я импортировал курсы из файла за дату \"2024-10-10\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Пусть ");
+ await testRunner.GivenAsync("я импортировал курсы из файла за дату \"2008-08-26\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Пусть ");
 #line hidden
 #line 10
- await testRunner.WhenAsync("я запрашиваю курсы за дату \"2024-10-10\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Когда ");
+ await testRunner.WhenAsync("я запрашиваю курсы за дату \"2008-08-26\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Когда ");
 #line hidden
 #line 11
- await testRunner.ThenAsync("курсы имеют дату \"2024-10-10\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Тогда ");
+ await testRunner.ThenAsync("курсы имеют дату \"2008-08-26\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Тогда ");
 #line hidden
 #line 12
  await testRunner.AndAsync("получено курсов в количестве 43", ((string)(null)), ((global::Reqnroll.Table)(null)), "И ");
@@ -157,7 +157,7 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.WhenAsync("я запрашиваю курсы за дату \"\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Когда ");
 #line hidden
 #line 28
- await testRunner.ThenAsync("курсы имеют дату \"2024-10-23\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Тогда ");
+ await testRunner.ThenAsync("курсы имеют дату \"2024-10-24\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Тогда ");
 #line hidden
 #line 29
  await testRunner.AndAsync("получено курсов в количестве 43", ((string)(null)), ((global::Reqnroll.Table)(null)), "И ");
