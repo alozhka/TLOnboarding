@@ -10,7 +10,6 @@ public class CurrencyConfiguration : IEntityTypeConfiguration<Currency>
     {
         builder.HasKey(c => c.Code);
 
-        //TODO: переделать на фиксированню длину
         builder.Property(c => c.Code)
             .HasMaxLength(3)
             .IsFixedLength()

@@ -5,18 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cbr.Infrastructure.Database.Repository;
 
-public class CurrencyRateRepository : ICurrencyRateRepository
+public class CurrencyRateRepository(CbrDbContext dbContext) : ICurrencyRateRepository
 {
-    private readonly CbrDbContext _dbContext;
-
-    public CurrencyRateRepository(CbrDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    private readonly CbrDbContext _dbContext = dbContext;
 
     public void AddRange(List<CurrencyRate> currencyRates)
         => _dbContext.CurrencyRate.AddRange(currencyRates);
-
 
     public async Task<CbrDayRatesDto?> ListCbrDayRatesToRub(DateOnly date, CancellationToken ct)
     {
@@ -36,6 +30,9 @@ public class CurrencyRateRepository : ICurrencyRateRepository
 
     public void SaveChanges()
         => _dbContext.SaveChanges();
+
+    public void UpdateRange(List<CurrencyRate> currencyRates)
+        => _dbContext.UpdateRange(currencyRates);
     public Task<int> SaveChangesAsync(CancellationToken ct)
         => _dbContext.SaveChangesAsync(ct);
 }
