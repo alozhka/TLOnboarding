@@ -26,14 +26,6 @@ public class CurrencyRateConfiguration : IEntityTypeConfiguration<CurrencyRate>
             .HasPrecision(20, 10)
             .HasColumnName("exchange_rate")
             .IsRequired();
-
-        builder.HasOne(r => r.SourceCurrency)
-            .WithMany()
-            .HasForeignKey(cr => cr.SourceCurrencyCode);
-
-        builder.HasOne(r => r.TargetCurrency)
-            .WithMany()
-            .HasForeignKey(cr => cr.TargetCurrencyCode);
         
         builder.HasIndex(r => r.Date);
 

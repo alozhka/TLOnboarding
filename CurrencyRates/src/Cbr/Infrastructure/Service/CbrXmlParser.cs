@@ -1,6 +1,7 @@
 using System.Text;
 using System.Xml;
 using Cbr.Application.Abstractions;
+using Cbr.Application.Dto;
 using Cbr.Domain.Entity;
 
 namespace Cbr.Infrastructure.Service;
@@ -11,7 +12,7 @@ public class CbrXmlParser : ICbrXmlParser
     /// Парсит xml-файл в сущность <see cref="CurrencyRates"/>
     /// </summary>
     /// <param name="filepath">Путь до xml-файла</param>
-    public List<CurrencyRate> FromFile(string filepath)
+    public CbrDayRatesDto FromFile(string filepath)
     {
         SetupEncoding();
 
@@ -23,7 +24,7 @@ public class CbrXmlParser : ICbrXmlParser
     /// Парсит строку в сущность <see cref="CurrencyRates"/>
     /// </summary>
     /// <param name="rawXml">Xml-cтрока</param>
-    public List<CurrencyRate> FromRawString(string rawXml)
+    public CbrDayRatesDto FromRawString(string rawXml)
     {
         SetupEncoding();
 
@@ -36,7 +37,7 @@ public class CbrXmlParser : ICbrXmlParser
     /// <param name="loadArg">Аргумент для загрузки (путь до файла или xml-строка)</param>
     /// <returns></returns>
     /// <exception cref="FormatException">Неправильная разметка</exception>
-    private static List<CurrencyRate> LoadAndParse(string loadArg)
+    private static CbrDayRatesDto LoadAndParse(string loadArg)
     {
         XmlDocument doc = new();
 
@@ -50,7 +51,7 @@ public class CbrXmlParser : ICbrXmlParser
                 throw new FormatException("No data inside currency rates document");
             }
 
-            return CbrConverter.ToCbrCurrencyRates(rootElement);
+            return CbrConverter.ToCbrDayRatesDto(rootElement);
         }
         catch (Exception e)
         {

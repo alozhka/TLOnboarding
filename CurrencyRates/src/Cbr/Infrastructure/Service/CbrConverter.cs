@@ -1,13 +1,14 @@
 using System.Xml;
+using Cbr.Application.Dto;
 using Cbr.Domain.Entity;
 
 namespace Cbr.Infrastructure.Service;
 
 internal static class CbrConverter
 {
-    public static List<CurrencyRate> ToCbrCurrencyRates(XmlElement el)
+    public static CbrDayRatesDto ToCbrDayRatesDto(XmlElement el)
     {
-        List<CurrencyRate> currencies = [];
+        List<CbrRateDto> currencies = [];
         Currency rub = new("RUB", "Российских рублей");
         DateOnly date = DateOnly.ParseExact(el.Attributes["Date"]!.Value, "dd.MM.yyyy");
 
@@ -23,13 +24,12 @@ internal static class CbrConverter
                 data.Add(new(node.Name, node.ChildNodes.Item(0)!.Value!));
             }
 
-            var parsedCurrency = new Currency(
-                data.Single(pair => pair.Key == "CharCode").Value,
-                data.Single(pair => pair.Key == "Name").Value);
-
-            currencies.Add(new CurrencyRate(parsedCurrency, rub, date, decimal.Parse(data.Single(pair => pair.Key == "VunitRate").Value)));
+            currencies.Add(new CbrRateDto(
+                data.Single(pair => pair.Key == "CharCode").Value, 
+                data.Single(pair => pair.Key == "Name").Value, 
+                decimal.Parse(data.Single(pair => pair.Key == "VunitRate").Value)));
         }
 
-        return currencies;
+        return new CbrDayRatesDto(date.ToString("dd.MM.yyyy"), currencies);
     }
 }

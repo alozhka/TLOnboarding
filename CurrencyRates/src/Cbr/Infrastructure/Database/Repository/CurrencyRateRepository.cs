@@ -10,15 +10,17 @@ public class CurrencyRateRepository(CbrDbContext dbContext) : ICurrencyRateRepos
     private readonly CbrDbContext _dbContext = dbContext;
 
     public void AddRange(List<CurrencyRate> currencyRates)
-        => _dbContext.CurrencyRate.AddRange(currencyRates);
+    {
+        _dbContext.CurrencyRate.AddRange(currencyRates);
+    }
 
     public async Task<CbrDayRatesDto?> ListCbrDayRatesToRub(DateOnly date, CancellationToken ct)
     {
         List<CbrRateDto> rates = await _dbContext.CurrencyRate
                 .Where(cr => cr.Date == date && cr.TargetCurrencyCode == "RUB")
-                .Include(cr => cr.SourceCurrency)
-                .OrderBy(cr => cr.SourceCurrency.Code)
-                .Select(cr => new CbrRateDto(cr.SourceCurrency.Code, cr.SourceCurrency.Name, cr.ExchangeRate))
+                .OrderBy(cr => cr.SourceCurrencyCode)
+                //TODO: убрать заглушку
+                .Select(cr => new CbrRateDto(cr.SourceCurrencyCode, "", cr.ExchangeRate))
                 .ToListAsync(ct);
 
         if (rates.Count == 0)

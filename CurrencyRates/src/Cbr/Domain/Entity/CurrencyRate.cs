@@ -8,13 +8,11 @@ public class CurrencyRate
     /// <summary>
     /// Из USD/RUB этим полем будет USD
     /// </summary>
-    public Currency SourceCurrency { get; }
     public string SourceCurrencyCode { get; }
 
     /// <summary>
     /// Из USD/RUB этим полем будет RUB
     /// </summary>
-    public Currency TargetCurrency { get; }
     public string TargetCurrencyCode { get; }
 
 
@@ -29,15 +27,13 @@ public class CurrencyRate
     public decimal ExchangeRate { get; }
 
     public CurrencyRate(
-        Currency sourceCurrency,
-        Currency targetCurrency,
+        string sourceCurrencyCode,
+        string targetCurrencyCode,
         DateOnly date,
         decimal exchangeRate)
     {
-        SourceCurrency = sourceCurrency;
-        TargetCurrencyCode = targetCurrency.Code;
-        TargetCurrency = targetCurrency;
-        TargetCurrencyCode = targetCurrency.Code;
+        SourceCurrencyCode = sourceCurrencyCode;
+        TargetCurrencyCode = targetCurrencyCode;
         Date = date;
         ExchangeRate = exchangeRate;
     }

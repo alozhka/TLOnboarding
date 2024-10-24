@@ -5,9 +5,9 @@ using Cbr.Domain.Entity;
 namespace Cbr.Application.Service;
 
 public class CurrencyRatesService(
-    ICurrencyRateRepository currencyRatesRepository, 
-    ICbrXmlParser cbrXmlParser, 
-    ICurrencyRepository currencyRepository)
+    ICurrencyRateRepository currencyRatesRepository,
+    ICurrencyRepository currencyRepository,
+    ICbrXmlParser cbrXmlParser)
 {
     private readonly ICurrencyRateRepository _currencyRatesRepository = currencyRatesRepository;
     private readonly ICurrencyRepository _currencyRepository = currencyRepository;
@@ -19,32 +19,25 @@ public class CurrencyRatesService(
 
     public void ImportCbrCurrencyRates(string filepath)
     {
-        List<CurrencyRate> rates = _cbrXmlParser.FromFile(filepath);
+        CbrDayRatesDto rates = _cbrXmlParser.FromFile(filepath);
         PersistRates(rates);
     }
 
     public void ImportCbrCurrencyRatesFromRaw(string rawXml)
     {
-        List<CurrencyRate> rates = _cbrXmlParser.FromFile(rawXml);
+        CbrDayRatesDto rates = _cbrXmlParser.FromFile(rawXml);
         PersistRates(rates);
     }
 
-    private void PersistRates(List<CurrencyRate> rates)
+    private void PersistRates(CbrDayRatesDto rates)
     {
-        List<string> currencyCodes = rates.Select(cr => cr.SourceCurrency.Code).Append("RUB").ToList();
-        List<string> persistedCodes = _currencyRepository.ListCurrencyCodesRange(currencyCodes, default).Result;
+        DateOnly ratesDate = DateOnly.ParseExact(rates.Date, "dd.MM.yyyy");
+        
+        List<CurrencyRate> currencyRates = rates.Rates.Select(cr => new CurrencyRate(cr.CurrencyCode, "RUB", ratesDate, cr.ExchangeRate)).ToList();
+        List<Currency> currencies = rates.Rates.Select(cr => new Currency(cr.CurrencyCode, cr.CurrencyName)).ToList();
 
-        List<CurrencyRate> ratesToAdd = rates
-            .Where(cr => !persistedCodes.Contains(cr.SourceCurrencyCode) || !persistedCodes.Contains(cr.TargetCurrencyCode))
-            .ToList();
-
-
-        List<CurrencyRate> ratesToUpdate = rates
-            .Where(cr => persistedCodes.Contains(cr.SourceCurrencyCode) && persistedCodes.Contains(cr.TargetCurrencyCode))
-            .ToList();
-
-        _currencyRatesRepository.AddRange(ratesToAdd);
-        _currencyRatesRepository.UpdateRange(ratesToUpdate);
+        _currencyRepository.AddOrUpdateRange(currencies);
+        _currencyRatesRepository.AddRange(currencyRates);
 
         _currencyRatesRepository.SaveChanges();
     }

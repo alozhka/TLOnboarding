@@ -1,8 +1,8 @@
-using Cbr.Domain.Entity;
+using Cbr.Application.Dto;
 
 namespace Cbr.Application.Abstractions;
 
 public interface ICbrXmlParser
 {
-    List<CurrencyRate> FromFile(string filepath);
+    CbrDayRatesDto FromFile(string filepath);
 }

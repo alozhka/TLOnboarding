@@ -4,5 +4,7 @@ namespace Cbr.Application.Abstractions;
 
 public interface ICurrencyRepository
 {
-    Task<List<string>> ListCurrencyCodesRange(List<string> currencyCodes, CancellationToken ct);
+    void AddRange(List<Currency> currencies);
+    void UpdateRange(List<Currency> currencies);
+    void AddOrUpdateRange(List<Currency> currencies);
 }
