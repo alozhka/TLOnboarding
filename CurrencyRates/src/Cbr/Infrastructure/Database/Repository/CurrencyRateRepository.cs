@@ -19,7 +19,6 @@ public class CurrencyRateRepository(CbrDbContext dbContext) : ICurrencyRateRepos
         List<CbrRateDto> rates = await _dbContext.CurrencyRate
                 .Where(cr => cr.Date == date && cr.TargetCurrencyCode == "RUB")
                 .OrderBy(cr => cr.SourceCurrencyCode)
-                //TODO: убрать заглушку
                 .Select(cr => new CbrRateDto(cr.SourceCurrencyCode, "", cr.ExchangeRate))
                 .ToListAsync(ct);
 
@@ -27,6 +26,20 @@ public class CurrencyRateRepository(CbrDbContext dbContext) : ICurrencyRateRepos
         {
             return null;
         }
+
+        List<string> currencyCodes = rates.Select(c => c.CurrencyCode).ToList();
+
+        List<string> currencyNames = await _dbContext.Currency
+            .Where(c => currencyCodes.Contains(c.Code))
+            .OrderBy(c => c.Code)
+            .Select(c => c.Name)
+            .ToListAsync(ct);
+
+        for (int i = 0; i < rates.Count; i++)
+        {
+            rates[i] = new CbrRateDto(rates[i].CurrencyCode, currencyNames[i], rates[i].ExchangeRate);
+        }
+
         return new CbrDayRatesDto(date.ToString("yyyy-MM-dd"), rates);
     }
 
