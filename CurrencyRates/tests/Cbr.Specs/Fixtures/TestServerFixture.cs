@@ -1,9 +1,5 @@
-using Cbr.Application;
-using Cbr.Application.Abstractions;
 using Cbr.Application.Service;
 using Cbr.Infrastructure.Database;
-using Cbr.Infrastructure.Database.Repository;
-using Cbr.Infrastructure.Service;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -60,13 +56,9 @@ public class TestServerFixture : IDisposable
             b.UseEnvironment("Development");
             b.ConfigureTestServices(services =>
             {
-                services.AddCbrApplication();
                 ServiceDescriptor descriptor = services.Single(d => d.ServiceType == typeof(DbContextOptions<CbrDbContext>));
                 services.AddSingleton(descriptor.ServiceType, descriptor.ImplementationFactory!);
                 services.AddSingleton<CbrDbContext>();
-                services.AddSingleton<ICurrencyRateRepository, CurrencyRateRepository>();
-                services.AddSingleton<ICurrencyRepository, CurrencyRepository>();
-                services.AddTransient<ICbrXmlParser, CbrXmlParser>();
 
                 services.AddLogging(b => b.AddConsole().AddFilter(level => level >= LogLevel.Warning));
             });
