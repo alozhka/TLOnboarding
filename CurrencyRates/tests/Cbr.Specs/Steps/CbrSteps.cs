@@ -64,7 +64,7 @@ public sealed class CbrSteps(TestServerFixture fixture)
     [Then("элемент №{int} курсов имеет код {string} с названием {string} и обменом {decimal}")]
     public void ТоЭлементКурсовИмеетКодСНазваниемИОбменом(int sequenceNumber, string code, string name, decimal rate)
     {
-        Assert.Equal(_dayRates.Rates[sequenceNumber - 1].CurrencyCode, code);
+        Assert.Equal(_dayRates!.Rates[sequenceNumber - 1].CurrencyCode, code);
         Assert.Equal(_dayRates.Rates[sequenceNumber - 1].CurrencyName, name);
         Assert.Equal(_dayRates.Rates[sequenceNumber - 1].ExchangeRate, rate);
     }

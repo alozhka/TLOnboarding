@@ -116,31 +116,31 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.ThenAsync("курсы имеют дату \"2008-08-26\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Тогда ");
 #line hidden
 #line 12
- await testRunner.AndAsync("получено курсов в количестве 43", ((string)(null)), ((global::Reqnroll.Table)(null)), "И ");
+ await testRunner.AndAsync("получено курсов в количестве 18", ((string)(null)), ((global::Reqnroll.Table)(null)), "И ");
 #line hidden
 #line 13
- await testRunner.AndAsync("элемент №1 курсов имеет код \"AUD\" с названием \"Австралийский доллар\" и обменом 69" +
-                        ".7852", ((string)(null)), ((global::Reqnroll.Table)(null)), "И ");
+ await testRunner.AndAsync("элемент №1 курсов имеет код \"AUD\" с названием \"Австралийский доллар\" и обменом 21" +
+                        ",1568", ((string)(null)), ((global::Reqnroll.Table)(null)), "И ");
 #line hidden
 #line 14
- await testRunner.AndAsync("элемент №2 курсов имеет код \"AZN\" с названием \"Азербайджанский манат\" и обменом 5" +
-                        "9.5088", ((string)(null)), ((global::Reqnroll.Table)(null)), "И ");
+ await testRunner.AndAsync("элемент №2 курсов имеет код \"BYR\" с названием \"Белорусских рублей\" и обменом 0,01" +
+                        "15714", ((string)(null)), ((global::Reqnroll.Table)(null)), "И ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="импорт из памяти, просмотр всех валютных пар к рублю за текущую дату")]
+        [Xunit.SkippableFactAttribute(DisplayName="импорт из памяти, просмотр всех валютных пар к рублю за указанную дату")]
         [Xunit.TraitAttribute("FeatureTitle", "курс валют ЦБ РФ")]
-        [Xunit.TraitAttribute("Description", "импорт из памяти, просмотр всех валютных пар к рублю за текущую дату")]
+        [Xunit.TraitAttribute("Description", "импорт из памяти, просмотр всех валютных пар к рублю за указанную дату")]
         [Xunit.TraitAttribute("Category", "positive")]
-        public async System.Threading.Tasks.Task ИмпортИзПамятиПросмотрВсехВалютныхПарКРублюЗаТекущуюДату()
+        public async System.Threading.Tasks.Task ИмпортИзПамятиПросмотрВсехВалютныхПарКРублюЗаУказаннуюДату()
         {
             string[] tagsOfScenario = new string[] {
                     "positive"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("импорт из памяти, просмотр всех валютных пар к рублю за текущую дату", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 25
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("импорт из памяти, просмотр всех валютных пар к рублю за указанную дату", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 17
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -150,29 +150,24 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 26
- await testRunner.GivenAsync("я импортировал курсы из файла за дату \"\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Пусть ");
+#line 18
+ await testRunner.GivenAsync("я импортировал курсы из памяти за дату \"2024-10-11\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Пусть ");
 #line hidden
-#line 27
- await testRunner.WhenAsync("я запрашиваю курсы за дату \"\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Когда ");
+#line 19
+ await testRunner.WhenAsync("я запрашиваю курсы за дату \"2024-10-11\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Когда ");
 #line hidden
-#line 28
- await testRunner.ThenAsync("курсы имеют дату \"2024-10-24\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Тогда ");
+#line 20
+ await testRunner.ThenAsync("курсы имеют дату \"2024-10-11\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Тогда ");
 #line hidden
-#line 29
- await testRunner.AndAsync("получено курсов в количестве 43", ((string)(null)), ((global::Reqnroll.Table)(null)), "И ");
+#line 21
+ await testRunner.AndAsync("получено курсов в количестве 2", ((string)(null)), ((global::Reqnroll.Table)(null)), "И ");
 #line hidden
-#line 30
- await testRunner.AndAsync("элемент №1 курсов имеет код \"AUD\" с названием \"Австралийский доллар\" и обменом 65" +
-                        ".7852", ((string)(null)), ((global::Reqnroll.Table)(null)), "И ");
+#line 22
+ await testRunner.AndAsync("элемент №1 курсов имеет код \"HKD\" с названием \"Гонконгский доллар\" и обменом 12,3" +
+                        "907", ((string)(null)), ((global::Reqnroll.Table)(null)), "И ");
 #line hidden
-#line 31
- await testRunner.AndAsync("элемент №2 курсов имеет код \"AZN\" с названием \"Азербайджанский манат\" и обменом 5" +
-                        "6.5088", ((string)(null)), ((global::Reqnroll.Table)(null)), "И ");
-#line hidden
-#line 32
- await testRunner.AndAsync("элемент №3 курсов имеет код \"GBP\" с названием \"Фунт стерлингов Соединенного корол" +
-                        "евства\" и обменом 125.9699", ((string)(null)), ((global::Reqnroll.Table)(null)), "И ");
+#line 23
+ await testRunner.AndAsync("элемент №2 курсов имеет код \"JPY\" с названием \"Японских иен\" и обменом 0,647076", ((string)(null)), ((global::Reqnroll.Table)(null)), "И ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
