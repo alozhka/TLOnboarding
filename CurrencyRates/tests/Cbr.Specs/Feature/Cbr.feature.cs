@@ -130,6 +130,49 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
+        [Xunit.SkippableFactAttribute(DisplayName="импорт из памяти, просмотр всех валютных пар к рублю за указанную дату")]
+        [Xunit.TraitAttribute("FeatureTitle", "курс валют ЦБ РФ")]
+        [Xunit.TraitAttribute("Description", "импорт из памяти, просмотр всех валютных пар к рублю за указанную дату")]
+        [Xunit.TraitAttribute("Category", "positive")]
+        public async System.Threading.Tasks.Task ИмпортИзПамятиПросмотрВсехВалютныхПарКРублюЗаУказаннуюДату()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "positive"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("импорт из памяти, просмотр всех валютных пар к рублю за указанную дату", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 17
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 18
+ await testRunner.GivenAsync("я импортировал курсы из памяти за дату \"2024-10-11\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Пусть ");
+#line hidden
+#line 19
+ await testRunner.WhenAsync("я запрашиваю курсы за дату \"2024-10-11\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Когда ");
+#line hidden
+#line 20
+ await testRunner.ThenAsync("курсы имеют дату \"2024-10-11\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Тогда ");
+#line hidden
+#line 21
+ await testRunner.AndAsync("получено курсов в количестве 2", ((string)(null)), ((global::Reqnroll.Table)(null)), "И ");
+#line hidden
+#line 22
+ await testRunner.AndAsync("элемент №1 курсов имеет код \"HKD\" с названием \"Гонконгский доллар\" и обменом 12,3" +
+                        "907", ((string)(null)), ((global::Reqnroll.Table)(null)), "И ");
+#line hidden
+#line 23
+ await testRunner.AndAsync("элемент №2 курсов имеет код \"JPY\" с названием \"Японских иен\" и обменом 0,647076", ((string)(null)), ((global::Reqnroll.Table)(null)), "И ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("Reqnroll", "2.0.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : object, Xunit.IAsyncLifetime

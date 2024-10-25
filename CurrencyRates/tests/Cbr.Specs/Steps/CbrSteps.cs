@@ -11,6 +11,7 @@ public sealed class CbrSteps(TestServerFixture fixture)
 {
     private readonly CbrTestDriver _driver = new(fixture.HttpClient, fixture.CurrencyRatesService);
     private CbrDayRatesDto? _dayRates;
+    private readonly Dictionary<DateOnly, string> _inMemoryDayRates = fixture.InMemoryDayRates;
 
     [Given(@"я импортировал курсы из файла за дату {string}")]
     public void ДопустимЯИмпортировалДанныеИзФайлаЗаДату(string date)
@@ -25,7 +26,7 @@ public sealed class CbrSteps(TestServerFixture fixture)
         _driver.ImportDayRatesFromFile(query);
     }
 
-    [Given(@"я импортировал данные из памяти за дату {string}")]
+    [Given(@"я импортировал курсы из памяти за дату {string}")]
     public void ДопустимЯИмпортировалДанныеИзПамятиЗаДату(string date)
     {
         if (string.IsNullOrEmpty(date))
@@ -33,8 +34,8 @@ public sealed class CbrSteps(TestServerFixture fixture)
             date = "daily";
         }
 
-        string query = string.Format("../../../Fixtures/XML_{0}.xml", date);
-        _driver.ImportDayRatesFromFile(query);
+        string rawXml = _inMemoryDayRates[DateOnly.Parse(date)];
+        _driver.ImportDayRatesFromRaw(rawXml);
     }
 
     [When(@"я запрашиваю курсы за дату {string}")]

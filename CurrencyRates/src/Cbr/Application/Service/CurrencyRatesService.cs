@@ -25,7 +25,7 @@ public class CurrencyRatesService(
 
     public void ImportCbrCurrencyRatesFromRaw(string rawXml)
     {
-        CbrDayRatesDto rates = _cbrXmlParser.FromFile(rawXml);
+        CbrDayRatesDto rates = _cbrXmlParser.FromRawString(rawXml);
         PersistRates(rates);
     }
 
