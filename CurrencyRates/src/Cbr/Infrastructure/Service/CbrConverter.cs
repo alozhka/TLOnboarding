@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Xml;
 using Cbr.Application.Dto;
 using Cbr.Domain.Entity;
@@ -27,7 +28,7 @@ internal static class CbrConverter
             currencies.Add(new CbrRateDto(
                 data.Single(pair => pair.Key == "CharCode").Value, 
                 data.Single(pair => pair.Key == "Name").Value, 
-                decimal.Parse(data.Single(pair => pair.Key == "VunitRate").Value)));
+                decimal.Parse(data.Single(pair => pair.Key == "VunitRate").Value, CultureInfo.GetCultureInfo("ru-RU"))));
         }
 
         return new CbrDayRatesDto(date.ToString("dd.MM.yyyy"), currencies);

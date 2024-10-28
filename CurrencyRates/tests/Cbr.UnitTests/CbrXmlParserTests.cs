@@ -1,5 +1,4 @@
 using Cbr.Application.Dto;
-using Cbr.Domain.Entity;
 using Cbr.Infrastructure.Service;
 
 namespace Cbr.UnitTests;
@@ -7,8 +6,6 @@ namespace Cbr.UnitTests;
 public class XmlParserTests
 {
     private readonly CbrXmlParser _parser = new();
-    private readonly Currency _rub = new("RUB", "Российских рублей");
-
 
     [Fact]
     public void Can_use_complex_types()
