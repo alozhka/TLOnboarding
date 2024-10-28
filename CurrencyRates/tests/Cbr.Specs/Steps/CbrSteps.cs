@@ -14,20 +14,19 @@ public sealed class CbrSteps(TestServerFixture fixture)
     private readonly Dictionary<DateOnly, string> _inMemoryDayRates = fixture.InMemoryDayRates;
 
     [Given(@"я импортировал курсы из файла за дату {string}")]
-    public void ДопустимЯИмпортировалДанныеИзФайлаЗаДату(string date)
+    public void ПустьЯИмпортировалДанныеИзФайлаЗаДату(string date)
     {
         if (string.IsNullOrEmpty(date))
         {
             date = "daily";
         }
 
-        //TODO: Ошибка с двойным ключём при сохранении валюты
         string query = string.Format("../../../Fixtures/XML_{0}.xml", date);
         _driver.ImportDayRatesFromFile(query);
     }
 
     [Given(@"я импортировал курсы из памяти за дату {string}")]
-    public void ДопустимЯИмпортировалДанныеИзПамятиЗаДату(string date)
+    public void ПустьЯИмпортировалДанныеИзПамятиЗаДату(string date)
     {
         if (string.IsNullOrEmpty(date))
         {
