@@ -8,12 +8,12 @@ public class CurrencyRate
     /// <summary>
     /// Из USD/RUB этим полем будет USD
     /// </summary>
-    public string SourceCurrencyCode { get; }
+    public string SourceCurrencyCode { get; } = null!;
 
     /// <summary>
     /// Из USD/RUB этим полем будет RUB
     /// </summary>
-    public string TargetCurrencyCode { get; }
+    public string TargetCurrencyCode { get; } = null!;
 
 
     /// <summary>
@@ -41,7 +41,7 @@ public class CurrencyRate
     /// <summary>
     /// For EF
     /// </summary>
-    public CurrencyRate()
+    protected CurrencyRate()
     {
     }
 }

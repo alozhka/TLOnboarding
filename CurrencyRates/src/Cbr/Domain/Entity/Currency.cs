@@ -6,12 +6,12 @@ public class Currency
     /// <summary>
     /// Код валюты (пр. RUB, USD и тд)
     /// </summary>
-    public string Code { get; }
+    public string Code { get; } = null!;
 
     /// <summary>
     /// Полное название (пр. Доллар США)
     /// </summary>
-    public string Name { get; }
+    public string Name { get; } = null!;
 
     public Currency(string code, string name)
     {
@@ -22,7 +22,7 @@ public class Currency
     /// <summary>
     /// For EF
     /// </summary>
-    public Currency()
+    protected Currency()
     {
     }
 }
