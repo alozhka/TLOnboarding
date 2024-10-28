@@ -1,3 +1,4 @@
+using Cbr.Application.Dto;
 using Cbr.Domain.Entity;
 using Cbr.Infrastructure.Service;
 
@@ -12,15 +13,14 @@ public class XmlParserTests
     [Fact]
     public void Can_use_complex_types()
     {
-        DateOnly date = new(2024, 10, 8);
-
-        List<CurrencyRate> expected =
+        List<CbrRateDto> expectedRates =
         [
-            new CurrencyRate(new Currency("AUD", "Австралийский доллар"), _rub, date, 65.7852m),
-            new CurrencyRate(new Currency("AZN", "Азербайджанский манат"), _rub, date, 56.5088m)
+            new CbrRateDto("AUD", "Австралийский доллар", 65.7852m),
+            new CbrRateDto("AZN", "Азербайджанский манат", 56.5088m)
         ];
+        CbrDayRatesDto expected = new("08.10.2024", expectedRates);
 
-        List<CurrencyRate> rate = _parser.FromRawString(
+        CbrDayRatesDto rate = _parser.FromRawString(
             """
             <?xml version="1.0" encoding="windows-1251"?>
             <ValCurs Date="08.10.2024" name="Foreign Currency Market">
@@ -39,15 +39,15 @@ public class XmlParserTests
     [Fact]
     public void Supports_parsing_from_xml_file()
     {
-        DateOnly date = new(2024, 10, 8);
-        List<CurrencyRate> expected =
+        List<CbrRateDto> expectedRates =
         [
-            new (new Currency("AUD", "Австралийский доллар"), _rub, date, 65.7852m),
-            new (new Currency("AZN", "Азербайджанский манат"), _rub, date, 65.7852m),
-            new (new Currency("JPY", "Японских иен"), _rub, date, 0.647076m),
+            new ("AUD", "Австралийский доллар", 65.7852m),
+            new ("AZN", "Азербайджанский манат", 65.7852m),
+            new ("JPY", "Японских иен", 0.647076m)
         ];
+        CbrDayRatesDto expected = new("08.10.2024", expectedRates);
 
-        List<CurrencyRate> rate = _parser.FromFile("../../../data/XML_daily.xml");
+        CbrDayRatesDto rate = _parser.FromFile("../../../data/XML_daily.xml");
 
         Assert.Equivalent(expected, rate);
     }
