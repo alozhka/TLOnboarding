@@ -29,6 +29,7 @@ public static class CbrModuleSetup
         services.AddDbContext<CbrDbContext>(o =>
         {
             o.UseNpgsql(cfg.GetConnectionString("Postgres"));
+            o.EnableSensitiveDataLogging();
         });
     }
 }

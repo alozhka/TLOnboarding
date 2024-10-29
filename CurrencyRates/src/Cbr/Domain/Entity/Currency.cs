@@ -11,7 +11,7 @@ public class Currency
     /// <summary>
     /// Полное название (пр. Доллар США)
     /// </summary>
-    public string Name { get; } = null!;
+    public string Name { get; set; } = null!;
 
     public Currency(string code, string name)
     {

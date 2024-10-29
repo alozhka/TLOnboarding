@@ -63,8 +63,8 @@ public sealed class CbrSteps(TestServerFixture fixture)
     {
         Assert.Equal(DateOnly.Parse(rawDate), DateOnly.Parse(_dayRates!.Date));
 
-        List<CbrRateDto> actualRates = table.CreateSet<CbrRateDto>().ToList();
+        List<CbrRateDto> expectedRates = table.CreateSet<CbrRateDto>().ToList();
 
-        Assert.Equal(_dayRates.Rates, actualRates);
+        Assert.Equal(expectedRates, _dayRates.Rates);
     }
 }

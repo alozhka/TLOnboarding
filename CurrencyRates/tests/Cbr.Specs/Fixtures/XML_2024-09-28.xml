@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<ValCurs Date="28.09.2024" name="Foreign Currency Market">
+    <Valute ID="R01200">
+        <NumCode>344</NumCode>
+        <CharCode>HKD</CharCode>
+        <Nominal>1</Nominal>
+        <Name>Гонконгский доллар</Name>
+        <Value>11,9475</Value>
+        <VunitRate>11,9475</VunitRate>
+    </Valute>
+    <Valute ID="R01210">
+        <NumCode>981</NumCode>
+        <CharCode>GEL</CharCode>
+        <Nominal>1</Nominal>
+        <Name>Грузинский лари</Name>
+        <Value>33,9793</Value>
+        <VunitRate>33,9793</VunitRate>
+    </Valute>
+    <Valute ID="R01215">
+        <NumCode>208</NumCode>
+        <CharCode>DKK</CharCode>
+        <Nominal>1</Nominal>
+        <Name>Датская крона</Name>
+        <Value>13,8685</Value>
+        <VunitRate>13,8685</VunitRate>
+    </Valute>
+    <Valute ID="R01230">
+        <NumCode>784</NumCode>
+        <CharCode>AED</CharCode>
+        <Nominal>1</Nominal>
+        <Name>Дирхам ОАЭ</Name>
+        <Value>25,2451</Value>
+        <VunitRate>25,2451</VunitRate>
+    </Valute>
+</ValCurs>
