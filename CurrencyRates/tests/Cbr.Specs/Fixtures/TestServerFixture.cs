@@ -32,7 +32,7 @@ public class TestServerFixture : IDisposable
             """
         },
         {
-            new DateOnly(2024, 08, 23),
+            new DateOnly(2024, 10, 08),
             """
             <?xml version="1.0" encoding="windows-1251"?>
             <ValCurs Date="08.10.2024" name="Foreign Currency Market">
