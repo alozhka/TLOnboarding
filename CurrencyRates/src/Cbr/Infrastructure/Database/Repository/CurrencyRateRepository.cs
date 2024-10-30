@@ -16,8 +16,8 @@ public class CurrencyRateRepository(CbrDbContext dbContext) : ICurrencyRateRepos
         List<DateOnly> externalDates = currencyRates.Select(cr => cr.Date).ToList();
 
         List<CurrencyRate> ratesInDb = _dbContext.CurrencyRate
-            .Where(cr => externalDates.Contains(cr.Date) 
-                && externalTargetCodes.Contains(cr.TargetCurrencyCode) 
+            .Where(cr => externalDates.Contains(cr.Date)
+                && externalTargetCodes.Contains(cr.TargetCurrencyCode)
                 && externalSourceCodes.Contains(cr.SourceCurrencyCode))
             .ToListAsync().Result;
         List<string> SourceCodesInDb = ratesInDb.Select(cr => cr.SourceCurrencyCode).ToList();
@@ -29,9 +29,11 @@ public class CurrencyRateRepository(CbrDbContext dbContext) : ICurrencyRateRepos
 
         foreach (CurrencyRate rate in ratesInDb)
         {
-            rate.ExchangeRate = currencyRates.Single(cr => cr == rate).ExchangeRate;
+            rate.ExchangeRate = currencyRates
+                .Single(cr => cr.SourceCurrencyCode == rate.SourceCurrencyCode && cr.TargetCurrencyCode == rate.TargetCurrencyCode)
+                .ExchangeRate;
         }
-        _dbContext.CurrencyRate.AddRange(currencyRates);
+        _dbContext.CurrencyRate.AddRange(ratesToAdd);
         _dbContext.CurrencyRate.UpdateRange(ratesInDb);
     }
 
