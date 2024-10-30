@@ -1,3 +1,4 @@
+using System.Text;
 using Cbr.Application.Dto;
 using Cbr.Infrastructure.Service;
 
@@ -36,6 +37,8 @@ public class XmlParserTests
     [Fact]
     public void Supports_parsing_from_xml_file()
     {
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
         List<CbrRateDto> expectedRates =
         [
             new ("AUD", "Австралийский доллар", 65.7852m),
@@ -92,6 +95,8 @@ public class XmlParserTests
     [Fact]
     public void Cannot_parse_incorrect_xml()
     {
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
         Assert.Throws<FormatException>(() => _parser.FromFile("../../../data/failure/XML_wrong.asp"));
 
         Assert.Throws<FormatException>(() => _parser.FromRawString(
