@@ -10,8 +10,10 @@ public class CurrencyRepository(CbrDbContext dbContext) : ICurrencyRepository
 
     public void AddOrUpdateRange(List<Currency> currencies)
     {
+        List<string> receivedCurrencyCodes = currencies.Select(c => c.Code).ToList();
+        
         List<Currency> internalCurrencies = _dbContext.Currency
-            .Where(c => currencies.Contains(c))
+            .Where(c => receivedCurrencyCodes.Contains(c.Code))
             .ToListAsync().Result;
         List<string> internalCurrencyCodes = internalCurrencies.Select(c => c.Code).ToList();
 

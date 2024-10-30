@@ -11,25 +11,28 @@ public class CurrencyRateRepository(CbrDbContext dbContext) : ICurrencyRateRepos
 
     public void AddOrUpdateRange(List<CurrencyRate> currencyRates)
     {
-        /* List<string> externalSourceCodes = currencyRates.Select(cr => cr.SourceCurrencyCode).ToList();
+        List<string> externalSourceCodes = currencyRates.Select(cr => cr.SourceCurrencyCode).ToList();
         List<string> externalTargetCodes = currencyRates.Select(cr => cr.TargetCurrencyCode).ToList();
-        List<string> externalDates = currencyRates.Select(cr => cr.TargetCurrencyCode).ToList();
+        List<DateOnly> externalDates = currencyRates.Select(cr => cr.Date).ToList();
 
         List<CurrencyRate> ratesInDb = _dbContext.CurrencyRate
-            .Where(cr => externalSourceCodes.Contains(cr.SourceCurrencyCode) && externalTargetCodes.Contains(cr.TargetCurrencyCode))
+            .Where(cr => externalDates.Contains(cr.Date) 
+                && externalTargetCodes.Contains(cr.TargetCurrencyCode) 
+                && externalSourceCodes.Contains(cr.SourceCurrencyCode))
             .ToListAsync().Result;
         List<string> SourceCodesInDb = ratesInDb.Select(cr => cr.SourceCurrencyCode).ToList();
         List<string> TargetCodesInDb = ratesInDb.Select(cr => cr.TargetCurrencyCode).ToList();
 
         List<CurrencyRate> ratesToAdd = currencyRates
-            .Where(cr => !SourceCodesInDb.Contains(cr.SourceCurrencyCode) && !TargetCodesInDb.Contains(cr.TargetCurrencyCode))
+            .Where(cr => !SourceCodesInDb.Contains(cr.SourceCurrencyCode) && !TargetCodesInDb.Contains(cr.TargetCurrencyCode)) // дата та же самая
             .ToList();
 
         foreach (CurrencyRate rate in ratesInDb)
         {
-            currencyRates.
-        } */
+            rate.ExchangeRate = currencyRates.Single(cr => cr == rate).ExchangeRate;
+        }
         _dbContext.CurrencyRate.AddRange(currencyRates);
+        _dbContext.CurrencyRate.UpdateRange(ratesInDb);
     }
 
     public async Task<CbrDayRatesDto?> ListCbrDayRatesToRub(DateOnly date, CancellationToken ct)

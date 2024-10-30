@@ -3,7 +3,7 @@ namespace Cbr.Domain.Entity;
 /// <summary>
 /// Показывает стоимость валюты к российскому рублю
 /// </summary>
-public class CurrencyRate : IEquatable<CurrencyRate>
+public class CurrencyRate
 {
     /// <summary>
     /// Из USD/RUB этим полем будет USD
@@ -24,7 +24,7 @@ public class CurrencyRate : IEquatable<CurrencyRate>
     /// <summary>
     /// Стоимость 1 единицы валюты в рублёвом эквиваленте (пр. USD/RUB = 96.89)
     /// </summary>
-    public decimal ExchangeRate { get; }
+    public decimal ExchangeRate { get; set; }
 
     public CurrencyRate(
         string sourceCurrencyCode,
@@ -43,16 +43,5 @@ public class CurrencyRate : IEquatable<CurrencyRate>
     /// </summary>
     protected CurrencyRate()
     {
-    }
-
-    public bool Equals(CurrencyRate? other)
-    {
-        if (ReferenceEquals(null, other)) return false;
-        if (ReferenceEquals(this, other)) return true;
-        
-        return SourceCurrencyCode == other.SourceCurrencyCode
-            && TargetCurrencyCode == other.TargetCurrencyCode
-            && Date == other.Date
-            && ExchangeRate == other.ExchangeRate;
     }
 }
