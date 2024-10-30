@@ -1,17 +1,20 @@
 using Cbr.Application.Abstractions;
 using Cbr.Application.Dto;
 using Cbr.Domain.Entity;
+using Cbr.Infrastructure.Service;
 
 namespace Cbr.Application.Service;
 
 public class CurrencyRatesService(
     ICurrencyRateRepository currencyRatesRepository,
     ICurrencyRepository currencyRepository,
-    ICbrXmlParser cbrXmlParser)
+    ICbrXmlParser cbrXmlParser,
+    ICbrApiService cbrApiService)
 {
     private readonly ICurrencyRateRepository _currencyRatesRepository = currencyRatesRepository;
     private readonly ICurrencyRepository _currencyRepository = currencyRepository;
     private readonly ICbrXmlParser _cbrXmlParser = cbrXmlParser;
+    private readonly ICbrApiService _cbrApiService = cbrApiService;
 
 
     public async Task<CbrDayRatesDto?> ListDayRatesByDate(DateOnly date, CancellationToken ct)
@@ -25,6 +28,13 @@ public class CurrencyRatesService(
 
     public void ImportCbrCurrencyRatesFromRaw(string rawXml)
     {
+        CbrDayRatesDto rates = _cbrXmlParser.FromRawString(rawXml);
+        PersistRates(rates);
+    }
+
+    public async Task ImportFromCbrApiAsync(DateOnly date, CancellationToken ct)
+    {
+        string rawXml = await _cbrApiService.GetCbrDayRatesRaw(date, ct);
         CbrDayRatesDto rates = _cbrXmlParser.FromRawString(rawXml);
         PersistRates(rates);
     }

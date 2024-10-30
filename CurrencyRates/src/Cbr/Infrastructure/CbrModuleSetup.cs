@@ -25,6 +25,7 @@ public static class CbrModuleSetup
         Service
         */
         services.AddTransient<ICbrXmlParser, CbrXmlParser>();
+        services.AddTransient<ICbrApiService, CbrApiService>();
 
         services.AddDbContext<CbrDbContext>(o =>
         {

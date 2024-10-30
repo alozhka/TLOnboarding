@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17">
   <diagram name="Page-1" id="Y3O6-fXWIPMZDo0kcvyY">
-    <mxGraphModel dx="2045" dy="697" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2359" dy="880" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -38,10 +38,10 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="qHWeuP3GEfssrpxVN6ST-19" value="Application" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="-820" y="400" width="740" height="350" as="geometry" />
+          <mxGeometry x="-340" y="40" width="520" height="340" as="geometry" />
         </mxCell>
         <mxCell id="TeqrsGrh8CQe0pCmq5D--1" value="CbrRateDto" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="qHWeuP3GEfssrpxVN6ST-19" vertex="1">
-          <mxGeometry x="550" y="170" width="160" height="104" as="geometry" />
+          <mxGeometry x="340" y="63" width="160" height="104" as="geometry" />
         </mxCell>
         <mxCell id="TeqrsGrh8CQe0pCmq5D--5" value="CurrencyCode: string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="TeqrsGrh8CQe0pCmq5D--1" vertex="1">
           <mxGeometry y="26" width="160" height="26" as="geometry" />
@@ -53,7 +53,7 @@
           <mxGeometry y="78" width="160" height="26" as="geometry" />
         </mxCell>
         <mxCell id="TeqrsGrh8CQe0pCmq5D--11" value="&lt;span style=&quot;text-align: left;&quot;&gt;CbrRateDto&lt;/span&gt;" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="qHWeuP3GEfssrpxVN6ST-19" vertex="1">
-          <mxGeometry x="410" y="40" width="300" height="78" as="geometry" />
+          <mxGeometry x="20" y="50" width="300" height="78" as="geometry" />
         </mxCell>
         <mxCell id="TeqrsGrh8CQe0pCmq5D--18" value="Date: Date" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="TeqrsGrh8CQe0pCmq5D--11" vertex="1">
           <mxGeometry y="26" width="300" height="26" as="geometry" />
@@ -61,17 +61,8 @@
         <mxCell id="TeqrsGrh8CQe0pCmq5D--21" value="Currencies: CbrRateDto[]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="TeqrsGrh8CQe0pCmq5D--11" vertex="1">
           <mxGeometry y="52" width="300" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="XGIjorbHftyJauIKbd2A-5" value="CbrXmlParser" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="qHWeuP3GEfssrpxVN6ST-19" vertex="1">
-          <mxGeometry x="20" y="40" width="270" height="78" as="geometry" />
-        </mxCell>
-        <mxCell id="XGIjorbHftyJauIKbd2A-8" value="CbrRateDto FromFile(string filepath)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="XGIjorbHftyJauIKbd2A-5" vertex="1">
-          <mxGeometry y="26" width="270" height="26" as="geometry" />
-        </mxCell>
-        <mxCell id="XGIjorbHftyJauIKbd2A-9" value="CbrRateDto&amp;nbsp;FromRawString(string rawXml)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="XGIjorbHftyJauIKbd2A-5" vertex="1">
-          <mxGeometry y="52" width="270" height="26" as="geometry" />
-        </mxCell>
         <mxCell id="qHWeuP3GEfssrpxVN6ST-2" value="CurrencyRatesService" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="qHWeuP3GEfssrpxVN6ST-19">
-          <mxGeometry x="20" y="150" width="470" height="104" as="geometry" />
+          <mxGeometry x="30" y="190" width="470" height="130" as="geometry" />
         </mxCell>
         <mxCell id="qHWeuP3GEfssrpxVN6ST-3" value="Task&amp;lt;CbrDayRatesDto?&amp;gt; ListDayRatesByDate(DateOnly date, CancellationToken ct)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="qHWeuP3GEfssrpxVN6ST-2">
           <mxGeometry y="26" width="470" height="26" as="geometry" />
@@ -82,35 +73,38 @@
         <mxCell id="qHWeuP3GEfssrpxVN6ST-5" value="ImportCbrCurrencyRatesFromRaw(string rawXml)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="qHWeuP3GEfssrpxVN6ST-2">
           <mxGeometry y="78" width="470" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="qHWeuP3GEfssrpxVN6ST-21" value="CbrApiService" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="qHWeuP3GEfssrpxVN6ST-19">
-          <mxGeometry x="20" y="280" width="420" height="52" as="geometry" />
-        </mxCell>
-        <mxCell id="qHWeuP3GEfssrpxVN6ST-22" value="Task&amp;lt;string&amp;gt; GetCbrDayRatesRaw(DateOnly date, CancellationToken ct)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="qHWeuP3GEfssrpxVN6ST-21">
-          <mxGeometry y="26" width="420" height="26" as="geometry" />
+        <mxCell id="qHWeuP3GEfssrpxVN6ST-54" value="Task ImportFromCbrApi(DateOnly date)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="qHWeuP3GEfssrpxVN6ST-2">
+          <mxGeometry y="104" width="470" height="26" as="geometry" />
         </mxCell>
         <mxCell id="qHWeuP3GEfssrpxVN6ST-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="qHWeuP3GEfssrpxVN6ST-19" source="TeqrsGrh8CQe0pCmq5D--21" target="TeqrsGrh8CQe0pCmq5D--1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="qHWeuP3GEfssrpxVN6ST-20" value="Hangfire" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="-420" y="770" width="375" height="150" as="geometry" />
+          <mxGeometry x="-340" y="400" width="330" height="160" as="geometry" />
         </mxCell>
         <mxCell id="qHWeuP3GEfssrpxVN6ST-26" value="GetCbrDayRatesJob" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="qHWeuP3GEfssrpxVN6ST-20">
-          <mxGeometry x="40" y="46" width="300" height="52" as="geometry" />
+          <mxGeometry x="20" y="40" width="300" height="52" as="geometry" />
         </mxCell>
         <mxCell id="qHWeuP3GEfssrpxVN6ST-29" value="RunAsync(DateOnly date, CancellationToken ct)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="qHWeuP3GEfssrpxVN6ST-26">
           <mxGeometry y="26" width="300" height="26" as="geometry" />
         </mxCell>
         <mxCell id="qHWeuP3GEfssrpxVN6ST-34" value="Infrastructure" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="-820" y="770" width="360" height="210" as="geometry" />
+          <mxGeometry x="-820" y="400" width="450" height="210" as="geometry" />
         </mxCell>
         <mxCell id="qHWeuP3GEfssrpxVN6ST-42" value="CbrXmlParser" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="qHWeuP3GEfssrpxVN6ST-34">
-          <mxGeometry x="20" y="40" width="270" height="78" as="geometry" />
+          <mxGeometry x="10" y="40" width="270" height="78" as="geometry" />
         </mxCell>
         <mxCell id="qHWeuP3GEfssrpxVN6ST-43" value="CbrRateDto FromFile(string filepath)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="qHWeuP3GEfssrpxVN6ST-42">
           <mxGeometry y="26" width="270" height="26" as="geometry" />
         </mxCell>
         <mxCell id="qHWeuP3GEfssrpxVN6ST-44" value="CbrRateDto&amp;nbsp;FromRawString(string rawXml)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="qHWeuP3GEfssrpxVN6ST-42">
           <mxGeometry y="52" width="270" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="qHWeuP3GEfssrpxVN6ST-21" value="CbrApiService" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="qHWeuP3GEfssrpxVN6ST-34">
+          <mxGeometry x="10" y="130" width="400" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="qHWeuP3GEfssrpxVN6ST-22" value="Task&amp;lt;string&amp;gt; GetCbrDayRatesRaw(DateOnly date, CancellationToken ct)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="qHWeuP3GEfssrpxVN6ST-21">
+          <mxGeometry y="26" width="400" height="26" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
