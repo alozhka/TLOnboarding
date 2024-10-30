@@ -1,7 +1,7 @@
 namespace Cbr.Domain.Entity;
 
 
-public class Currency
+public class Currency : IEquatable<Currency>
 {
     /// <summary>
     /// Код валюты (пр. RUB, USD и тд)
@@ -24,5 +24,13 @@ public class Currency
     /// </summary>
     protected Currency()
     {
+    }
+
+    public bool Equals(Currency? other)
+    {
+        if (ReferenceEquals(null, other)) return false;
+        if (ReferenceEquals(this, other)) return true;
+        
+        return Code == other.Code && Name == other.Name;
     }
 }

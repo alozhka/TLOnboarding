@@ -1,7 +1,6 @@
 using Cbr.Application.Abstractions;
 using Cbr.Application.Dto;
 using Cbr.Domain.Entity;
-using Cbr.Infrastructure.Service;
 
 namespace Cbr.Application.Service;
 
@@ -33,7 +32,7 @@ public class CurrencyRatesService(
     }
 
     /// <summary>
-    /// Берёт данные с API ЦБ РФ и сохраняет в талблицу
+    /// Берёт данные с API ЦБ РФ и сохраняет в таблицу
     /// </summary>
     /// <param name="date"></param>
     /// <param name="ct"></param>
@@ -53,7 +52,7 @@ public class CurrencyRatesService(
         List<Currency> currencies = rates.Rates.Select(cr => new Currency(cr.CurrencyCode, cr.CurrencyName)).ToList();
 
         _currencyRepository.AddOrUpdateRange(currencies);
-        _currencyRatesRepository.AddRange(currencyRates);
+        _currencyRatesRepository.AddOrUpdateRange(currencyRates);
 
         _currencyRatesRepository.SaveChanges();
     }

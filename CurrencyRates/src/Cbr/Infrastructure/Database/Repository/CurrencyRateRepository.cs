@@ -9,8 +9,26 @@ public class CurrencyRateRepository(CbrDbContext dbContext) : ICurrencyRateRepos
 {
     private readonly CbrDbContext _dbContext = dbContext;
 
-    public void AddRange(List<CurrencyRate> currencyRates)
+    public void AddOrUpdateRange(List<CurrencyRate> currencyRates)
     {
+        /* List<string> externalSourceCodes = currencyRates.Select(cr => cr.SourceCurrencyCode).ToList();
+        List<string> externalTargetCodes = currencyRates.Select(cr => cr.TargetCurrencyCode).ToList();
+        List<string> externalDates = currencyRates.Select(cr => cr.TargetCurrencyCode).ToList();
+
+        List<CurrencyRate> ratesInDb = _dbContext.CurrencyRate
+            .Where(cr => externalSourceCodes.Contains(cr.SourceCurrencyCode) && externalTargetCodes.Contains(cr.TargetCurrencyCode))
+            .ToListAsync().Result;
+        List<string> SourceCodesInDb = ratesInDb.Select(cr => cr.SourceCurrencyCode).ToList();
+        List<string> TargetCodesInDb = ratesInDb.Select(cr => cr.TargetCurrencyCode).ToList();
+
+        List<CurrencyRate> ratesToAdd = currencyRates
+            .Where(cr => !SourceCodesInDb.Contains(cr.SourceCurrencyCode) && !TargetCodesInDb.Contains(cr.TargetCurrencyCode))
+            .ToList();
+
+        foreach (CurrencyRate rate in ratesInDb)
+        {
+            currencyRates.
+        } */
         _dbContext.CurrencyRate.AddRange(currencyRates);
     }
 

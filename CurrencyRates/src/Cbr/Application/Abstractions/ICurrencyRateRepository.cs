@@ -5,8 +5,7 @@ namespace Cbr.Application.Abstractions;
 
 public interface ICurrencyRateRepository
 {
-    void AddRange(List<CurrencyRate> currencyRates);
-    void UpdateRange(List<CurrencyRate> currencyRates);
+    void AddOrUpdateRange(List<CurrencyRate> currencyRates);
     void SaveChanges();
 
     Task<CbrDayRatesDto?> ListCbrDayRatesToRub(DateOnly date, CancellationToken ct);
