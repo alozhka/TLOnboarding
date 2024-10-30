@@ -32,6 +32,12 @@ public class CurrencyRatesService(
         PersistRates(rates);
     }
 
+    /// <summary>
+    /// Берёт данные с API ЦБ РФ и сохраняет в талблицу
+    /// </summary>
+    /// <param name="date"></param>
+    /// <param name="ct"></param>
+    /// <returns></returns>
     public async Task ImportFromCbrApiAsync(DateOnly date, CancellationToken ct)
     {
         string rawXml = await _cbrApiService.GetCbrDayRatesRaw(date, ct);

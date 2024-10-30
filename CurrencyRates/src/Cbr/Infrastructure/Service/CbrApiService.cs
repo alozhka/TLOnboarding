@@ -2,6 +2,11 @@ using Cbr.Application.Abstractions;
 
 namespace Cbr.Infrastructure.Service;
 
+/// <summary>
+/// !!!Обязательно!!! Добавьте поддержку кодировки windows-1251.
+/// Данные с Центробанка приходят именно в этой кодировке
+/// </summary>
+/// <param name="httpClient"></param>
 public class CbrApiService(HttpClient httpClient) : ICbrApiService
 {
     private readonly HttpClient _httpClient = httpClient;

@@ -1,3 +1,4 @@
+using System.Text;
 using Cbr.Application;
 using Cbr.Application.Abstractions;
 using Cbr.Infrastructure.Database;
@@ -15,6 +16,7 @@ public static class CbrModuleSetup
     {
         services.AddCbrApplication();
         
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         /*
         Repository
         */

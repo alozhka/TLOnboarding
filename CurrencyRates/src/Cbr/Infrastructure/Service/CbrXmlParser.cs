@@ -2,10 +2,14 @@ using System.Text;
 using System.Xml;
 using Cbr.Application.Abstractions;
 using Cbr.Application.Dto;
-using Cbr.Domain.Entity;
 
 namespace Cbr.Infrastructure.Service;
 
+
+/// <summary>
+/// Парсит xml из файла или строки в сущность <see cref="CbrDayRatesDto"/>
+/// !!!Обязательно!!! Добавьте поддержку кодировки windows-1251
+/// </summary>
 public class CbrXmlParser : ICbrXmlParser
 {
     /// <summary>
@@ -14,8 +18,6 @@ public class CbrXmlParser : ICbrXmlParser
     /// <param name="filepath">Путь до xml-файла</param>
     public CbrDayRatesDto FromFile(string filepath)
     {
-        SetupEncoding();
-
         string rawXml = File.ReadAllText(filepath, Encoding.GetEncoding("windows-1251"));
         return LoadAndParse(rawXml);
     }
@@ -26,8 +28,6 @@ public class CbrXmlParser : ICbrXmlParser
     /// <param name="rawXml">Xml-cтрока</param>
     public CbrDayRatesDto FromRawString(string rawXml)
     {
-        SetupEncoding();
-
         return LoadAndParse(rawXml);
     }
 
@@ -63,10 +63,5 @@ public class CbrXmlParser : ICbrXmlParser
 
             throw;
         }
-    }
-
-    private static void SetupEncoding()
-    {
-        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
     }
 }
