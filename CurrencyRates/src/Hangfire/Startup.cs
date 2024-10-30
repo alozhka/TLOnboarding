@@ -1,16 +1,25 @@
+using Cbr.Infrastructure;
+using Hangfire.Helpers;
+using Hangfire.Jobs;
+
 namespace Hangfire;
 
 internal static class Startup
 {
-    public static void AddServices(this IServiceCollection services)
+    public static void AddServices(this IServiceCollection services, IConfiguration cfg)
     {
+        services.AddCbr(cfg);
+        services.AddHttpClient();
         services.AddHangfire(cfg => cfg
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
                 .UseInMemoryStorage());
-        
-        services.AddHangfireServer();
+
+        services.AddHangfireServer((provider, serverOptions) => 
+        {
+            serverOptions.Activator = new ServiceProviderAwareJobActivator(provider);
+        });
     }
 
     public static void UseServices(this IApplicationBuilder app)
@@ -18,16 +27,10 @@ internal static class Startup
         app.UseRouting();
 
         app.UseHangfireDashboard("/hangfire");
-        
-        RecurringJob.AddOrUpdate(
-            "Write current date in console",
-            () => WriteCurrentDateInConsole(),
-            Cron.Minutely);
-    }
 
-    public static void WriteCurrentDateInConsole()
-    {
-        DateTime currentTime = DateTime.Now;
-        Console.WriteLine("Running simple task at " + currentTime.ToString("yyyy-MM-dd HH:mm:ss"));
+        RecurringJob.AddOrUpdate<ImportCbrDayRatesJob>(
+            "Import day rates from cbr api",
+            s => s.RunAsync(new DateOnly(2023, 11, 12), CancellationToken.None),
+            Cron.Hourly);
     }
 }

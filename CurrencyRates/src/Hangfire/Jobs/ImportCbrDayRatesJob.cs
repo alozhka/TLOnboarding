@@ -1,9 +1,11 @@
+using Cbr.Application.Service;
+
 namespace Hangfire.Jobs;
 
-public class ImportCbrDayRatesJob
+public class ImportCbrDayRatesJob(CurrencyRatesService currencyRatesService)
 {
-    public Task RunAsync()
+    public async Task RunAsync(DateOnly date, CancellationToken ct)
     {
-        throw new NotImplementedException();
+        await currencyRatesService.ImportFromCbrApiAsync(date, ct);
     }
 }
