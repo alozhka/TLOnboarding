@@ -39,7 +39,7 @@ internal static class Startup
     {
         app.UseRouting();
 
-        app.UseHangfireDashboard("/hangfire");
+        app.UseHangfireDashboard();
 
         RecurringJob.AddOrUpdate<ImportCbrDayRatesJob>(
             "Import day rates from cbr api",
