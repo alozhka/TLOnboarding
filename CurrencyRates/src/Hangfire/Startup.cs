@@ -1,6 +1,7 @@
 using Cbr.Infrastructure;
 using Hangfire.Helpers;
 using Hangfire.Jobs;
+using Hangfire.PostgreSql;
 
 namespace Hangfire;
 
@@ -10,13 +11,25 @@ internal static class Startup
     {
         services.AddCbr(cfg);
         services.AddHttpClient();
-        services.AddHangfire(cfg => cfg
+        services.AddHangfire(globalConfiguration =>
+        {
+            globalConfiguration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
                 .UseSimpleAssemblyNameTypeSerializer()
-                .UseRecommendedSerializerSettings()
-                .UseInMemoryStorage());
+                .UseRecommendedSerializerSettings();
+            if (cfg["Applications:EnableIntegrationTesting"] == "true")
+            {
+                globalConfiguration.UseInMemoryStorage();
+            }
+            else
+            {
+                globalConfiguration.UsePostgreSqlStorage(bootstrapperOptions =>
+                    bootstrapperOptions.UseNpgsqlConnection(cfg.GetConnectionString("Postgres")));
+            }
+        });
 
-        services.AddHangfireServer((provider, serverOptions) => 
+
+        services.AddHangfireServer((provider, serverOptions) =>
         {
             serverOptions.Activator = new ServiceProviderAwareJobActivator(provider);
         });
@@ -30,7 +43,7 @@ internal static class Startup
 
         RecurringJob.AddOrUpdate<ImportCbrDayRatesJob>(
             "Import day rates from cbr api",
-            s => s.RunAsync(new DateOnly(2023, 11, 12), CancellationToken.None),
+            s => s.RunAsync(CancellationToken.None),
             Cron.Hourly);
     }
 }
