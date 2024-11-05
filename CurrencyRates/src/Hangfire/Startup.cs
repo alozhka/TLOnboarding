@@ -41,8 +41,8 @@ internal static class Startup
         app.UseHangfireDashboard();
 
         RecurringJob.AddOrUpdate<ImportCbrDayRatesJob>(
-            "Import day rates from cbr api",
+            ImportCbrDayRatesJob.JobId,
             s => s.RunAsync(CancellationToken.None),
-            Cron.Hourly);
+            ImportCbrDayRatesJob.Cron);
     }
 }
