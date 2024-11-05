@@ -10,7 +10,6 @@ internal static class Startup
     public static void AddServices(this IServiceCollection services, IConfiguration cfg)
     {
         services.AddCbr(cfg);
-        services.AddHttpClient();
         services.AddHangfire(globalConfiguration =>
         {
             globalConfiguration

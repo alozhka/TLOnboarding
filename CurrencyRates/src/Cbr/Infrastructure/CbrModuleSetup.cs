@@ -17,6 +17,7 @@ public static class CbrModuleSetup
         services.AddCbrApplication();
         
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        services.AddHttpClient();
         /*
         Repository
         */

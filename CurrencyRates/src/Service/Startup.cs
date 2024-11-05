@@ -8,8 +8,6 @@ public static class Startup
     public static void AddDependencies(this IServiceCollection services, IConfiguration cfg)
     {
         services.AddCbr(cfg);
-        services.AddHttpClient();
-        // TODO: попробовать добавить HttpClient в конфигурацию модуля Cbr
         
         services.AddControllers();
         services.AddEndpointsApiExplorer();
