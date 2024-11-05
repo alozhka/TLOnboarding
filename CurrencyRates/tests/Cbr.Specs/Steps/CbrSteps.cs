@@ -1,6 +1,7 @@
 using Cbr.Application.Dto;
 using Cbr.Specs.Drivers;
 using Cbr.Specs.Fixtures;
+using Hangfire;
 using Reqnroll;
 
 namespace Cbr.Specs.Steps;
@@ -44,7 +45,7 @@ public sealed class CbrSteps(TestServerFixture fixture)
     Когда
     */
     [When(@"я запрашиваю курсы за дату {string}")]
-    public async Task КогдаЯЗапрашиваюДанныеЗаДату(string date)
+    public async Task КогдаЯЗапрашиваюКурсыЗаДату(string date)
     {
         DateOnly? dateOnly = null;
         if (!string.IsNullOrEmpty(date))

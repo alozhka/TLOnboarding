@@ -15,7 +15,8 @@ public class TestServerFixture : IDisposable
     private IDbContextTransaction? _dbTransaction;
     public HttpClient HttpClient { get; }
     public CurrencyRatesService CurrencyRatesService { get; }
-    public Dictionary<DateOnly, string> InMemoryDayRates = new()
+
+    public readonly Dictionary<DateOnly, string> InMemoryDayRates = new()
     {
         {
             new DateOnly(2024, 10, 11),
@@ -56,11 +57,13 @@ public class TestServerFixture : IDisposable
             b.UseEnvironment("Development");
             b.ConfigureTestServices(services =>
             {
-                ServiceDescriptor descriptor = services.Single(d => d.ServiceType == typeof(DbContextOptions<CbrDbContext>));
+                ServiceDescriptor descriptor =
+                    services.Single(d => d.ServiceType == typeof(DbContextOptions<CbrDbContext>));
                 services.AddSingleton(descriptor.ServiceType, descriptor.ImplementationFactory!);
                 services.AddSingleton<CbrDbContext>();
 
-                services.AddLogging(b => b.AddConsole().AddFilter(level => level >= LogLevel.Warning));
+                services.AddLogging(loggingBuilder =>
+                    loggingBuilder.AddConsole().AddFilter(level => level >= LogLevel.Warning));
             });
         });
         HttpClient = factory.CreateClient();
@@ -71,6 +74,7 @@ public class TestServerFixture : IDisposable
         using var scope = factory.Services.CreateScope();
         CurrencyRatesService = scope.ServiceProvider.GetRequiredService<CurrencyRatesService>();
     }
+
     public void Dispose()
     {
         if (_dbTransaction is not null)
@@ -79,6 +83,7 @@ public class TestServerFixture : IDisposable
             _dbTransaction.Dispose();
             _dbTransaction = null;
         }
+
         GC.SuppressFinalize(this);
     }
 
