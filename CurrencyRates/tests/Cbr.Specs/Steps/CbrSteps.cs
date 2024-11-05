@@ -55,6 +55,12 @@ public sealed class CbrSteps(TestServerFixture fixture)
 
         _dayRates = await _driver.GetDayRates(dateOnly);
     }
+    
+    [When("я запрашиваю курсы за текущую дату")]
+    public async Task КогдаЯЗапрашиваюКурсыТекущуюЗаДату()
+    {
+        _dayRates = await _driver.GetDayRates();
+    }
 
     /*
     Тогда
@@ -63,6 +69,17 @@ public sealed class CbrSteps(TestServerFixture fixture)
     public void ТоЗаДатуБудутКурсы(string rawDate, DataTable table)
     {
         Assert.Equal(DateOnly.Parse(rawDate), DateOnly.Parse(_dayRates!.Date));
+
+        List<CbrRateDto> expectedRates = table.CreateSet<CbrRateDto>().ToList();
+
+        Assert.Equal(expectedRates, _dayRates.Rates);
+    }
+
+    [Then("за текущую дату будут курсы:")]
+    public void ЗаТекущуюДатуБудутКурсы(DataTable table)
+    {
+        
+        Assert.Equal(DateOnly.FromDateTime(DateTime.Now), DateOnly.Parse(_dayRates!.Date));
 
         List<CbrRateDto> expectedRates = table.CreateSet<CbrRateDto>().ToList();
 

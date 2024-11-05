@@ -8,16 +8,15 @@ namespace Cbr.Specs.Drivers;
 public class HangfireTestDriver : IDisposable
 {
     public BackgroundJobServer JobServer { get; }
-    public JobStorage JobStorage { get; }
+    public JobStorage InMemoryJobStorage { get; }
 
     private readonly List<string> _recurringJobIds = [];
 
     public HangfireTestDriver()
     {
         GlobalConfiguration.Configuration.UseInMemoryStorage();
-        JobStorage = new InMemoryStorage();
+        InMemoryJobStorage = new InMemoryStorage();
         JobServer = new BackgroundJobServer();
-
     }
 
     public void AddCbrApiImportRecurringJob()
@@ -26,7 +25,7 @@ public class HangfireTestDriver : IDisposable
             ImportCbrDayRatesJob.JobId,
             s => s.RunAsync(CancellationToken.None),
             ImportCbrDayRatesJob.Cron);
-        
+
         _recurringJobIds.Add(ImportCbrDayRatesJob.JobId);
     }
 
@@ -37,7 +36,7 @@ public class HangfireTestDriver : IDisposable
             RecurringJob.TriggerJob(jobId);
         }
     }
-    
+
     public void Dispose()
     {
         JobServer.Dispose();

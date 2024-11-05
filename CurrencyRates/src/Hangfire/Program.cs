@@ -7,5 +7,7 @@ var app = builder.Build();
 
 app.UseServices();
 
-    
+
 app.Run();
+
+public class HangfireProgram;
