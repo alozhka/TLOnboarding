@@ -10,4 +10,4 @@ app.UseServices();
 
 app.Run();
 
-public class HangfireProgram;
+public partial class Program;

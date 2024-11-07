@@ -1,30 +1,26 @@
 using Hangfire;
 using Hangfire.Common;
 using Hangfire.Storage;
-using HangfireServer.Helpers.Date;
 using HangfireServer.Jobs;
+using HangfireServer.Specs.Helpers.Date;
 
-namespace Cbr.Specs.Drivers;
+namespace HangfireServer.Specs.Drivers;
 
 public class HangfireTestDriver : IDisposable
 {
     private readonly Lazy<IStorageConnection> _storageConnection = new(GetStorageConnection);
     private readonly Lazy<RecurringJobManager> _recurringJobManager = new(GetRecurringJobManager);
 
-    private readonly List<string> _recurringJobIds = [];
-
-    public HangfireTestDriver()
-    {
-    }
+    private readonly List<string> _affectedRecurringJobIds = [];
 
     public void AddCbrApiImportRecurringJob()
     {
-        _recurringJobIds.Add(ImportCbrDayRatesJob.JobId);
+        _affectedRecurringJobIds.Add(ImportCbrDayRatesJob.JobId);
     }
 
     public void TriggerAllRecurringJobs()
     {
-        foreach (string jobId in _recurringJobIds)
+        foreach (string jobId in _affectedRecurringJobIds)
         {
             RecurringJob.TriggerJob(jobId);
         }

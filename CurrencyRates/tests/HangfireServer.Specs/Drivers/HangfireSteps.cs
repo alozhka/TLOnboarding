@@ -1,10 +1,9 @@
-using Cbr.Specs.Drivers;
 using Reqnroll;
 
-namespace Cbr.Specs.Steps;
+namespace HangfireServer.Specs.Drivers;
 
 [Binding]
-public sealed class HangfireSpecs
+public sealed class HangfireSteps
 {
     private readonly HangfireTestDriver _driver = new();
 

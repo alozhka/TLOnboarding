@@ -1,0 +1,11 @@
+{
+    "$schema": "https://schemas.reqnroll.net/reqnroll-config-latest.json",
+    
+    "bindingCulture": {
+        "language": "ru-RU"
+    },
+
+    "language": {
+        "feature": "ru-RU"
+    }
+}

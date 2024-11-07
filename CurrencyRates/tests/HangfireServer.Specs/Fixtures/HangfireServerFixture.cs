@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace Cbr.Specs.Fixtures;
+namespace HangfireServer.Specs.Fixtures;
 
 public class HangfireServerFixture : IDisposable
 {
     public HangfireServerFixture()
     {
-        WebApplicationFactory<HangfireProgram> factory = new();
+        WebApplicationFactory<Program> factory = new();
     }
     public void Dispose()
     {
