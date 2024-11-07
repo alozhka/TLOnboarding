@@ -4,7 +4,7 @@ using Hangfire;
 namespace HangfireServer.Helpers;
 
 /// <summary>
-/// Опзволяет Hangfire получить зависимости из DI контейнера
+/// Позволяет Hangfire получить зависимости из DI контейнера
 /// </summary>
 /// <param name="serviceProvider"></param>
 public class ServiceProviderAwareJobActivator(IServiceProvider serviceProvider) : JobActivator
