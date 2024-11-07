@@ -1,5 +1,6 @@
 using Hangfire;
-using Hangfire.InMemory;
+using Hangfire.Common;
+using Hangfire.Helpers;
 using Hangfire.Jobs;
 using Hangfire.Storage;
 
@@ -7,16 +8,14 @@ namespace Cbr.Specs.Drivers;
 
 public class HangfireTestDriver : IDisposable
 {
-    public BackgroundJobServer JobServer { get; }
-    public JobStorage InMemoryJobStorage { get; }
+    private readonly Lazy<IStorageConnection> _storageConnection = new(GetStorageConnection);
+    private readonly Lazy<RecurringJobManager> _recurringJobManager = new(GetRecurringJobManager);
 
     private readonly List<string> _recurringJobIds = [];
 
     public HangfireTestDriver()
     {
         GlobalConfiguration.Configuration.UseInMemoryStorage();
-        InMemoryJobStorage = new InMemoryStorage();
-        JobServer = new BackgroundJobServer();
     }
 
     public void AddCbrApiImportRecurringJob()
@@ -37,8 +36,26 @@ public class HangfireTestDriver : IDisposable
         }
     }
 
+    private static IStorageConnection GetStorageConnection()
+    {
+        return JobStorage.Current.GetConnection()
+               ?? throw new InvalidOperationException("Cannot get Hangfire job storage");
+    }
+
+    private static RecurringJobManager GetRecurringJobManager()
+    {
+        return new RecurringJobManager(
+            JobStorage.Current,
+            JobFilterProviders.Providers,
+            new DefaultTimeZoneResolver(),
+            Clock.UtcNow);
+    }
+
     public void Dispose()
     {
-        JobServer.Dispose();
+        if (_storageConnection.IsValueCreated)
+        {
+            _storageConnection.Value.Dispose();
+        }
     }
 }
