@@ -27,11 +27,11 @@ internal static class Startup
             }
         });
 
-
         services.AddHangfireServer((provider, serverOptions) =>
         {
             serverOptions.Activator = new ServiceProviderAwareJobActivator(provider);
         });
+        services.AddHostedService<RecurringJobInstallService>();
     }
 
     public static void UseServices(this IApplicationBuilder app)
@@ -39,10 +39,5 @@ internal static class Startup
         app.UseRouting();
 
         app.UseHangfireDashboard();
-
-        RecurringJob.AddOrUpdate<ImportCbrDayRatesJob>(
-            ImportCbrDayRatesJob.JobId,
-            s => s.RunAsync(CancellationToken.None),
-            ImportCbrDayRatesJob.Cron);
     }
 }
