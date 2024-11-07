@@ -1,6 +1,6 @@
 using System.Globalization;
 
-namespace Hangfire.Helpers.Date;
+namespace HangfireServer.Helpers.Date;
 
 /// <summary>
 /// Выставляет для часов нужное значение

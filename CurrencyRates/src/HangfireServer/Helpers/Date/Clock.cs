@@ -1,4 +1,4 @@
-namespace Hangfire.Helpers;
+namespace HangfireServer.Helpers.Date;
 
 public static class Clock
 {

@@ -1,4 +1,4 @@
-using Hangfire;
+using HangfireServer;
 
 var builder = WebApplication.CreateBuilder(args);
 

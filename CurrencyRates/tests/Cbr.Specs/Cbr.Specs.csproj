@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="Hangfire.Core" Version="1.8.15" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.10" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
@@ -25,8 +26,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Cbr\Cbr.csproj" />
-    <ProjectReference Include="..\..\src\Hangfire\Hangfire.csproj" />
+    <ProjectReference Include="..\..\src\HangfireServer\HangfireServer.csproj" />
     <ProjectReference Include="..\..\src\Service\Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Feature\Hangfire\" />
   </ItemGroup>
 
 </Project>

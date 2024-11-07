@@ -1,9 +1,9 @@
 using Cbr.Infrastructure;
-using Hangfire.Helpers;
-using Hangfire.Jobs;
+using Hangfire;
 using Hangfire.PostgreSql;
+using HangfireServer.Helpers;
 
-namespace Hangfire;
+namespace HangfireServer;
 
 internal static class Startup
 {

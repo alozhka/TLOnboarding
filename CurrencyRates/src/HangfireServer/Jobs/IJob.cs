@@ -1,6 +1,6 @@
 using Hangfire.Server;
 
-namespace Hangfire.Jobs;
+namespace HangfireServer.Jobs;
 
 public interface IJob
 {

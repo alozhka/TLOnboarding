@@ -1,6 +1,7 @@
-using Hangfire.Jobs;
+using Hangfire;
+using HangfireServer.Jobs;
 
-namespace Hangfire.Helpers;
+namespace HangfireServer.Helpers;
 
 public class RecurringJobInstallService : BackgroundService
 {

@@ -1,7 +1,7 @@
 using Cbr.Application.Service;
 using Hangfire.Server;
 
-namespace Hangfire.Jobs;
+namespace HangfireServer.Jobs;
 
 public class ImportCbrDayRatesJob(CurrencyRatesService currencyRatesService) : IJob
 {

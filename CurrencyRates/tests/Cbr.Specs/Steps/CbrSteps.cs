@@ -1,7 +1,6 @@
 using Cbr.Application.Dto;
 using Cbr.Specs.Drivers;
 using Cbr.Specs.Fixtures;
-using Hangfire;
 using Reqnroll;
 
 namespace Cbr.Specs.Steps;

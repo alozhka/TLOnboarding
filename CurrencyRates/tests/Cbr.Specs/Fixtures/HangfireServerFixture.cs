@@ -1,23 +1,14 @@
-using Hangfire;
-using Hangfire.InMemory;
+using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace Cbr.Specs.Fixtures;
 
 public class HangfireServerFixture : IDisposable
 {
-    public BackgroundJobServer JobServer { get; }
-    public JobStorage JobStorage { get; }
-
     public HangfireServerFixture()
     {
-        GlobalConfiguration.Configuration.UseInMemoryStorage();
-        JobStorage = new InMemoryStorage();
-        JobServer = new BackgroundJobServer();
-        
-        
+        WebApplicationFactory<HangfireProgram> factory = new();
     }
     public void Dispose()
     {
-        JobServer.Dispose();
     }
 }

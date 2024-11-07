@@ -1,8 +1,8 @@
 using Hangfire;
 using Hangfire.Common;
-using Hangfire.Helpers;
-using Hangfire.Jobs;
 using Hangfire.Storage;
+using HangfireServer.Helpers.Date;
+using HangfireServer.Jobs;
 
 namespace Cbr.Specs.Drivers;
 
@@ -15,16 +15,10 @@ public class HangfireTestDriver : IDisposable
 
     public HangfireTestDriver()
     {
-        GlobalConfiguration.Configuration.UseInMemoryStorage();
     }
 
     public void AddCbrApiImportRecurringJob()
     {
-        RecurringJob.AddOrUpdate<ImportCbrDayRatesJob>(
-            ImportCbrDayRatesJob.JobId,
-            s => s.RunAsync(CancellationToken.None),
-            ImportCbrDayRatesJob.Cron);
-
         _recurringJobIds.Add(ImportCbrDayRatesJob.JobId);
     }
 
@@ -57,5 +51,7 @@ public class HangfireTestDriver : IDisposable
         {
             _storageConnection.Value.Dispose();
         }
+
+        GC.SuppressFinalize(this);
     }
 }
