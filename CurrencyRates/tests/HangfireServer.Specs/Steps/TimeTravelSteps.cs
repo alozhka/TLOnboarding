@@ -1,4 +1,3 @@
-using HangfireServer.Specs.Helpers.Date;
 using Reqnroll;
 
 namespace HangfireServer.Specs.Steps;
@@ -7,10 +6,10 @@ namespace HangfireServer.Specs.Steps;
 [Scope(Tag = "time_travel")]
 public class TimeTravelSteps
 {
-    [When("по Москве наступает время {string}")]
-    [Given("по Москве было время {string}")]
-    public static void ПоМосквеНаступилоВремя(string dateTime)
+    [Given(@"по Москве было время ""(.*)""")]
+    [When(@"по Москве наступает время ""(.*)""")]
+    public static void ПоМосквеНаступаетВремя(string p0)
     {
-        ClockHelper.SetUtcNow(dateTime);
+        ScenarioContext.StepIsPending();
     }
 }

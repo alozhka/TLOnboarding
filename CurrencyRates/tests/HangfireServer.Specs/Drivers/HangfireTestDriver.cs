@@ -1,30 +1,48 @@
+using Cbr.Application.Dto;
 using Hangfire;
 using Hangfire.Common;
 using Hangfire.Storage;
-using HangfireServer.Jobs;
+using HangfireServer.Specs.Fixtures;
 using HangfireServer.Specs.Helpers.Date;
+using Newtonsoft.Json;
+using Xunit;
 
 namespace HangfireServer.Specs.Drivers;
 
-public class HangfireTestDriver : IDisposable
+public class HangfireTestDriver(HangfireServerFixture fixture) : IDisposable
 {
     private readonly Lazy<IStorageConnection> _storageConnection = new(GetStorageConnection);
     private readonly Lazy<RecurringJobManager> _recurringJobManager = new(GetRecurringJobManager);
 
+    private readonly HttpClient _httpClient = fixture.HttpClient;
     private readonly List<string> _affectedRecurringJobIds = [];
 
-    public void AddCbrApiImportRecurringJob()
+    public async Task<CbrDayRatesDto> GetCbrDayRates(DateOnly? requestDate = null)
     {
-        _affectedRecurringJobIds.Add(ImportCbrDayRatesJob.JobId);
-    }
-
-    public void TriggerAllRecurringJobs()
-    {
-        foreach (string jobId in _affectedRecurringJobIds)
+        string query = "api/v1/cbr/daily-rates";
+        if (requestDate != null)
         {
-            RecurringJob.TriggerJob(jobId);
+            query += "?requestDate=" + requestDate?.ToString("yyyy-MM-dd");
+        }
+
+        HttpResponseMessage response = await _httpClient.GetAsync(query);
+
+        await EnsureSuccessResponse(response);
+        string content = await response.Content.ReadAsStringAsync();
+        CbrDayRatesDto dto = JsonConvert.DeserializeObject<CbrDayRatesDto>(content)
+                             ?? throw new ArgumentException($"Unexpected JSON response: {content}");
+        return dto;
+    }
+    
+    private static async Task EnsureSuccessResponse(HttpResponseMessage responseMessage)
+    {
+        if (!responseMessage.IsSuccessStatusCode)
+        {
+            string content = await responseMessage.Content.ReadAsStringAsync();
+            Assert.Fail($"HTTP status code {responseMessage.StatusCode}: {content}");
         }
     }
+
 
     private static IStorageConnection GetStorageConnection()
     {
