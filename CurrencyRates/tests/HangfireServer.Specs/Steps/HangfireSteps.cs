@@ -1,9 +1,7 @@
-using System.Globalization;
 using Cbr.Application.Dto;
-using Cbr.Application.Service;
+using HangfireServer.Jobs;
 using HangfireServer.Specs.Drivers;
 using HangfireServer.Specs.Fixtures;
-using Microsoft.Extensions.DependencyInjection;
 using Reqnroll;
 using Xunit;
 
@@ -14,12 +12,34 @@ namespace HangfireServer.Specs.Steps;
 public sealed class HangfireSteps(HangfireServerFixture fixture)
 {
     private readonly HangfireTestDriver _driver = new(fixture);
-    private CbrDayRatesDto? _dayRatesDto;
+    private CbrDayRatesDto? _dayRates;
 
 
     [When(@"я запрашиваю курсы за дату ""(.*)""")]
-    public async Task WhenЯЗапрашиваюКурсыЗаТекущуюДату(string date)
+    public async Task ЯЗапрашиваюКурсыЗаТекущуюДату(string date)
     {
-        _dayRatesDto = await _driver.GetCbrDayRates();
+        DateOnly? dateOnly = null;
+        if (!string.IsNullOrEmpty(date))
+        {
+            dateOnly = DateOnly.Parse(date);
+        }
+
+        _dayRates = await _driver.GetCbrDayRates(dateOnly);
+    }
+
+    [Then(@"за дату ""(.*)"" будут курсы:")]
+    public void ТоЗаДатуБудутКурсы(string rawDate, DataTable table)
+    {
+        Assert.Equal(DateOnly.Parse(rawDate), DateOnly.Parse(_dayRates!.Date));
+
+        List<CbrRateDto> expectedRates = table.CreateSet<CbrRateDto>().ToList();
+
+        Assert.Equal(expectedRates, _dayRates.Rates);
+    }
+
+    [When(@"запускается импорт курсов валют к рублю")]
+    public async Task WhenЗапускаетсяИмпортКурсовВалютКРублю()
+    { 
+        await _driver.RunRecurringJob(ImportCbrDayRatesJob.JobId);
     }
 }

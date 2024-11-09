@@ -1,6 +1,8 @@
+using Cbr.Application.Abstractions;
 using Cbr.Infrastructure;
 using Cbr.Infrastructure.Database;
 using Hangfire;
+using HangfireServer.Specs.Fixtures.FakeService;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -8,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace HangfireServer.Specs.Fixtures;
@@ -31,13 +34,16 @@ public class HangfireServerFixture : IDisposable
                 GlobalConfiguration.Configuration.UseInMemoryStorage();
                 services.AddCbr(cfg);
 
-
+                // Убираем зависимость от внешнего API для тестов
+                services.RemoveAll<ICbrApiService>();
+                services.AddTransient<ICbrApiService, CbrApiFakeService>();
                 services.AddLogging(loggingBuilder =>
                     loggingBuilder.AddConsole().AddFilter(level => level >= LogLevel.Warning));
             });
         });
 
-        DbContext dbContext = factory.Services.GetRequiredService<CbrDbContext>();
+        using IServiceScope scope = factory.Services.CreateScope();
+        DbContext dbContext = scope.ServiceProvider.GetRequiredService<CbrDbContext>();
         _dbTransaction = dbContext.Database.BeginTransaction();
         HttpClient = factory.CreateClient();
     }

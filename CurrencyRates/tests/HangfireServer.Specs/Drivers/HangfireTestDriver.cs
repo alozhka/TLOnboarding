@@ -1,6 +1,7 @@
 using Cbr.Application.Dto;
 using Hangfire;
 using Hangfire.Common;
+using Hangfire.States;
 using Hangfire.Storage;
 using HangfireServer.Specs.Fixtures;
 using HangfireServer.Specs.Helpers.Date;
@@ -40,6 +41,31 @@ public class HangfireTestDriver(HangfireServerFixture fixture) : IDisposable
         {
             string content = await responseMessage.Content.ReadAsStringAsync();
             Assert.Fail($"HTTP status code {responseMessage.StatusCode}: {content}");
+        }
+    }
+
+    public async Task RunRecurringJob(string jobId)
+    {
+        _affectedRecurringJobIds.Add(jobId);
+
+        _recurringJobManager.Value.TriggerJob(jobId);
+
+        StateData? stateData = _storageConnection.Value.GetStateData(jobId);
+        if (stateData is null)
+        {
+            throw new InvalidOperationException($"Cannot find job with id='{jobId}'");
+        }
+        
+        while (stateData.Name != SucceededState.StateName && stateData.Name != DeletedState.StateName)
+        {
+            await Task.Delay(1);
+            stateData = _storageConnection.Value.GetStateData(jobId);
+        }
+
+        if (stateData.Name == SucceededState.StateName)
+        {
+            throw new InvalidOperationException(
+                $"Recurring job {jobId} failed: здесь заглушка для будущих внутренних исключений");
         }
     }
 
