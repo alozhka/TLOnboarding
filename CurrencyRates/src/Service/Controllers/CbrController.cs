@@ -1,6 +1,5 @@
 using Cbr.Application.Dto;
 using Cbr.Application.Service;
-using Cbr.Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Service.Controllers;

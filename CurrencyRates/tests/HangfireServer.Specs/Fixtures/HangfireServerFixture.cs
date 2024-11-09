@@ -1,5 +1,4 @@
 using Cbr.Application.Abstractions;
-using Cbr.Infrastructure;
 using Cbr.Infrastructure.Database;
 using Hangfire;
 using HangfireServer.Specs.Fixtures.FakeService;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -23,20 +21,14 @@ public class HangfireServerFixture : IDisposable
     public HangfireServerFixture()
     {
         WebApplicationFactory<Program> factory = new();
-        IConfiguration cfg = factory.Services.GetRequiredService<IConfiguration>();
         factory.WithWebHostBuilder(b =>
         {
             b.UseSolutionRelativeContentRoot("src/HangfireServer");
             b.UseEnvironment("Development");
             b.ConfigureServices(services =>
             {
-                // Для тестов в Hangfire из-за проблем с откатом используется база в оперативе
-                GlobalConfiguration.Configuration.UseInMemoryStorage();
-                services.AddCbr(cfg);
-
-                // Убираем зависимость от внешнего API для тестов
-                services.RemoveAll<ICbrApiService>();
-                services.AddTransient<ICbrApiService, CbrApiFakeService>();
+                //ReconfigureServicesTotTests(services);
+                
                 services.AddLogging(loggingBuilder =>
                     loggingBuilder.AddConsole().AddFilter(level => level >= LogLevel.Warning));
             });
@@ -46,6 +38,21 @@ public class HangfireServerFixture : IDisposable
         DbContext dbContext = scope.ServiceProvider.GetRequiredService<CbrDbContext>();
         _dbTransaction = dbContext.Database.BeginTransaction();
         HttpClient = factory.CreateClient();
+    }
+
+    private static void ReconfigureServicesTotTests(IServiceCollection services)
+    {
+        // Убираем зависимость от внешнего API для тестов
+        services.RemoveAll<IGlobalConfiguration>();
+        services.AddHangfire(globalConfiguration => globalConfiguration
+            .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings()
+            .UseInMemoryStorage());
+        GlobalConfiguration.Configuration.UseInMemoryStorage();
+        
+        services.RemoveAll<ICbrApiService>();
+        services.AddTransient<ICbrApiService, CbrApiFakeService>();
     }
 
     public void Dispose()

@@ -1,7 +1,7 @@
 using Cbr.Infrastructure;
 using Hangfire;
 using Hangfire.PostgreSql;
-using HangfireServer.Helpers;
+using HangfireServer.Configuration;
 
 namespace HangfireServer;
 
@@ -15,16 +15,10 @@ internal static class Startup
             globalConfiguration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
                 .UseSimpleAssemblyNameTypeSerializer()
-                .UseRecommendedSerializerSettings();
-            if (cfg["Applications:EnableIntegrationTesting"] == "true")
-            {
-                globalConfiguration.UseInMemoryStorage();
-            }
-            else
-            {
-                globalConfiguration.UsePostgreSqlStorage(bootstrapperOptions =>
-                    bootstrapperOptions.UseNpgsqlConnection(cfg.GetConnectionString("Postgres")));
-            }
+                .UseRecommendedSerializerSettings()
+                .UseInMemoryStorage()
+                /*.UsePostgreSqlStorage(bootstrapperOptions =>
+                    bootstrapperOptions.UseNpgsqlConnection(cfg.GetConnectionString("Postgres")))*/;
         });
 
         services.AddHangfireServer((provider, serverOptions) =>

@@ -1,7 +1,7 @@
 
 using Hangfire;
 
-namespace HangfireServer.Helpers;
+namespace HangfireServer.Configuration;
 
 /// <summary>
 /// Позволяет Hangfire получить зависимости из DI контейнера
