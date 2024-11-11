@@ -15,7 +15,7 @@ namespace HangfireServer.Specs.Fixtures;
 
 public class HangfireServerFixture : IDisposable
 {
-    private readonly IDbContextTransaction _dbTransaction;
+    private IDbContextTransaction? _dbTransaction;
     public readonly HttpClient HttpClient;
 
     public HangfireServerFixture()
@@ -43,7 +43,6 @@ public class HangfireServerFixture : IDisposable
     private static void ReconfigureServicesTotTests(IServiceCollection services)
     {
         // Убираем зависимость от внешнего API для тестов
-        services.RemoveAll<IGlobalConfiguration>();
         services.AddHangfire(globalConfiguration => globalConfiguration
             .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
             .UseSimpleAssemblyNameTypeSerializer()
@@ -57,8 +56,12 @@ public class HangfireServerFixture : IDisposable
 
     public void Dispose()
     {
-        _dbTransaction.Rollback();
-        _dbTransaction.Dispose();
+        if (_dbTransaction is not null)
+        {
+            _dbTransaction.Rollback();
+            _dbTransaction.Dispose();
+            _dbTransaction = null;
+        }
 
         GC.SuppressFinalize(this);
     }

@@ -23,7 +23,7 @@ public class HangfireTestDriver(HangfireServerFixture fixture) : IDisposable
         string query = "api/v1/cbr/daily-rates";
         if (requestDate != null)
         {
-            query += "?requestDate=" + requestDate?.ToString("yyyy-MM-dd");
+            query += "?requestDate=" + requestDate.Value.ToString("yyyy-MM-dd");
         }
 
         HttpResponseMessage response = await _httpClient.GetAsync(query);
@@ -34,7 +34,7 @@ public class HangfireTestDriver(HangfireServerFixture fixture) : IDisposable
                              ?? throw new ArgumentException($"Unexpected JSON response: {content}");
         return dto;
     }
-    
+
     private static async Task EnsureSuccessResponse(HttpResponseMessage responseMessage)
     {
         if (!responseMessage.IsSuccessStatusCode)
@@ -48,27 +48,32 @@ public class HangfireTestDriver(HangfireServerFixture fixture) : IDisposable
     {
         _affectedRecurringJobIds.Add(jobId);
 
+        //TODO: попробовать добавить метод на начало и конец сценария
         _recurringJobManager.Value.TriggerJob(jobId);
 
-        StateData? stateData = _storageConnection.Value.GetStateData(jobId);
-        if (stateData is null)
+        BackgroundJobStatus state = await WaitRecurringJobFinished(jobId);
+        if (!state.IsSucceeded)
         {
-            throw new InvalidOperationException($"Cannot find job with id='{jobId}'");
-        }
-        
-        while (stateData.Name != SucceededState.StateName && stateData.Name != DeletedState.StateName)
-        {
-            await Task.Delay(1);
-            stateData = _storageConnection.Value.GetStateData(jobId);
-        }
-
-        if (stateData.Name == SucceededState.StateName)
-        {
+            Exception innerException = state.LoadException();
             throw new InvalidOperationException(
-                $"Recurring job {jobId} failed: здесь заглушка для будущих внутренних исключений");
+                $"Recurring job {jobId} failed: {innerException.Message}",
+                innerException);
         }
     }
 
+    private async Task<BackgroundJobStatus> WaitRecurringJobFinished(string recurringJobId)
+    {
+        IStorageConnection connection = _storageConnection.Value;
+        string jobId = RecurringJobStatus.Fetch(connection, recurringJobId).LastJobId;
+        BackgroundJobStatus jobStatus = BackgroundJobStatus.Fetch(connection, jobId);
+        while (!jobStatus.IsFinal)
+        {
+            await Task.Delay(1);
+            jobStatus = BackgroundJobStatus.Fetch(connection, jobId);
+        }
+
+        return jobStatus;
+    }
 
     private static IStorageConnection GetStorageConnection()
     {
@@ -91,7 +96,5 @@ public class HangfireTestDriver(HangfireServerFixture fixture) : IDisposable
         {
             _storageConnection.Value.Dispose();
         }
-
-        GC.SuppressFinalize(this);
     }
 }
