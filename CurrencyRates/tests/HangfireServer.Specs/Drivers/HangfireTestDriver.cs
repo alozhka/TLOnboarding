@@ -1,7 +1,6 @@
 using Cbr.Application.Dto;
 using Hangfire;
 using Hangfire.Common;
-using Hangfire.States;
 using Hangfire.Storage;
 using HangfireServer.Specs.Fixtures;
 using HangfireServer.Specs.Helpers.Date;

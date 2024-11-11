@@ -27,7 +27,7 @@ public class HangfireServerFixture : IDisposable
             b.UseEnvironment("Development");
             b.ConfigureServices(services =>
             {
-                //ReconfigureServicesTotTests(services);
+                ReconfigureServicesTotTests(services);
                 
                 services.AddLogging(loggingBuilder =>
                     loggingBuilder.AddConsole().AddFilter(level => level >= LogLevel.Warning));
@@ -43,6 +43,7 @@ public class HangfireServerFixture : IDisposable
     private static void ReconfigureServicesTotTests(IServiceCollection services)
     {
         // Убираем зависимость от внешнего API для тестов
+        services.RemoveAll<IGlobalConfiguration>();
         services.AddHangfire(globalConfiguration => globalConfiguration
             .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
             .UseSimpleAssemblyNameTypeSerializer()
