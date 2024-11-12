@@ -16,7 +16,7 @@ namespace HangfireServer.Specs.Fixtures;
 public class HangfireServerFixture : IDisposable
 {
     private IDbContextTransaction? _dbTransaction;
-    public readonly HttpClient HttpClient;
+    public readonly IServiceScope ServiceScope;
 
     public HangfireServerFixture()
     {
@@ -24,23 +24,21 @@ public class HangfireServerFixture : IDisposable
         factory.WithWebHostBuilder(b =>
         {
             b.UseSolutionRelativeContentRoot("src/HangfireServer");
-            b.UseEnvironment("Development");
+            b.UseEnvironment("Test");
             b.ConfigureServices(services =>
             {
-                ReconfigureServicesTotTests(services);
-                
+                ReconfigureServicesToTests(services);
                 services.AddLogging(loggingBuilder =>
                     loggingBuilder.AddConsole().AddFilter(level => level >= LogLevel.Warning));
             });
         });
 
-        using IServiceScope scope = factory.Services.CreateScope();
-        DbContext dbContext = scope.ServiceProvider.GetRequiredService<CbrDbContext>();
+        ServiceScope = factory.Services.CreateScope();
+        DbContext dbContext = ServiceScope.ServiceProvider.GetRequiredService<CbrDbContext>();
         _dbTransaction = dbContext.Database.BeginTransaction();
-        HttpClient = factory.CreateClient();
     }
 
-    private static void ReconfigureServicesTotTests(IServiceCollection services)
+    private static void ReconfigureServicesToTests(IServiceCollection services)
     {
         // Убираем зависимость от внешнего API для тестов
         services.RemoveAll<IGlobalConfiguration>();
@@ -63,7 +61,8 @@ public class HangfireServerFixture : IDisposable
             _dbTransaction.Dispose();
             _dbTransaction = null;
         }
-
+        
+        ServiceScope.Dispose();
         GC.SuppressFinalize(this);
     }
 

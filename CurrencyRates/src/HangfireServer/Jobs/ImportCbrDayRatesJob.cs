@@ -1,5 +1,6 @@
 using Cbr.Application.Service;
 using Hangfire.Server;
+using HangfireServer.Jobs.Date;
 
 namespace HangfireServer.Jobs;
 
@@ -19,7 +20,7 @@ public class ImportCbrDayRatesJob(CurrencyRatesService currencyRatesService) : I
 
     public async Task Run(PerformContext performContext, CancellationToken ct)
     {
-        DateOnly date = DateOnly.FromDateTime(DateTime.Now);
+        DateOnly date = DateOnly.FromDateTime(Clock.UtcNow());
         await currencyRatesService.ImportFromCbrApiAsync(date, ct);
     }
 }

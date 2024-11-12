@@ -16,8 +16,9 @@ internal static class Startup
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
-                .UsePostgreSqlStorage(bootstrapperOptions =>
-                    bootstrapperOptions.UseNpgsqlConnection(cfg.GetConnectionString("Postgres")));
+                .UseInMemoryStorage()
+                /*.UsePostgreSqlStorage(bootstrapperOptions =>
+                    bootstrapperOptions.UseNpgsqlConnection(cfg.GetConnectionString("Postgres")))*/;
         });
 
         services.AddHangfireServer((provider, serverOptions) =>

@@ -4,7 +4,7 @@ namespace HangfireServer.Specs.Drivers;
 
 public class RecurringJobStatus(Dictionary<string, string> entries)
 {
-    public string LastJobId = entries["lastJobId"];
+    public readonly string LastJobId = entries["LastJobId"];
 
     public static RecurringJobStatus Fetch(IStorageConnection connection, string recurringJobId)
     {
