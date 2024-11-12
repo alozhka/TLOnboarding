@@ -7,7 +7,7 @@ public class CbrApiFakeService : ICbrApiService
     public Task<string> GetCbrDayRatesRaw(DateOnly date, CancellationToken ct)
     {
         const string rawFakeData = """
-                                   <ValCurs Date="12.11.2024" name="Foreign Currency Market">
+                                   <ValCurs Date="21.09.2021" name="Foreign Currency Market">
                                    <Valute ID="R01135">
                                       <NumCode>348</NumCode>
                                       <CharCode>HUF</CharCode>

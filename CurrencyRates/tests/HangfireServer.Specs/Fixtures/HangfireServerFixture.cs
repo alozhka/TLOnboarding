@@ -2,14 +2,13 @@ using Cbr.Application.Abstractions;
 using Cbr.Infrastructure.Database;
 using Hangfire;
 using HangfireServer.Specs.Fixtures.FakeService;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using SpecsLibrary.Fixtures;
 
 namespace HangfireServer.Specs.Fixtures;
 
@@ -18,39 +17,42 @@ public class HangfireServerFixture : IDisposable
     private IDbContextTransaction? _dbTransaction;
     public readonly IServiceScope ServiceScope;
 
+
     public HangfireServerFixture()
     {
-        WebApplicationFactory<Program> factory = new();
+        CustomWebApplicationFactory<Program> factory = new(configureServices: services =>
+        {
+            // для Hangfire делаем хранилище в ОЗУ, так как тяжело будет сделать откаты при работе с СУБД
+            // конфигурация такая же
+            services.RemoveAll<IGlobalConfiguration>();
+            services.AddHangfire(globalConfiguration =>
+            {
+                globalConfiguration
+                    .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+                    .UseSimpleAssemblyNameTypeSerializer()
+                    .UseRecommendedSerializerSettings()
+                    .UseInMemoryStorage();
+            });
+
+            // фейковый API сервис ЦБ РФ
+            services.RemoveAll<ICbrApiService>();
+            services.AddTransient<ICbrApiService, CbrApiFakeService>();
+        });
+
         factory.WithWebHostBuilder(b =>
         {
             b.UseSolutionRelativeContentRoot("src/HangfireServer");
-            b.UseEnvironment("Test");
-            b.ConfigureServices(services =>
+            b.ConfigureTestServices(services =>
             {
-                ReconfigureServicesToTests(services);
                 services.AddLogging(loggingBuilder =>
                     loggingBuilder.AddConsole().AddFilter(level => level >= LogLevel.Warning));
             });
         });
+        factory.CreateClient();
 
         ServiceScope = factory.Services.CreateScope();
         DbContext dbContext = ServiceScope.ServiceProvider.GetRequiredService<CbrDbContext>();
         _dbTransaction = dbContext.Database.BeginTransaction();
-    }
-
-    private static void ReconfigureServicesToTests(IServiceCollection services)
-    {
-        // Убираем зависимость от внешнего API для тестов
-        services.RemoveAll<IGlobalConfiguration>();
-        services.AddHangfire(globalConfiguration => globalConfiguration
-            .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
-            .UseSimpleAssemblyNameTypeSerializer()
-            .UseRecommendedSerializerSettings()
-            .UseInMemoryStorage());
-        GlobalConfiguration.Configuration.UseInMemoryStorage();
-        
-        services.RemoveAll<ICbrApiService>();
-        services.AddTransient<ICbrApiService, CbrApiFakeService>();
     }
 
     public void Dispose()
@@ -61,7 +63,7 @@ public class HangfireServerFixture : IDisposable
             _dbTransaction.Dispose();
             _dbTransaction = null;
         }
-        
+
         ServiceScope.Dispose();
         GC.SuppressFinalize(this);
     }

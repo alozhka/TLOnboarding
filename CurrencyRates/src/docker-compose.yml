@@ -6,7 +6,7 @@ services:
    environment:
      - POSTGRES_USER=currencyratesapi
      - POSTGRES_PASSWORD=em4xooNu
-     - POSTGRES_DB=currency-rates
+     - POSTGRES_MULTIPLE_DATABASES=currency-rates,currency-rates-test
    volumes:
      - csharp_currencry_rates_db_postgress_data:/var/lib/postgresql/data
    ports:

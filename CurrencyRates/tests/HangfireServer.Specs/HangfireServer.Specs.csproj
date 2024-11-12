@@ -31,6 +31,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\HangfireServer\HangfireServer.csproj" />
+      <ProjectReference Include="..\SpecsLibrary\SpecsLibrary.csproj" />
     </ItemGroup>
 
 </Project>

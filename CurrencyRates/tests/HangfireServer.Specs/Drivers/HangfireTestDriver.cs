@@ -28,14 +28,6 @@ public class HangfireTestDriver(HangfireServerFixture fixture) : IDisposable
         return dto;
     }
 
-    private static async Task EnsureSuccessResponse(HttpResponseMessage responseMessage)
-    {
-        if (!responseMessage.IsSuccessStatusCode)
-        {
-            string content = await responseMessage.Content.ReadAsStringAsync();
-            Assert.Fail($"HTTP status code {responseMessage.StatusCode}: {content}");
-        }
-    }
 
     public async Task RunRecurringJob(string jobId)
     {
