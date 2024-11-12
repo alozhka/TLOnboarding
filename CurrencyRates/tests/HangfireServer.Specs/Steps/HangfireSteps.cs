@@ -1,5 +1,6 @@
 using Cbr.Application.Dto;
 using HangfireServer.Jobs;
+using HangfireServer.Jobs.Date;
 using HangfireServer.Specs.Drivers;
 using HangfireServer.Specs.Fixtures;
 using Reqnroll;
@@ -41,5 +42,17 @@ public sealed class HangfireSteps(HangfireServerFixture fixture)
     public async Task WhenЗапускаетсяИмпортКурсовВалютКРублю()
     { 
         await _driver.RunRecurringJob(ImportCbrDayRatesJob.JobId);
+    }
+
+    [BeforeScenario]
+    public static void BeforeScenario()
+    {
+        ClockHelper.ResetUtcNow();
+    }
+    
+    [AfterScenario]
+    public static void AfterScenario()
+    {
+        ClockHelper.ResetUtcNow();
     }
 }
