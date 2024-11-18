@@ -26,10 +26,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Helpers\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\..\src\HangfireServer\HangfireServer.csproj" />
       <ProjectReference Include="..\SpecsLibrary\SpecsLibrary.csproj" />
     </ItemGroup>

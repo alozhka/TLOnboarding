@@ -11,12 +11,12 @@ public class ImportCbrDayRatesJob(CurrencyRatesService currencyRatesService) : I
     /// <summary>
     /// Отображает время запуска задачи.
     /// 0 - запуск в начале часа (00 минут)
-    /// 9,18 - в 9 и 18 часов
+    /// 6,15 - в 6 и 15 часов по UTC => (+ 3 часа) => 9,18 по Москве
     /// * - каждый день
     /// * - каждый месяц
     /// * - каждый день недели
     /// </summary>
-    public const string Cron = "0 9,18 * * *";
+    public const string Cron = "0 6,15 * * *";
 
     public async Task Run(PerformContext performContext, CancellationToken ct)
     {

@@ -1,7 +1,7 @@
 using Cbr.Application.Abstractions;
 using Cbr.Infrastructure.Database;
 using Hangfire;
-using HangfireServer.Specs.Fixtures.FakeService;
+using HangfireServer.Specs.Fixtures.StubServices;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -36,7 +36,7 @@ public class HangfireServerFixture : IDisposable
 
             // фейковый API сервис ЦБ РФ
             services.RemoveAll<ICbrApiService>();
-            services.AddTransient<ICbrApiService, CbrApiFakeService>();
+            services.AddTransient<ICbrApiService, StubCbrApiService>();
         });
 
         factory.WithWebHostBuilder(b =>
