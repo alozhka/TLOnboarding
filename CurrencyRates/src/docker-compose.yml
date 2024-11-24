@@ -1,0 +1,17 @@
+services:
+ csharp-currencry-rates-db:
+   image: postgres:16.3-alpine
+   container_name: csharp-currencry-rates-db
+   hostname: csharp-currencry-rates-db
+   environment:
+     - POSTGRES_USER=currencyratesapi
+     - POSTGRES_PASSWORD=em4xooNu
+     - POSTGRES_MULTIPLE_DATABASES=currency-rates,currency-rates-test
+   volumes:
+     - csharp_currencry_rates_db_postgress_data:/var/lib/postgresql/data
+   ports:
+     - 127.0.0.1:5432:5432
+
+
+volumes:
+ csharp_currencry_rates_db_postgress_data:

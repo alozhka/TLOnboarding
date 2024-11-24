@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<ValCurs Date="27.09.2024" name="Foreign Currency Market">
+    <Valute ID="R01010">
+        <NumCode>036</NumCode>
+        <CharCode>AUD</CharCode>
+        <Nominal>1</Nominal>
+        <Name>Австралийский доллар</Name>
+        <Value>63,4192</Value>
+        <VunitRate>63,4192</VunitRate>
+    </Valute>
+    <Valute ID="R01230">
+        <NumCode>784</NumCode>
+        <CharCode>AED</CharCode>
+        <Nominal>1</Nominal>
+        <Name>Дирхам ОАЭ</Name>
+        <Value>25,1620</Value>
+        <VunitRate>25,162</VunitRate>
+    </Valute>
+</ValCurs>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<ValCurs Date="21.09.2021" name="Foreign Currency Market">
+    <Valute ID="R01135">
+        <NumCode>348</NumCode>
+        <CharCode>HUF</CharCode>
+        <Nominal>100</Nominal>
+        <Name>Венгерских форинтов</Name>
+        <Value>26,2102</Value>
+        <VunitRate>0,262102</VunitRate>
+    </Valute>
+    <Valute ID="R01150">
+        <NumCode>704</NumCode>
+        <CharCode>VND</CharCode>
+        <Nominal>10000</Nominal>
+        <Name>Вьетнамских донгов</Name>
+        <Value>38,3406</Value>
+        <VunitRate>0,00383406</VunitRate>
+    </Valute>
+    <Valute ID="R01240">
+        <NumCode>818</NumCode>
+        <CharCode>EGP</CharCode>
+        <Nominal>10</Nominal>
+        <Name>Египетских фунтов</Name>
+        <Value>19,0823</Value>
+        <VunitRate>1,90823</VunitRate>
+    </Valute>
+</ValCurs>
